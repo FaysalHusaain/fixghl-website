@@ -1,0 +1,72 @@
+<p className="answer">A GoHighLevel workflow usually fails to trigger for one of four reasons: it is still in draft, the contact does not meet a trigger filter, re-entry is switched off for a contact who has already been through it, or the trigger type does not match the event. Check those four first, in that order, using a fresh test contact.</p>
+
+This guide walks through each check, shows where to look in the workflow builder, and covers what to do when a workflow starts but stops part way. It is written for GHL users who can open the workflow builder; you do not need any code.
+
+## Why is my GoHighLevel workflow not triggering?
+
+Most trigger failures come from settings, not bugs. A workflow only enrols a contact when it is published, the event matches the trigger type, every trigger filter is true for that contact at that moment, and the re-entry rules allow it. If any one of those is false, nothing happens and GHL shows no error.
+
+| Check | Where to look | What usually fixes it |
+| --- | --- | --- |
+| Is it published? | Toggle at the top of the workflow builder | Publish, then test with a new contact |
+| Does the contact meet every filter? | The trigger's filters | Remove or correct the filter the contact fails |
+| Has the contact been through it before? | Workflow settings, re-entry | Allow re-entry, or test with a fresh contact |
+| Is it the right trigger type? | The trigger itself | Switch to the trigger that matches the real event |
+| Did it run and then stop? | Execution logs and enrollment history | Fix the action that errored or the condition that ended it |
+
+HighLevel's own [getting started with workflows](https://help.gohighlevel.com/support/solutions/articles/155000002288-getting-started-with-workflows) article covers the builder itself.
+
+## Is the workflow published?
+
+A workflow in draft does not act on live trigger events. New workflows start in draft, and it is easy to save changes without switching the toggle to Published. Open the workflow, check the status at the top of the builder, publish it, and save.
+
+After publishing, trigger the event again with a test contact. Events that happened while the workflow was in draft are not replayed.
+
+## Does the contact meet every trigger filter?
+
+Trigger filters must all be true at the moment the event fires. Filters on the same trigger are combined with AND, so one filter that a contact fails stops the whole enrolment. A common case is a filter on a tag that a later step adds, which does not exist yet when the trigger is checked.
+
+To check:
+
+1. Open the trigger and list every filter on it.
+2. Open the test contact and compare each field, tag or value against the filter.
+3. Look for filters that point at things that changed: a form that was renamed or deleted, a calendar that was replaced, a pipeline stage that was renamed.
+4. Remove the filter the contact fails, or correct it, and test again.
+
+A trigger filtered on a specific form keeps pointing at that form. If the form is deleted and recreated, the trigger needs to be pointed at the new one.
+
+## Has the contact already been through the workflow?
+
+If re-entry is off, a contact who has already entered the workflow will not enter again, even when the trigger fires. That is correct for a welcome sequence and wrong for something like a booking reminder that should run every time.
+
+- Check the workflow settings for the re-entry option and switch it on if the workflow should run more than once per contact.
+- When testing, use a contact that has never entered the workflow. Reusing the same test contact is one of the most common reasons a fix appears not to work.
+
+## Is it the right trigger for the event?
+
+Each trigger listens for one kind of event. A workflow set to Contact Created will not fire for a contact who already existed and was updated by a form; that needs a form or contact-changed trigger instead. Booking workflows have the same issue: an appointment trigger and a form trigger fire at different moments. <mark className="todo">[[VERIFY: current trigger names in the workflow builder]]</mark>
+
+Write down the real event in plain words ("someone submits the consult form") and pick the trigger that names that event, then add filters to narrow it.
+
+## How do I see why a contact did not enter?
+
+Open the workflow's enrollment history and execution logs and search for the contact. If the contact is not listed, the trigger never fired for them: go back to the trigger, its filters and re-entry. If the contact is listed, the workflow started, and the logs show which action ran last and whether it failed.
+
+HighLevel highlights actions with errors in the builder; their help article on [highlighting and resolving errors in a workflow](https://help.gohighlevel.com/support/solutions/articles/155000004872-highlighting-resolving-errors-in-a-workflow) shows what each state means.
+
+## What if the workflow starts but stops part way?
+
+When the logs show a contact entering and then stopping, the cause is usually one of these:
+
+- **An If/Else branch sent them down a path with no actions.** Check the condition against the contact's data.
+- **A wait step is still waiting.** Wait-until-event steps hold the contact until the event happens or the timeout passes.
+- **A send failed.** SMS needs a valid phone number and a sending number; email needs an address and a sending domain. Contacts who are on Do Not Disturb or have unsubscribed are skipped.
+- **A goal event ended it.** If the workflow has a goal and the contact met it, they leave the workflow by design.
+
+## How do I test a workflow safely?
+
+Create a new test contact with your own email and phone number, make sure it meets every filter, and trigger the real event: submit the actual form or book the actual calendar. Then follow the contact through the execution logs step by step. Delete or tag test contacts afterwards so they do not end up in reports.
+
+## When should you get help?
+
+If you have checked all four causes and the logs still do not explain it, the problem is often outside the workflow: a form that posts to a different sub-account, a duplicate contact that received the event instead, or an integration sending incomplete data. Those take longer to trace. Our [GHL fixes service](/services/ghl-fixes) does exactly this, and the first 30-minute call is free.

@@ -1,0 +1,19 @@
+## What is LC Email in GoHighLevel?
+
+<p className="answer">LC Email, short for LeadConnector Email, is the built-in email sending service in GoHighLevel. A sub-account can send from a shared domain without setup, or from a dedicated sending domain with its own SPF and DKIM records, which gives better control over deliverability.</p>
+
+## How is it used?
+
+- Sending workflow emails, campaigns and one-to-one replies from GHL.
+- Sending from a subdomain such as mail.yourdomain.com to keep it separate from your inbox provider.
+- Tracking opens, clicks, bounces and unsubscribes inside GHL.
+
+## What usually goes wrong?
+
+- Emails going to spam because the dedicated domain was never set up or verified.
+- Two SPF records on the same host, which breaks SPF entirely.
+- No DMARC record, which some inbox providers now expect from bulk senders.
+
+## Related terms and services
+
+See [GHL emails going to spam](/guides/ghl-emails-going-to-spam), [GHL setup](/services/ghl-setup), [GHL fixes](/services/ghl-fixes). If something in your account is not working as described here, [book a free 30-minute call](/book).

@@ -1,0 +1,64 @@
+<p className="answer">GoHighLevel emails land in spam when the sending domain is shared or not authenticated, when SPF, DKIM or DMARC records are missing or broken, when the list holds old or unengaged contacts, or when a new domain sends too much too soon. Fix authentication first, then list quality, then sending volume.</p>
+
+This guide covers each fix in the order that matters most, with the DNS records involved and a way to confirm the fix worked. It applies to GHL's built-in LC Email service.
+
+## Why are my GoHighLevel emails going to spam?
+
+Inbox providers such as Gmail and Outlook decide where an email goes mainly on the sender's reputation and authentication, and much less on the words in the email. Mail sent from a shared domain, or from your own domain without matching SPF and DKIM records, carries little trust. A list with bounces and people who never open makes it worse.
+
+| Cause | How to spot it | Fix |
+| --- | --- | --- |
+| Sending from a shared domain | No dedicated sending domain in Email Services | Add a dedicated sending domain |
+| Missing or broken SPF or DKIM | Gmail "Show original" shows FAIL | Add the records GHL gives you, exactly |
+| No DMARC record | No TXT record at `_dmarc` | Publish a DMARC record, starting at `p=none` |
+| Old or bought contacts | High bounces, low opens | Clean the list and stop mailing non-openers |
+| New domain sending at full volume | Spam placement after a domain change | Warm up gradually |
+
+## Are you sending from a dedicated sending domain?
+
+LC Email can send from a shared domain with no setup, but your reputation is then mixed with every other sender on it. A dedicated sending domain sends from your own domain, with your own reputation. HighLevel's help center has step-by-step guides for adding one at registrars such as [GoDaddy](https://help.gohighlevel.com/support/solutions/articles/48001237513-dedicated-sending-domain-setup-on-godaddy-lc-email-) and [SiteGround](https://help.gohighlevel.com/support/solutions/articles/155000000568-dedicated-sending-domain-setup-on-siteground-lc-email-).
+
+Use a subdomain, such as `mail.yourdomain.com`, if your main domain already sends email through Google Workspace or Microsoft 365. That keeps GHL's records separate from your inbox provider's.
+
+## How do I set up SPF, DKIM and DMARC for GHL?
+
+SPF lists who may send for your domain, DKIM signs each email so it can be verified, and DMARC tells inbox providers what to do when those checks fail. GHL gives you the SPF and DKIM values when you add the sending domain. DMARC you publish yourself.
+
+1. In GHL, add the sending domain under Email Services and copy the records it shows you. The DKIM value is unique to your domain, so never copy one from an example.
+2. Add each record at your DNS provider exactly as shown.
+3. Keep **one SPF record per host**. If an SPF record already exists for that name, merge the `include:` into it instead of adding a second record, which causes a permanent error.
+4. Add a DMARC record for your domain. A safe start is:
+
+```txt
+Host:  _dmarc
+Type:  TXT
+Value: v=DMARC1; p=none; rua=mailto:dmarc@yourdomain.com
+```
+
+5. Wait for DNS to update, which can take up to a day, then verify the domain in GHL.
+6. Once every legitimate sender passes, tighten DMARC to `p=quarantine`.
+
+<mark className="todo">[[VERIFY: current Email Services menu path and record types shown in GHL]]</mark>
+
+## Is your list hurting deliverability?
+
+Yes, if it contains contacts who never asked for your email, addresses that bounce, or people who have not opened anything in months. Each of those signals tells inbox providers your mail is unwanted. Google's [email sender guidelines](https://support.google.com/a/answer/81126) ask bulk senders to keep reported spam rates below 0.3% and to offer one-click unsubscribe.
+
+- Never import bought or scraped lists.
+- Remove hard bounces and contacts who have unsubscribed.
+- Send re-engagement emails to long-inactive contacts, then stop mailing those who do not respond.
+- Keep a visible unsubscribe link in every marketing email.
+
+## How should I warm up a new sending domain?
+
+Start small and grow steadily. In the first weeks, send only to your most engaged contacts, people who opened or clicked recently, and increase volume gradually while bounces and complaints stay low. Sending your full list on the first day from a new domain is one of the fastest ways to land in spam.
+
+## Does the email content matter?
+
+Less than authentication and reputation, but it still counts. Keep links to a few trusted domains, avoid link shorteners, include plain text alongside images, and make sure the from name and reply-to address are real and consistent.
+
+## How do I check that it is fixed?
+
+Send a test email to a Gmail address, open it, choose **Show original**, and confirm that SPF, DKIM and DMARC all show PASS. For ongoing monitoring of Gmail reputation, set up [Google Postmaster Tools](https://postmaster.google.com/) for your sending domain.
+
+If the records pass and mail still lands in spam, the problem is usually list quality or sending history, which takes longer to repair. Our [GHL fixes service](/services/ghl-fixes) handles deliverability end to end, and new accounts get this set up correctly through our [setup service](/services/ghl-setup).

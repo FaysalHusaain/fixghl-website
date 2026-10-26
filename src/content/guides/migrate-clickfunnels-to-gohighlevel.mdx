@@ -1,0 +1,65 @@
+<p className="answer">You can migrate from ClickFunnels to GoHighLevel without losing data if you work in a set order: list everything you have, create custom fields in GHL first, import contacts with every column mapped, import or rebuild pages, rebuild checkout and email sequences, test it all, and only then move your domain. Keep ClickFunnels running until GHL is proven.</p>
+
+This guide gives the order of work we use for ClickFunnels migrations and the checks that catch lost data before it matters.
+
+## What moves, and what has to be rebuilt?
+
+Contacts move by CSV export and import. Some funnel pages can be imported by URL. Products, checkout, upsells, email sequences and automations do not transfer and have to be rebuilt in GHL.
+
+| ClickFunnels asset | How it gets into GHL |
+| --- | --- |
+| Contacts and tags | CSV export, then import with columns mapped to GHL fields |
+| Funnel pages | GHL's ClickFunnels importer, page by page, or rebuilt <mark className="todo">[[VERIFY: importer support for ClickFunnels 2.0 pages]]</mark> |
+| Products, order forms, bumps, upsells | Rebuilt in GHL and connected to your Stripe account |
+| Email sequences and automations | Rebuilt as GHL workflows |
+| Membership areas and courses | Rebuilt in GHL memberships, with member access re-created |
+| Domain | Pointed to GHL at cut-over, with redirects for changed URLs |
+
+## How do you migrate, step by step?
+
+### Take an inventory
+
+List every funnel, page, product, email sequence, automation, membership and integration in ClickFunnels, and mark each one as move, rebuild or retire. Most accounts have funnels nobody uses; retiring them now saves rebuilding them later.
+
+### Create custom fields and tags in GHL first
+
+GHL ignores CSV columns that do not map to an existing field. Before importing, create a custom field in GHL for every piece of contact data you want to keep, and decide how ClickFunnels tags will map to GHL tags.
+
+### Export and import contacts
+
+Export contacts from ClickFunnels as a CSV, then clean the file: remove duplicates, standardise phone numbers to international format, and drop addresses that have bounced. Import into GHL, map every column, and add a tag such as `migrated-clickfunnels` to the whole batch so you can find and check it later.
+
+Respect consent. Contacts who unsubscribed in ClickFunnels must stay unsubscribed in GHL.
+
+### Import or rebuild funnel pages
+
+Try GHL's ClickFunnels import with the live page URL, one page at a time. Check each imported page on a phone: spacing, fonts, forms and buttons often need adjusting. Rebuild pages that do not import cleanly instead of patching them.
+
+### Rebuild products, checkout and upsells
+
+Connect Stripe to GHL, recreate each product and price, then rebuild order forms, order bumps and one-click upsells. Run a real test purchase through every path, including the upsell decline path, and refund it.
+
+### Rebuild email sequences as workflows
+
+Rewrite each ClickFunnels sequence as a GHL workflow with the same timing and conditions. This is a good moment to fix sequences that never worked well, but change one thing at a time so you can compare results.
+
+### Test everything before cut-over
+
+Submit every form, book every calendar, buy through every checkout, and follow a test contact through each workflow. Compare contact counts and spot-check records against the ClickFunnels export.
+
+### Switch the domain and set redirects
+
+Point your domain to GHL in a quiet period, then set 301 redirects for any page whose URL changed so links and search rankings carry over. Keep ClickFunnels active until a full cycle of real leads and sales has run through GHL without problems.
+
+## How long does a ClickFunnels migration take?
+
+It depends on how many funnels, products and sequences you have, and how much of it is being rebuilt rather than imported. A small account with one funnel moves much faster than a business with several products, a membership and years of sequences. The inventory step gives you a reliable estimate.
+
+## What usually goes wrong?
+
+- **Custom fields created after the import**, so the data in those columns was dropped.
+- **Unsubscribed contacts re-subscribed** because opt-out status was not mapped.
+- **Upsell paths untested**, so a declined upsell leads to a dead page.
+- **The domain moved before testing**, which takes live funnels down while problems are fixed.
+
+If you would rather not run the move yourself, our [ClickFunnels to GHL migration service](/services/migrations/clickfunnels-to-ghl) follows this plan with the testing done for you. Still deciding between the two platforms? Read [GoHighLevel vs ClickFunnels](/compare/gohighlevel-vs-clickfunnels).

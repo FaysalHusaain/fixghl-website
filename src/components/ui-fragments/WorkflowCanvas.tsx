@@ -28,7 +28,8 @@ function Connector() {
   );
 }
 
-export function WorkflowCanvas() {
+export function WorkflowCanvas({ compact = false }: { compact?: boolean }) {
+  if (compact) return <CompactCanvas />;
   return (
     <figure data-ui className="relative">
       <figcaption className="sr-only">
@@ -65,6 +66,40 @@ export function WorkflowCanvas() {
           <Connector />
           <Step kind="Action" title="Move opportunity" detail="New enquiries to Booked" />
         </div>
+      </div>
+    </figure>
+  );
+}
+
+// Vertical variant for narrow columns (service pages).
+function CompactCanvas() {
+  const steps = [
+    { kind: "Trigger", title: "Form submitted", detail: "Filter: Free consult form", fixed: true },
+    { kind: "If / else", title: "Phone number exists", detail: "Yes: send SMS. No: send email." },
+    { kind: "Wait", title: "Until appointment", detail: "Reminder the day before" },
+    { kind: "Action", title: "Move opportunity", detail: "New enquiries to Booked" },
+  ];
+  return (
+    <figure data-ui className="on-dark rounded-2xl bg-ink-900 text-left text-ink-50">
+      <figcaption className="sr-only">Illustration of a GoHighLevel workflow with its trigger fixed.</figcaption>
+      <div className="flex items-center justify-between gap-4 px-4 py-3 text-[0.8125rem] text-ink-400 md:px-5">
+        <span className="truncate text-ink-200">Workflow · New enquiry to booked call</span>
+        <span className="flex shrink-0 items-center gap-2"><span aria-hidden className="size-2 rounded-full bg-gold-500" />Published</span>
+      </div>
+      <div className="flex flex-col px-4 pb-5 md:px-5">
+        {steps.map((st, i) => (
+          <div key={st.title} className="flex flex-col">
+            {i > 0 && <span aria-hidden className="ml-8 h-4 w-[1.5px] bg-ink-700" />}
+            <div className={`rounded-xl p-4 ${st.fixed ? "bg-ink-800 ring-2 ring-gold-500" : "bg-ink-800/70"}`}>
+              <div className="flex items-center justify-between text-[0.8125rem] text-ink-400">
+                <span>{st.kind}</span>
+                {st.fixed && <span className="rounded-full bg-gold-500 px-2 py-0.5 font-medium text-ink-950">Fixed</span>}
+              </div>
+              <p className="mt-2 text-[0.9375rem] font-medium leading-snug">{st.title}</p>
+              <p className="mt-1 text-[0.8125rem] leading-snug text-ink-300">{st.detail}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </figure>
   );

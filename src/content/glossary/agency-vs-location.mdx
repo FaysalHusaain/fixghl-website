@@ -1,0 +1,19 @@
+## What is the difference between agency and location in GoHighLevel?
+
+<p className="answer">The agency account is the top level of GoHighLevel, where billing, snapshots, SaaS settings, white-labelling and sub-accounts are managed. A location is the older name for a sub-account. The term still appears in the API, some integrations and older help articles, so a location ID is a sub-account ID.</p>
+
+## How is it used?
+
+- Agency users manage many sub-accounts; sub-account users work inside one.
+- API keys and integrations are set at either the agency or the location level.
+- Snapshots are created and loaded from the agency level.
+
+## What usually goes wrong?
+
+- Integrations connected at the agency level when they needed the location level, or the other way round.
+- Team members given agency access when they only needed one sub-account.
+- Confusion between location IDs and agency IDs when setting up webhooks or Zapier.
+
+## Related terms and services
+
+See [sub-accounts](/glossary/sub-account), [SaaS mode](/glossary/saas-mode), [integrations](/services/integrations). If something in your account is not working as described here, [book a free 30-minute call](/book).
