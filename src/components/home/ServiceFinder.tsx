@@ -29,12 +29,13 @@ export function ServiceFinder({ items }: { items: FinderItem[] }) {
   }, [items, q]);
 
   return (
-    <div data-ui>
+    <div data-ui data-finder>
       <label htmlFor={inputId} className="font-semibold text-ink-50">What is going wrong, or what do you need?</label>
       <div className="mt-3 flex items-center gap-3 rounded-2xl bg-ink-900 px-4 md:px-6">
         <Icon name="search" className="size-6 shrink-0 text-ink-400" />
         <input
           id={inputId}
+          data-finder-input
           type="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
@@ -53,6 +54,7 @@ export function ServiceFinder({ items }: { items: FinderItem[] }) {
           <button
             key={ex}
             type="button"
+            data-finder-chip={ex}
             onClick={() => setQ(ex)}
             className="min-h-10 rounded-full bg-ink-900 px-4 text-ink-200 transition-colors hover:bg-ink-800 hover:text-ink-50"
           >
@@ -60,12 +62,12 @@ export function ServiceFinder({ items }: { items: FinderItem[] }) {
           </button>
         ))}
       </div>
-      <p className="mt-8 text-small text-ink-400" aria-live="polite">
+      <p data-finder-count className="mt-8 text-small text-ink-400" aria-live="polite">
         {q ? `${shown.length} matching ${shown.length === 1 ? "service" : "services"}. Tap one to open its page.` : "All services. Tap one to open its page."}
       </p>
       <ul className="mt-2 flex flex-col">
         {shown.map((it) => (
-          <li key={it.href}>
+          <li key={it.href} data-finder-item={`${it.name} ${it.symptom} ${it.keywords}`.toLowerCase()}>
             <Link
               href={it.href}
               className="group grid grid-cols-[1fr_auto] items-center gap-x-6 gap-y-1 rounded-2xl px-4 py-5 transition-colors hover:bg-gold-500 hover:text-ink-950 focus-visible:bg-gold-500 focus-visible:text-ink-950 md:px-6 md:py-6"
@@ -80,7 +82,7 @@ export function ServiceFinder({ items }: { items: FinderItem[] }) {
           </li>
         ))}
         {shown.length === 0 && (
-          <li className="px-4 py-6 text-ink-300 md:px-6">
+          <li data-finder-empty className="px-4 py-6 text-ink-300 md:px-6">
             Nothing matches that yet. <Link href="/book#describe" className="link text-ink-50">Describe it to us</Link> and we will tell you which service fits.
           </li>
         )}
