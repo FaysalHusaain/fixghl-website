@@ -1,0 +1,11 @@
+# Open items
+- [[TODO: business email]]
+- [[TODO: offers/pricing]]
+- [[TODO: affiliate URL]] -> NEXT_PUBLIC_GHL_AFFILIATE_URL
+- [[TODO: GHL calendar embed URL]] -> NEXT_PUBLIC_GHL_CALENDAR_URL
+- [[TODO: GHL form embed or webhook]] -> GHL_FORM_WEBHOOK_URL
+- [[TODO: final logo]] (temporary text wordmark in use)
+- [[TODO: font pairing lock]] (A: Geist, B: Inter Tight + Inter)
+- [[TODO: social profile URLs]] for sameAs
+- [[TODO: legal entity name / jurisdiction]]
+- [[TODO: reply-time promise]]

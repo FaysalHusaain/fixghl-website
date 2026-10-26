@@ -1,26 +1,72 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* FixGHL tokens. Generated from design/palette.mjs; see design/README for contrast results. */
+@theme {
+  --color-ink-50: #faf9f8;
+  --color-ink-100: #f4f3f1;
+  --color-ink-200: #e5e4e1;
+  --color-ink-300: #cfcdc9;
+  --color-ink-400: #a8a59f;
+  --color-ink-500: #7f7c76;
+  --color-ink-600: #65625d;
+  --color-ink-700: #4b4944;
+  --color-ink-800: #2e2c29;
+  --color-ink-900: #1b1a18;
+  --color-ink-950: #08080a;
+  --color-gold-400: #ffe680;
+  --color-gold-500: #ffde59;
+  --color-gold-600: #f2c922;
+  --color-gold-700: #8a6a00;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Fluid type: five steps only */
+  --text-small: clamp(0.875rem, 0.84rem + 0.15vw, 0.9375rem);
+  --text-body: clamp(1.0625rem, 1.02rem + 0.18vw, 1.125rem);
+  --text-lead: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-title: clamp(2rem, 1.4rem + 2.6vw, 3.75rem);
+  --text-display: clamp(2.75rem, 0.6rem + 8.8vw, 7.5rem);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --gutter: clamp(1rem, 0.5rem + 2vw, 2rem);
+    --maxw: 90rem;
   }
+  html { color-scheme: light; -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--color-ink-50);
+    color: var(--color-ink-950);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  :focus-visible { outline: 2px solid var(--color-ink-950); outline-offset: 3px; border-radius: 2px; }
+  .on-dark :focus-visible { outline-color: var(--color-gold-500); }
+  ::selection { background: var(--color-gold-500); color: var(--color-ink-950); }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .frame { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: 3.25rem; padding: 0 1.5rem; border-radius: 999px;
+    font-size: var(--text-small); font-weight: 500; letter-spacing: -0.005em;
+    transition: transform 160ms var(--ease-out-soft), background-color 160ms var(--ease-out-soft), color 160ms var(--ease-out-soft);
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-gold { background: var(--color-gold-500); color: var(--color-ink-950); }
+  .btn-gold:hover { background: var(--color-gold-400); }
+  .btn-ghost-dark { box-shadow: inset 0 0 0 1.5px var(--color-ink-700); color: var(--color-ink-50); }
+  .btn-ghost-dark:hover { box-shadow: inset 0 0 0 1.5px var(--color-ink-300); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
