@@ -20,11 +20,41 @@ export const metadata: Metadata = pageMetadata({
 });
 
 const pains = [
-  { quote: "Our workflow worked last week. Now it enrols nobody.", cause: "Usually a draft status, a trigger filter or re-entry settings.", href: "/guides/ghl-workflow-not-triggering" },
-  { quote: "Half our emails are landing in spam.", cause: "Usually a shared or unauthenticated sending domain.", href: "/guides/ghl-emails-going-to-spam" },
-  { quote: "People book a call, get no reminder and never show up.", cause: "Usually a calendar that is not connected to its reminder workflow.", href: "/services/ghl-fixes" },
-  { quote: "We moved platforms and our tags and fields did not come with us.", cause: "Usually custom fields that did not exist in GHL before the import.", href: "/services/migrations" },
-  { quote: "SaaS mode is switched on and we still cannot sell it.", cause: "Usually plans, rebilling and snapshots that were never connected.", href: "/services/saas-white-label" },
+  {
+    quote: "Our workflow worked last week. Now it enrols nobody.",
+    cause: "The workflow is in draft, a trigger filter no contact meets, or re-entry is switched off.",
+    fix: "We check each setting in your account, correct the one at fault and test with a fresh contact.",
+    href: "/guides/ghl-workflow-not-triggering",
+    cta: "Read the step-by-step guide",
+  },
+  {
+    quote: "Half our emails are landing in spam.",
+    cause: "Mail goes out from a shared or unauthenticated sending domain.",
+    fix: "We set up your own sending domain with SPF, DKIM and DMARC, then warm it up.",
+    href: "/guides/ghl-emails-going-to-spam",
+    cta: "Read the step-by-step guide",
+  },
+  {
+    quote: "People book a call, get no reminder and never show up.",
+    cause: "The calendar is not connected to its confirmation and reminder workflow.",
+    fix: "We connect them, add SMS and email reminders, and test with a real booking.",
+    href: "/services/ghl-fixes",
+    cta: "See our GHL fixes service",
+  },
+  {
+    quote: "We moved platforms and our tags and fields did not come with us.",
+    cause: "The custom fields did not exist in GHL before the import, so those columns were dropped.",
+    fix: "We create the fields first, map every column and check the record counts.",
+    href: "/services/migrations",
+    cta: "See our migration service",
+  },
+  {
+    quote: "SaaS mode is switched on and we still cannot sell it.",
+    cause: "Plans, Stripe rebilling and snapshots were never connected.",
+    fix: "We set up the plans, the rebilling and the snapshot each plan loads.",
+    href: "/services/saas-white-label",
+    cta: "See our SaaS mode service",
+  },
 ];
 
 const finder: FinderItem[] = [
@@ -62,20 +92,29 @@ export default function Home() {
             <div className="md:sticky md:top-28">
               <h2 id="pains-title" className="h-title" data-reveal>Sound familiar?</h2>
               <p className="mt-5 max-w-[30ch] text-ink-600" data-reveal style={{ ["--i" as string]: 1 }}>
-                Common GHL problems in the words people use, and where the cause usually sits.
+                Common GHL problems, what usually causes them, and how we fix them.
               </p>
             </div>
           </div>
-          <ul className="flex flex-col gap-10 md:col-span-8 md:gap-14">
+          <ul className="flex flex-col gap-2 md:col-span-8">
             {pains.map((p, i) => (
-              <li key={p.quote} data-reveal style={{ ["--i" as string]: i % 3 }}>
-                <p className="font-display text-[clamp(1.5rem,1.15rem+1.4vw,2.25rem)] font-semibold leading-[1.15] tracking-[-0.025em]">
+              <li key={p.quote} data-reveal style={{ ["--i" as string]: i % 3 }} className="rounded-[1.5rem] bg-ink-100 p-6 md:p-8">
+                <p className="font-display text-[clamp(1.375rem,1.1rem+1.2vw,2rem)] font-semibold leading-[1.15] tracking-[-0.025em]">
                   “{p.quote}”
                 </p>
-                <p className="mt-3 text-ink-600">
-                  {p.cause}{" "}
-                  <Link href={p.href} className="link whitespace-nowrap font-medium text-ink-950">See the fix</Link>
-                </p>
+                <dl className="mt-5 grid gap-4 md:grid-cols-2 md:gap-8">
+                  <div>
+                    <dt className="text-small font-semibold text-ink-600">Usual cause</dt>
+                    <dd className="mt-1 text-ink-800">{p.cause}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-small font-semibold text-ink-600">How we fix it</dt>
+                    <dd className="mt-1 text-ink-800">{p.fix}</dd>
+                  </div>
+                </dl>
+                <Link href={p.href} className="mt-6 inline-flex items-center gap-2 font-semibold text-ink-950">
+                  {p.cta} <Icon name="arrow" className="size-4" />
+                </Link>
               </li>
             ))}
           </ul>
@@ -88,8 +127,8 @@ export default function Home() {
           <div className="grid gap-6 md:grid-cols-12 md:items-end">
             <h2 id="services-title" className="h-title md:col-span-7" data-reveal>What do you need done in GHL?</h2>
             <p className="text-ink-300 md:col-span-5" data-reveal style={{ ["--i" as string]: 1 }}>
-              Type the problem in your own words, or pick a service. Each page explains what we do, how long it takes and what to ask before
-              hiring anyone.
+              Type the problem in the search box and the list below narrows to the service that handles it. Or tap any service to open its
+              page: what it covers, how the work runs, and what to ask before hiring anyone.
             </p>
           </div>
           <div className="mt-12 md:mt-16" data-reveal style={{ ["--i" as string]: 2 }}>
@@ -172,6 +211,9 @@ export default function Home() {
                   <span className="font-display text-[clamp(1.75rem,1.2rem+2vw,3rem)] font-semibold leading-none tracking-[-0.035em]">
                     {m.name.replace(" to GHL", "")}
                     <span className="text-ink-500 group-hover:text-gold-500"> to GHL</span>
+                    <span className="mt-3 block font-sans text-small font-medium tracking-normal text-ink-600 group-hover:text-ink-300">
+                      See what moves, how and in what order
+                    </span>
                   </span>
                   <Icon name="arrow" className="size-7 shrink-0 transition-transform group-hover:translate-x-1" />
                 </Link>

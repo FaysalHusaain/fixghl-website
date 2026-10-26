@@ -39,7 +39,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} ${interTight.variable} antialiased`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${interTight.variable} antialiased`}>
       <body>
         <a
           href="#main"

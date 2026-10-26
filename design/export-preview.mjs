@@ -16,13 +16,14 @@ for (const p of paths) {
     .replace(/@font-face\{[^}]*\}/g, "")
     .replace(/href="(\/[^"#?]*)(#[^"]*)?"/g, (m, h, hash = "") => (paths.includes(h) ? `href="${name(h)}${hash}"` : m))
     .replace(/href="#describe"/g, 'href="book.html"')
+    .replace("</body>", `<script>try{history.scrollRestoration="manual"}catch(e){}window.scrollTo(0,0)</script></body>`)
     .replace("</head>", `${fonts}<style>.js-reveal [data-reveal]{opacity:1!important;transform:none!important}</style></head>`);
   if (p === "/") {
     // The artifact host wraps the main page in its own document skeleton: keep only head styles/title and body content.
     const head = html.match(/<head>([\s\S]*?)<\/head>/)[1].replace(/<meta[^>]*>/g, "");
     const body = html.match(/<body[^>]*>([\s\S]*)<\/body>/)[1];
     const htmlClass = html.match(/<html[^>]*class="([^"]*)"/)[1];
-    html = `${head}<style>:root{--font-inter:Inter,"Inter Fallback";--font-inter-tight:"Inter Tight","Inter Tight Fallback"}</style><div class="${htmlClass}" style="min-height:100%">${body}</div>`;
+    html = `${head}<script>try{history.scrollRestoration="manual"}catch(e){}window.addEventListener("load",function(){window.scrollTo(0,0)})</script><style>:root{--font-inter:Inter,"Inter Fallback";--font-inter-tight:"Inter Tight","Inter Tight Fallback"}</style><div class="${htmlClass}" style="min-height:100%">${body}</div>`;
     html = html.replace("<style", '<meta name="claude:viewport-fit-sides" content="cover"><style').replace(/<title>[^<]*<\/title>/, "<title>FixGHL Site Preview</title>");
   }
   writeFileSync(`${out}/${name(p)}`, html);
