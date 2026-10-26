@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { site } from "@/lib/site";
+import { Icon } from "./Icon";
 
 // Approved claims only. Testimonials render only when real ones exist and NEXT_PUBLIC_SHOW_TESTIMONIALS=true.
 const stats = [
@@ -7,7 +9,7 @@ const stats = [
   { figure: "4", label: "regions: the US, the UK, the EU and the Middle East" },
 ];
 
-export function ProofStrip() {
+export function ProofStrip({ cta = false }: { cta?: boolean }) {
   return (
     <section className="on-dark bg-ink-950 text-ink-50" aria-labelledby="proof-title">
       <div className="frame section">
@@ -25,6 +27,13 @@ export function ProofStrip() {
             </div>
           ))}
         </dl>
+        {cta && (
+          <div className="mt-14 md:mt-20" data-reveal>
+            <Link href="/book" data-track="book_call_click" data-track-location="proof" className="btn btn-gold">
+              Get a GHL specialist on your account <Icon name="arrow" className="size-4" />
+            </Link>
+          </div>
+        )}
         {site.showTestimonials && <div id="testimonials" />}
       </div>
     </section>

@@ -83,6 +83,15 @@ export function ServicePage({ s }: { s: Service }) {
             ))}
           </dl>
 
+          <div className="on-dark mt-10 flex flex-col gap-5 rounded-[1.5rem] bg-ink-950 p-6 text-ink-50 md:flex-row md:items-center md:justify-between md:p-8" data-reveal>
+            <p className="max-w-[48ch] text-[1.125rem] leading-snug">
+              Want to know what this would involve for your account? A free 30-minute call gets you the likely scope and a written quote.
+            </p>
+            <Link href="/book" data-track="book_call_click" data-track-location={`service_${s.slug}_included`} className="btn btn-gold shrink-0">
+              Get my scope and quote <Icon name="arrow" className="size-4" />
+            </Link>
+          </div>
+
           {s.moves && (
             <div className="mt-20 md:mt-28">
               <h2 className="h-sub" data-reveal>What moves, and how?</h2>

@@ -51,7 +51,6 @@ const URL = 'file:///tmp/claude-0/spa.html';
       const first = await p.locator('[data-finder-item]:not([hidden]) span.font-display').first().textContent();
       if (first !== top) fails.push(`${vp.width} chip "${chip}": top result ${first}, expected ${top}`);
     }
-    console.log('after chips hash', await p.evaluate(() => location.hash), fails);
     await p.locator('[data-finder-input]').fill('zzzz');
     if (!(await p.getByText('Nothing matches that yet').isVisible())) fails.push(`${vp.width} finder empty state missing`);
     await p.locator('[data-finder-input]').fill('');

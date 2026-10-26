@@ -5,6 +5,7 @@ export const homeFaqs: QA[] = [
   { q: "Who do you work with?", a: "Coaches, agencies and local businesses that run on GoHighLevel or are moving to it. Our clients are in the US, the UK, the EU and the Middle East." },
   { q: "How much does it cost?", a: "Every project is quoted after a free 30-minute call, once we have seen the account. The quote is written and fixed for the agreed scope." },
   { q: "What happens on the 30-minute call?", a: "You show us the account, or describe it, and what it should be doing. We ask questions, point out the likely cause, and explain how we would approach it. A written quote follows if you want one." },
+  { q: "What if the job turns out bigger than expected?", a: "The quote is fixed for the agreed scope. If we find something outside it, we tell you what it is and quote it separately, and nothing extra starts without your approval." },
   { q: "Do you need access to my GHL account?", a: "Yes, to do the work. We ask for the narrowest access that lets us do it, usually a user on the affected sub-account, and you can remove it at handover." },
   { q: "Do you work with agencies on client sub-accounts?", a: "Yes. Agencies are one of our main client groups. We work inside the client sub-accounts you give us access to and follow your naming and snapshot conventions." },
   { q: "Can you help with something urgent this week?", a: "Choose This week as the urgency when you book or write to us, and we will tell you on the call what we can do and when. [[TODO: urgent fix availability]]" },

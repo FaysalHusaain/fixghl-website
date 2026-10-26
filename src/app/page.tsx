@@ -112,11 +112,24 @@ export default function Home() {
                     <dd className="mt-1 text-ink-800">{p.fix}</dd>
                   </div>
                 </dl>
-                <Link href={p.href} className="mt-6 inline-flex items-center gap-2 font-semibold text-ink-950">
+                <Link href={p.href} className="mt-6 inline-flex items-center gap-2 font-medium text-ink-700 hover:text-ink-950">
                   {p.cta} <Icon name="arrow" className="size-4" />
                 </Link>
               </li>
             ))}
+            <li data-reveal className="on-dark flex flex-col gap-6 rounded-[1.5rem] bg-ink-950 p-6 text-ink-50 md:flex-row md:items-center md:justify-between md:p-8">
+              <div>
+                <p className="font-display text-[clamp(1.375rem,1.1rem+1.2vw,2rem)] font-semibold leading-[1.15] tracking-[-0.025em]">
+                  Recognise one of these?
+                </p>
+                <p className="mt-2 max-w-[44ch] text-ink-300">
+                  Book a free 30-minute call. We look at your account with you and tell you the likely cause, whether or not you hire us.
+                </p>
+              </div>
+              <Link href="/book" data-track="book_call_click" data-track-location="home_pains" className="btn btn-gold shrink-0">
+                Find the cause on a free call <Icon name="arrow" className="size-4" />
+              </Link>
+            </li>
           </ul>
         </div>
       </section>
@@ -127,8 +140,7 @@ export default function Home() {
           <div className="grid gap-6 md:grid-cols-12 md:items-end">
             <h2 id="services-title" className="h-title md:col-span-7" data-reveal>What do you need done in GHL?</h2>
             <p className="text-ink-300 md:col-span-5" data-reveal style={{ ["--i" as string]: 1 }}>
-              Type the problem in the search box and the list below narrows to the service that handles it. Or tap any service to open its
-              page: what it covers, how the work runs, and what to ask before hiring anyone.
+              Type the problem and the list narrows to the service that handles it, or tap a service to see what it covers.
             </p>
           </div>
           <div className="mt-12 md:mt-16" data-reveal style={{ ["--i" as string]: 2 }}>
@@ -189,10 +201,16 @@ export default function Home() {
               </li>
             ))}
           </ol>
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" data-reveal>
+            <p className="t-lead max-w-[40ch] text-ink-800">The first step is free, takes 30 minutes and commits you to nothing.</p>
+            <Link href="/book" data-track="book_call_click" data-track-location="home_process" className="btn btn-ink shrink-0">
+              Book the free call <Icon name="arrow" className="size-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
-      <ProofStrip />
+      <ProofStrip cta />
 
       {/* Migrations */}
       <section aria-labelledby="mig-title" className="section">
@@ -250,7 +268,12 @@ export default function Home() {
               Show us the account and what it should be doing. You leave the call knowing the cause, the fix and what it would cost.
             </p>
             <ul className="mt-10 flex flex-col gap-4 text-ink-200" data-reveal style={{ ["--i" as string]: 2 }}>
-              {["You speak with a GHL specialist who can read your account", "A written quote after the call, fixed for the agreed scope", "No obligation to hire us"].map((t) => (
+              {[
+                "You leave with the likely cause and how we would fix it, even if you never hire us",
+                "If you want us to do it, a written quote follows, fixed for the agreed scope",
+                "You speak with a GHL specialist who can read your account",
+                "No obligation to hire us",
+              ].map((t) => (
                 <li key={t} className="flex gap-3">
                   <Icon name="check" className="mt-1 size-5 shrink-0 text-gold-500" />
                   {t}

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 import { Breadcrumbs, type Crumb } from "@/components/ui/Breadcrumbs";
 import { Faq } from "@/components/ui/Faq";
@@ -40,7 +41,8 @@ export function ArticleLayout({
 
         <div className="frame grid gap-12 pb-[var(--section)] lg:grid-cols-12">
           <aside className="lg:order-2 lg:col-span-3 lg:col-start-10">
-            <details className="group rounded-2xl bg-ink-100 p-5 lg:sticky lg:top-24" open>
+            <div className="flex flex-col gap-3 lg:sticky lg:top-24">
+            <details className="group rounded-2xl bg-ink-100 p-5" open>
               <summary className="flex cursor-pointer list-none items-center justify-between font-semibold [&::-webkit-details-marker]:hidden">
                 On this page
                 <Icon name="plus" className="size-4 transition-transform group-open:rotate-45" />
@@ -54,9 +56,25 @@ export function ArticleLayout({
                 <li><a href="#faq" className="block py-1 text-ink-700 hover:text-ink-950">Frequently asked questions</a></li>
               </ol>
             </details>
+            <div className="on-dark hidden rounded-2xl bg-ink-950 p-5 text-ink-50 lg:block">
+              <p className="font-semibold">Rather have it fixed?</p>
+              <p className="mt-2 text-small text-ink-300">We fix this in your account. The first 30-minute call is free.</p>
+              <Link href="/book" data-track="book_call_click" data-track-location={`article_${meta.slug}_sidebar`} className="btn btn-gold mt-4 min-h-11 w-full">
+                Book a free call
+              </Link>
+            </div>
+            </div>
           </aside>
           <div className="prose min-w-0 lg:order-1 lg:col-span-8">
             {children}
+            <div className="not-prose on-dark mt-12 flex flex-col gap-5 rounded-[1.5rem] bg-ink-950 p-6 text-ink-50 md:flex-row md:items-center md:justify-between md:p-8">
+              <p className="max-w-[44ch] text-[1.125rem] leading-snug">
+                Tried these steps and it still is not working? We find the cause in your account on a free 30-minute call.
+              </p>
+              <Link href="/book" data-track="book_call_click" data-track-location={`article_${meta.slug}_inline`} className="btn btn-gold shrink-0">
+                Book a free 30-minute call
+              </Link>
+            </div>
             <h2 id="faq">Frequently asked questions</h2>
             <div className="not-prose">
               <Faq items={meta.faqs} openFirst={false} />

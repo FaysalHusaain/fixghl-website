@@ -20,8 +20,8 @@ export function Hero() {
 
           <div className="mt-6 grid gap-7 md:mt-10 md:grid-cols-12 md:items-end md:gap-8">
             <p className="t-lead max-w-[40ch] text-ink-200 md:col-span-6">
-              FixGHL is a specialist GHL studio for coaches, agencies and local businesses. We fix, set up, migrate and automate
-              GoHighLevel accounts.
+              Every day a workflow stays broken, leads go unanswered. FixGHL is a specialist GHL studio that fixes, sets up, migrates and
+              automates GoHighLevel for coaches, agencies and local businesses.
             </p>
             <div className="flex flex-col gap-4 md:col-span-6 md:items-end">
               <div className="flex flex-col gap-3 sm:flex-row">
@@ -30,7 +30,8 @@ export function Hero() {
                 </Link>
                 <Link href="/book#describe" className="btn btn-outline-dark">Describe your issue</Link>
               </div>
-              <p className="text-small text-ink-400">
+              <p className="text-small font-medium text-ink-200">Free · 30 minutes · No obligation</p>
+              <p className="-mt-2 text-small text-ink-400">
                 <span className="whitespace-nowrap">7+ years in GHL</span> · <span className="whitespace-nowrap">100+ projects</span> ·{" "}
                 <span className="whitespace-nowrap">US, UK, EU, Middle East</span>
               </p>
