@@ -16,3 +16,11 @@ Run `node design/palette.mjs` to regenerate it. Ink is a warm neutral scale (hue
 - Ink text on a gold fill measures 15.1:1 (pass).
 - Gold on white measures 1.33:1 (fail), so it is never used.
 - On light surfaces, the primary button is an ink fill and gold is not used.
+
+## Review page
+Run `node design/build-preview.mjs <out.html>` while `next start -p 3100` is running. It builds a self-contained page with real-size desktop and phone frames from the production build. Published: https://claude.ai/artifact/JdjfCGrJ19kn6oQQpYRHKs
+
+## Mobile-first rules (locked)
+- Lay out phone width first and enhance at `md`. The primary CTA sits on the first phone screen, and tap targets are at least 52px.
+- GHL fragments render vertically on phones, the way GHL's own builder does, and horizontally from `md` up.
+- Phase 2: a sticky bottom "Book a 30-minute call" bar on phones once the hero scrolls out of view, respecting the safe area.

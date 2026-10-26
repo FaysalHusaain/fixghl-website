@@ -1,10 +1,11 @@
 // An abstracted GHL workflow, drawn in HTML. Illustrative configuration only: no metrics.
-type Node = { kind: string; title: string; detail: string; fixed?: boolean };
+// Mobile: vertical, like GHL's own builder. md+: horizontal, cropped by the frame edge.
+type StepProps = { kind: string; title: string; detail: string; fixed?: boolean };
 
-function Step({ kind, title, detail, fixed }: Node) {
+function Step({ kind, title, detail, fixed }: StepProps) {
   return (
     <div
-      className={`relative w-[15.5rem] shrink-0 rounded-xl p-4 ${
+      className={`relative w-full rounded-xl p-4 md:w-[15.5rem] md:shrink-0 ${
         fixed ? "bg-ink-800 ring-2 ring-gold-500" : "bg-ink-800/70"
       }`}
     >
@@ -18,8 +19,13 @@ function Step({ kind, title, detail, fixed }: Node) {
   );
 }
 
-function Link() {
-  return <span aria-hidden className="mt-[3.25rem] h-[1.5px] w-8 shrink-0 bg-ink-700" />;
+function Connector() {
+  return (
+    <span
+      aria-hidden
+      className="ml-8 h-5 w-[1.5px] shrink-0 bg-ink-700 md:ml-0 md:mt-[3.25rem] md:h-[1.5px] md:w-8"
+    />
+  );
 }
 
 export function WorkflowCanvas() {
@@ -29,34 +35,34 @@ export function WorkflowCanvas() {
         Illustration of a GoHighLevel workflow after a fix: a form trigger, a contact update, an if/else branch for SMS
         or email confirmation, a wait step and a pipeline move.
       </figcaption>
-      <div className="rounded-t-2xl bg-ink-900 text-left">
-        <div className="flex items-center justify-between px-5 py-3 text-[0.8125rem] text-ink-400">
+      <div className="rounded-2xl bg-ink-900 text-left md:rounded-b-none">
+        <div className="flex items-center justify-between gap-4 px-4 py-3 text-[0.8125rem] text-ink-400 md:px-5">
           <span className="text-ink-200">Workflow · New enquiry to booked call</span>
-          <span className="flex items-center gap-2">
+          <span className="flex shrink-0 items-center gap-2">
             <span aria-hidden className="size-2 rounded-full bg-gold-500" />
             Published
           </span>
         </div>
-        <div className="flex items-start gap-0 overflow-hidden px-5 pb-10 pt-4">
-          <div className="flex shrink-0 flex-col gap-3">
+        <div className="flex flex-col px-4 pb-6 pt-2 md:flex-row md:items-start md:overflow-hidden md:px-5 md:pb-10 md:pt-4">
+          <div className="flex flex-col gap-3 md:shrink-0">
             <Step kind="Trigger" title="Form submitted" detail="Filter: Free consult form" fixed />
-            <p className="max-w-[15.5rem] px-1 text-[0.8125rem] leading-snug text-gold-500">
+            <p className="px-1 text-[0.8125rem] leading-snug text-gold-500 md:max-w-[15.5rem]">
               The trigger pointed at a form that had been deleted, so nothing fired. Now it does.
             </p>
           </div>
-          <Link />
+          <Connector />
           <Step kind="Action" title="Create or update contact" detail="Map name, email and phone" />
-          <Link />
-          <div className="flex shrink-0 flex-col gap-3">
+          <Connector />
+          <div className="flex flex-col gap-3 md:shrink-0">
             <Step kind="If / else" title="Phone number exists" detail="Yes: send SMS. No: send email." />
-            <div className="flex gap-3">
-              <div className="w-[7.5rem] rounded-xl bg-ink-800/70 p-3 text-[0.8125rem] text-ink-200">Send SMS confirmation</div>
-              <div className="w-[7.5rem] rounded-xl bg-ink-800/70 p-3 text-[0.8125rem] text-ink-200">Send email confirmation</div>
+            <div className="grid grid-cols-2 gap-3 md:flex">
+              <div className="rounded-xl bg-ink-800/70 p-3 text-[0.8125rem] text-ink-200 md:w-[7.5rem]">Send SMS confirmation</div>
+              <div className="rounded-xl bg-ink-800/70 p-3 text-[0.8125rem] text-ink-200 md:w-[7.5rem]">Send email confirmation</div>
             </div>
           </div>
-          <Link />
+          <Connector />
           <Step kind="Wait" title="Until appointment" detail="Reminder the day before" />
-          <Link />
+          <Connector />
           <Step kind="Action" title="Move opportunity" detail="New enquiries to Booked" />
         </div>
       </div>

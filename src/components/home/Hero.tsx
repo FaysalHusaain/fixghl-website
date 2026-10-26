@@ -28,26 +28,29 @@ export function Hero() {
         </nav>
       </header>
 
-      <div className="frame flex flex-1 flex-col pt-[clamp(3rem,9vh,7rem)]">
+      <div className="frame flex flex-1 flex-col pt-[clamp(2rem,7vh,7rem)]">
         <h1 className="text-display font-semibold leading-[0.95] tracking-[-0.045em]">
           <span className="block">GoHighLevel, fixed</span> <span className="block">and built right.</span>
         </h1>
 
-        <div className="mt-10 grid gap-8 md:grid-cols-12 md:items-end">
+        <div className="mt-6 grid gap-7 md:mt-10 md:gap-8 md:grid-cols-12 md:items-end">
           <p className="max-w-[40ch] text-lead leading-[1.4] text-ink-200 md:col-span-6">
             FixGHL is a specialist GHL studio for coaches, agencies and local businesses. We fix, set up, migrate and
             automate GoHighLevel accounts.
           </p>
           <div className="flex flex-col gap-4 md:col-span-6 md:items-end">
             <div className="flex flex-col gap-3 sm:flex-row">
-              <a href="/book" className="btn btn-gold">Book a free 20-minute GHL call</a>
+              <a href="/book" className="btn btn-gold">Book a free 30-minute GHL call</a>
               <a href="#describe" className="btn btn-ghost-dark">Describe your issue</a>
             </div>
-            <p className="text-small text-ink-400">7+ years in GHL · 100+ projects · US, UK, EU, Middle East</p>
+            <p className="text-small text-ink-400">
+              <span className="whitespace-nowrap">7+ years in GHL</span> · <span className="whitespace-nowrap">100+ projects</span> ·{" "}
+              <span className="whitespace-nowrap">US, UK, EU, Middle East</span>
+            </p>
           </div>
         </div>
 
-        <div className="mt-[clamp(3rem,8vh,6rem)] -mr-[var(--gutter)] md:mr-0">
+        <div className="mt-12 md:mt-[clamp(3rem,8vh,6rem)]">
           <WorkflowCanvas />
         </div>
       </div>

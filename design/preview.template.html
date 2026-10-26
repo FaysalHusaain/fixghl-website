@@ -1,0 +1,153 @@
+<title>FixGHL Hero Review</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Inter:wght@400;500&family=Inter+Tight:wght@500;600&display=swap">
+<style>
+/*__CSS__*/
+</style>
+<style>
+/* Review shell: dark single theme, matches the FixGHL ink scale. Layout: controls, then the two frames, then palette. */
+:root {
+  --bg: #121110; --panel: #1b1a18; --raised: #2e2c29; --fg: #faf9f8; --soft: #a8a59f; --gold: #ffde59; --ink: #08080a;
+  --ui: "Geist", ui-sans-serif, system-ui, sans-serif;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--ui); font-size: 16px; line-height: 1.5; margin: 0; }
+.pv-wrap { max-width: 1520px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
+.pv-top { display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: end; justify-content: space-between; }
+.pv-top h1 { font-size: clamp(26px, 3vw, 36px); line-height: 1.1; letter-spacing: -0.03em; font-weight: 600; margin: 0; text-wrap: balance; }
+.pv-top p { margin: 8px 0 0; color: var(--soft); max-width: 62ch; }
+.pv-controls { display: flex; flex-wrap: wrap; gap: 12px 20px; }
+.pv-group { display: flex; flex-direction: column; gap: 6px; }
+.pv-group span { font-size: 13px; color: var(--soft); }
+.pv-seg { display: inline-flex; background: var(--panel); border-radius: 999px; padding: 4px; }
+.pv-seg button { font: 500 14px/1 var(--ui); color: var(--soft); background: transparent; border: 0; border-radius: 999px; padding: 0 16px; min-height: 40px; cursor: pointer; transition: background-color .16s, color .16s; }
+.pv-seg button[aria-pressed="true"] { background: var(--gold); color: var(--ink); }
+.pv-seg button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.pv-stages { display: grid; gap: 28px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 1100px) { .pv-stages { grid-template-columns: minmax(0, 1fr) 390px; } }
+.pv-cap { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--soft); margin-bottom: 10px; }
+.pv-desk-wrap { position: relative; width: 100%; overflow: hidden; border-radius: 12px; background: var(--ink); }
+.pv-desk { width: 1440px; height: 900px; transform-origin: 0 0; overflow: hidden; container-type: inline-size; --pv-vh: 9px; }
+.pv-phone { width: min(390px, 100%); height: 844px; max-height: 80svh; overflow-y: auto; overscroll-behavior: contain; border-radius: 28px; outline: 8px solid var(--raised); margin: 8px auto 0; container-type: inline-size; --pv-vh: 8.44px; scrollbar-width: none; }
+.pv-phone::-webkit-scrollbar { display: none; }
+.pv-doc { font-family: var(--font-sans); }
+.pv-doc[data-font="b"] { --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif; }
+.pv-doc[data-font="b"] h1, .pv-doc[data-font="b"] header a:first-child { font-family: "Inter Tight", "Inter", ui-sans-serif, sans-serif; }
+.pv-doc a { pointer-events: none; }
+.pv-info { display: grid; gap: 28px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .pv-info { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.pv-card { background: var(--panel); border-radius: 16px; padding: 24px; min-width: 0; }
+.pv-card h2 { font-size: 20px; letter-spacing: -0.02em; margin: 0 0 16px; font-weight: 600; }
+.pv-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+.pv-sw { border-radius: 10px; height: 64px; display: flex; align-items: end; padding: 8px; font-size: 12px; font-variant-numeric: tabular-nums; }
+.pv-table { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 10px 8px; vertical-align: top; }
+th { color: var(--soft); font-weight: 500; }
+tr + tr td { border-top: 1px solid var(--raised); }
+.ok { color: var(--fg); } .no { color: #ff8a7a; }
+.pv-fonts { display: grid; gap: 20px; }
+.pv-fonts div p { margin: 4px 0 0; color: var(--soft); font-size: 14px; }
+.pv-spec { font-size: 40px; line-height: 1; letter-spacing: -0.04em; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="pv-wrap">
+  <div class="pv-top">
+    <div>
+      <h1>FixGHL hero, at real size</h1>
+      <p>This is the production build of the homepage hero. Switch the font pairing to compare. The phone frame scrolls, so swipe inside it to see the full workflow panel.</p>
+    </div>
+    <div class="pv-controls">
+      <div class="pv-group" role="group" aria-label="Font pairing">
+        <span>Font pairing</span>
+        <div class="pv-seg">
+          <button type="button" id="font-a" data-font="a" aria-pressed="true">A · Geist</button>
+          <button type="button" id="font-b" data-font="b" aria-pressed="false">B · Inter Tight + Inter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pv-stages">
+    <section aria-label="Desktop preview">
+      <div class="pv-cap"><span>Desktop · 1440 × 900, scaled to fit</span><span id="scale"></span></div>
+      <div class="pv-desk-wrap" id="deskwrap">
+        <div class="pv-desk pv-doc Sms4YG_variable FlyLvG_variable antialiased" id="desk"><!--__HERO__--></div>
+      </div>
+    </section>
+    <section aria-label="Phone preview">
+      <div class="pv-cap"><span>Phone · 390 × 844, real size</span><span>Scrolls</span></div>
+      <div class="pv-phone pv-doc Sms4YG_variable FlyLvG_variable antialiased" id="phone"><!--__HERO__--></div>
+    </section>
+  </div>
+
+  <div class="pv-info">
+    <div class="pv-card">
+      <h2>Font pairings</h2>
+      <div class="pv-fonts">
+        <div>
+          <div class="pv-spec" style="font-family:'Geist',sans-serif">GoHighLevel, fixed</div>
+          <p>A · Geist for headings and body. Neutral and engineered, and very clean at large sizes. It's a single family, so it loads the fastest.</p>
+        </div>
+        <div>
+          <div class="pv-spec" style="font-family:'Inter Tight',sans-serif">GoHighLevel, fixed</div>
+          <p>B · Inter Tight for headings, Inter for body. Denser and more editorial headlines, with a more familiar body text. It needs two families.</p>
+        </div>
+      </div>
+    </div>
+    <div class="pv-card">
+      <h2>Palette and contrast (WCAG 2.2 AA)</h2>
+      <div class="pv-swatches" aria-hidden="true">
+        <div class="pv-sw" style="background:#08080a;color:#faf9f8;outline:1px solid #2e2c29">#08080A</div>
+        <div class="pv-sw" style="background:#1b1a18;color:#faf9f8">#1B1A18</div>
+        <div class="pv-sw" style="background:#65625d;color:#faf9f8">#65625D</div>
+        <div class="pv-sw" style="background:#a8a59f;color:#08080a">#A8A59F</div>
+        <div class="pv-sw" style="background:#e5e4e1;color:#08080a">#E5E4E1</div>
+        <div class="pv-sw" style="background:#faf9f8;color:#08080a">#FAF9F8</div>
+        <div class="pv-sw" style="background:#ffde59;color:#08080a">#FFDE59</div>
+      </div>
+      <div class="pv-table" style="margin-top:16px">
+        <table>
+          <thead><tr><th>Pairing</th><th>Ratio</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Ink text on white</td><td>20.0:1</td><td class="ok">Pass</td></tr>
+            <tr><td>Grey #65625D text on warm white</td><td>5.8:1</td><td class="ok">Pass</td></tr>
+            <tr><td>Grey #A8A59F text on ink</td><td>8.1:1</td><td class="ok">Pass</td></tr>
+            <tr><td>Ink label on gold button</td><td>15.1:1</td><td class="ok">Pass</td></tr>
+            <tr><td>Gold text or focus ring on ink</td><td>15.1:1</td><td class="ok">Pass</td></tr>
+            <tr><td>Gold on white</td><td>1.33:1</td><td class="no">Fail, never used</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var docs = document.querySelectorAll('.pv-doc');
+  var btns = document.querySelectorAll('.pv-seg button');
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      btns.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      docs.forEach(function (d) { d.dataset.font = b.dataset.font; });
+      try { localStorage.setItem('pv-font', b.dataset.font); } catch (e) {}
+    });
+  });
+  try { var saved = localStorage.getItem('pv-font'); if (saved === 'b') document.getElementById('font-b').click(); } catch (e) {}
+  // Keep anchors inert inside the previews.
+  document.querySelectorAll('.pv-doc a').forEach(function (a) { a.setAttribute('tabindex', '-1'); });
+  var wrap = document.getElementById('deskwrap'), desk = document.getElementById('desk'), label = document.getElementById('scale');
+  function fit() {
+    var s = wrap.clientWidth / 1440;
+    desk.style.transform = 'scale(' + s + ')';
+    wrap.style.height = (900 * s) + 'px';
+    label.textContent = Math.round(s * 100) + '%';
+  }
+  fit();
+  if ('ResizeObserver' in window) new ResizeObserver(fit).observe(wrap); else window.addEventListener('resize', fit);
+})();
+</script>
