@@ -21,7 +21,7 @@ Resolve each one, then remove the marker from the code. Find all markers with `g
 - [ ] Payment terms and refunds; limitation of liability (terms, needs a lawyer's review)
 - [x] Testimonials: 5 Fiverr reviews added (src/content/testimonials.ts)
 - [ ] More reviews (studio is sending more screenshots)
-- [ ] Confirm clients are happy to be named by business or real name (currently Fiverr username, country and client type only)
+- [x] Client names confirmed by the studio (Colt Blumenthal, Kerry Moore, Eric Thompson, Dr. Chris Simon, Matthew White, Tanner Tinsley)
 - [ ] Add Australia to approved client regions? (one reviewer is in Australia)
 - [ ] Case studies: none yet; /case-studies stays noindexed
 

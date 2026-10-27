@@ -153,22 +153,34 @@ ${pages.map((p) => `<template id="tpl-${p.id}" data-title="${p.title.replace(/"/
     main.querySelectorAll("form").forEach(function (f) {
       f.addEventListener("submit", function (e) { e.preventDefault(); go("book-thanks"); });
     });
-    // Client stories
+    // Client stories: start from the first when visible, play once in order, then rest on the first.
     main.querySelectorAll("[data-stories]").forEach(function (root) {
       var tabs = root.querySelectorAll("[data-story-tab]");
       var panels = root.querySelectorAll("[data-story-panel]");
       var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var current = 0;
+      root.setAttribute("data-playing", "false");
+      root.setAttribute("data-done", "false");
       function show(i) {
+        current = i;
         tabs.forEach(function (t, k) {
           var on = k === i;
           t.setAttribute("data-active", String(on)); t.setAttribute("aria-selected", String(on));
           var fill = t.querySelector(".story-fill");
           var clone = fill.cloneNode(true); fill.parentNode.replaceChild(clone, fill);
-          clone.addEventListener("animationend", function () { if (!reduce) show((i + 1) % tabs.length); });
+          if (on) clone.addEventListener("animationend", function () {
+            if (reduce || root.getAttribute("data-done") === "true") return;
+            if (i === tabs.length - 1) { root.setAttribute("data-done", "true"); root.setAttribute("data-playing", "false"); show(0); }
+            else show(i + 1);
+          });
         });
         panels.forEach(function (p, k) { p.setAttribute("data-active", String(k === i)); p.setAttribute("aria-hidden", String(k !== i)); });
       }
-      tabs.forEach(function (t, k) { t.addEventListener("click", function () { show(k); }); });
+      tabs.forEach(function (t, k) { t.addEventListener("click", function () { root.setAttribute("data-done", "true"); root.setAttribute("data-playing", "false"); show(k); }); });
+      new IntersectionObserver(function (es) {
+        if (root.getAttribute("data-done") === "true") return;
+        root.setAttribute("data-playing", String(es[0].isIntersecting));
+      }, { threshold: 0.35 }).observe(root);
       show(0);
     });
     // Service finder

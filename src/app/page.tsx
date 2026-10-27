@@ -30,6 +30,13 @@ const pains = [
     cta: "Read the step-by-step guide",
   },
   {
+    quote: "We bought GoHighLevel months ago and still have not set it up.",
+    cause: "Too many settings, no clear order, and the business still runs out of an inbox and a spreadsheet.",
+    fix: "We build the account in the right order: domains, email, calendars, pipeline and follow-up, then hand it over.",
+    href: "/services/ghl-setup",
+    cta: "See our GHL setup service",
+  },
+  {
     quote: "Half our emails are landing in spam.",
     cause: "Mail goes out from a shared or unauthenticated sending domain.",
     fix: "We set up your own sending domain with SPF, DKIM and DMARC, then warm it up.",
@@ -37,18 +44,18 @@ const pains = [
     cta: "Read the step-by-step guide",
   },
   {
-    quote: "People book a call, get no reminder and never show up.",
-    cause: "The calendar is not connected to its confirmation and reminder workflow.",
-    fix: "We connect them, add SMS and email reminders, and test with a real booking.",
-    href: "/services/ghl-fixes",
-    cta: "See our GHL fixes service",
-  },
-  {
-    quote: "We moved platforms and our tags and fields did not come with us.",
-    cause: "The custom fields did not exist in GHL before the import, so those columns were dropped.",
-    fix: "We create the fields first, map every column and check the record counts.",
+    quote: "We want to leave ClickFunnels, but our funnels are live and earning.",
+    cause: "Contacts, pages, checkout and sequences all move differently, and nothing can go down mid-move.",
+    fix: "We map every asset, build and test in GHL while the old platform stays live, then switch on a set date.",
     href: "/services/migrations",
     cta: "See our migration service",
+  },
+  {
+    quote: "Our follow-up still happens by hand, when someone remembers.",
+    cause: "Leads, bookings and no-shows are not connected to workflows, so replies depend on a person.",
+    fix: "We build follow-up, reminders and pipeline moves as workflows, test every branch and document them.",
+    href: "/services/automation",
+    cta: "See our automation service",
   },
   {
     quote: "SaaS mode is switched on and we still cannot sell it.",
@@ -94,7 +101,7 @@ export default function Home() {
             <div className="md:sticky md:top-28">
               <h2 id="pains-title" className="h-title" data-reveal>Sound familiar?</h2>
               <p className="mt-5 max-w-[30ch] text-ink-600" data-reveal style={{ ["--i" as string]: 1 }}>
-                Common GHL problems, what usually causes them, and how we fix them.
+                Whether the account is broken, unfinished or still on another platform, this is usually why, and what we do about it.
               </p>
             </div>
           </div>
@@ -106,11 +113,11 @@ export default function Home() {
                 </p>
                 <dl className="mt-5 grid gap-4 md:grid-cols-2 md:gap-8">
                   <div>
-                    <dt className="text-small font-semibold text-ink-600">Usual cause</dt>
+                    <dt className="text-small font-semibold text-ink-600">Why it happens</dt>
                     <dd className="mt-1 text-ink-800">{p.cause}</dd>
                   </div>
                   <div>
-                    <dt className="text-small font-semibold text-ink-600">How we fix it</dt>
+                    <dt className="text-small font-semibold text-ink-600">What we do</dt>
                     <dd className="mt-1 text-ink-800">{p.fix}</dd>
                   </div>
                 </dl>
@@ -125,11 +132,11 @@ export default function Home() {
                   Recognise one of these?
                 </p>
                 <p className="mt-2 max-w-[44ch] text-ink-300">
-                  Book a free 30-minute call. We look at your account with you and tell you the likely cause, whether or not you hire us.
+                  Book a free 30-minute call. We look at where you are, tell you what we would do and what it involves, whether or not you hire us.
                 </p>
               </div>
               <Link href="/book" data-track="book_call_click" data-track-location="home_pains" className="btn btn-gold shrink-0">
-                Find the cause on a free call <Icon name="arrow" className="size-4" />
+                Talk it through on a free call <Icon name="arrow" className="size-4" />
               </Link>
             </li>
           </ul>

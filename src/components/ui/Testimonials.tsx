@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { testimonials, type Testimonial } from "@/content/testimonials";
 
 const initials = (name: string) =>
@@ -26,14 +26,33 @@ const stories = testimonials.filter((t, i, all) => all.findIndex((x) => x.name =
 // a progress line fills under the active client, then the next story crossfades in. Hover pauses; tap selects.
 export function Testimonials() {
   const [active, setActive] = useState(0);
+  const [inView, setInView] = useState(false);
+  const [done, setDone] = useState(false); // plays once through, then rests on the first story
+  const root = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.35 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   const next = () => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    setActive((a) => (a + 1) % stories.length);
+    if (active === stories.length - 1) {
+      setActive(0);
+      setDone(true);
+    } else setActive(active + 1);
+  };
+  const pick = (i: number) => {
+    setActive(i);
+    setDone(true); // the visitor has taken control
   };
 
   return (
     <section aria-labelledby="reviews-title" className="section">
-      <div className="frame" data-stories>
+      <div className="frame" data-stories data-playing={inView && !done} data-done={done} ref={root}>
         <h2 id="reviews-title" className="h-title max-w-[16ch]" data-reveal>In our clients’ words</h2>
 
         <div className="mt-10 grid gap-10 md:mt-16 lg:grid-cols-12 lg:gap-16">
@@ -68,7 +87,7 @@ export function Testimonials() {
                 data-story-tab={i}
                 data-active={i === active}
                 aria-selected={i === active}
-                onClick={() => setActive(i)}
+                onClick={() => pick(i)}
                 className="story-tab group py-3 text-left md:py-4"
               >
                 <span className="flex items-baseline justify-between gap-4">

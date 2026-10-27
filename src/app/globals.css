@@ -143,8 +143,10 @@
 .story-meta { color: var(--color-ink-600); }
 .story-tab[data-active="true"] .story-name, .story-tab:hover .story-name { color: var(--color-ink-950); }
 .story-fill { transform: scaleX(0); transform-origin: left; }
-.story-tab[data-active="true"] .story-fill { animation: storyfill 7s linear forwards; }
-[data-stories]:hover .story-fill, [data-stories]:focus-within .story-fill { animation-play-state: paused; }
+.story-tab[data-active="true"] .story-fill { animation: storyfill 7s linear forwards; animation-play-state: paused; }
+[data-stories][data-playing="true"] .story-tab[data-active="true"] .story-fill { animation-play-state: running; }
+[data-stories][data-playing="true"]:hover .story-fill { animation-play-state: paused; }
+[data-stories][data-done="true"] .story-tab[data-active="true"] .story-fill { animation: none; transform: scaleX(1); }
 @keyframes storyfill { to { transform: scaleX(1); } }
 @media (prefers-reduced-motion: reduce) {
   .story-tab[data-active="true"] .story-fill { animation: none !important; transform: scaleX(1); }

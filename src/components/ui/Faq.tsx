@@ -4,7 +4,7 @@ import { Icon } from "./Icon";
 import { JsonLd, faqPage } from "@/lib/schema";
 
 // Native <details> accordion: keyboard accessible, content stays in the HTML for search and AI crawlers.
-export function Faq({ items, schema = true, openFirst = true }: { items: QA[]; schema?: boolean; openFirst?: boolean }) {
+export function Faq({ items, schema = true, openFirst = false }: { items: QA[]; schema?: boolean; openFirst?: boolean }) {
   return (
     <>
       <div className="flex flex-col">

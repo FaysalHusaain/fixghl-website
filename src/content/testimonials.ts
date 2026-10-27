@@ -1,4 +1,4 @@
-// Client reviews from Fiverr orders, supplied by the studio with permission to name clients.
+// Client reviews supplied by the studio, with permission to name clients.
 // Every quote is a verbatim sentence or clause from a five-star review, chosen so that no studio member is named.
 // Do not add reviews without the original source.
 
@@ -18,8 +18,8 @@ export const testimonials: Testimonial[] = [
   {
     id: "colt-ghl-funnel",
     quote: "The funnel he delivered exceeded my expectations in every way.",
-    name: "Colt B.", // [[VERIFY: preferred name for coltblumenthalm]]
-    role: "Music producer",
+    name: "Colt Blumenthal",
+    role: "Multi-platinum mix engineer",
     reviewer: "coltblumenthalm",
     country: "United States",
     project: "GoHighLevel funnel",
@@ -29,8 +29,8 @@ export const testimonials: Testimonial[] = [
   {
     id: "kerry-wix-migration",
     quote: "Professional, great communication and very proactive. Definitely recommend.",
-    name: "Kerry, CWC Training",
-    role: "Massage course provider",
+    name: "Kerry Moore",
+    role: "Founder, Cambridgeshire Wellness Clinic",
     reviewer: "kerrycwc",
     country: "United Kingdom",
     project: "Wix to GHL migration",
@@ -73,7 +73,8 @@ export const testimonials: Testimonial[] = [
   {
     id: "landpro-funnel",
     quote: "The funnel was delivered on time and with meticulous attention to detail.",
-    name: "LandPro Connect", // [[VERIFY: business name for landproconnect]]
+    name: "Tanner Tinsley",
+    role: "Founder, LandproConnect",
     reviewer: "landproconnect",
     country: "United States",
     project: "Funnel build",
@@ -83,8 +84,8 @@ export const testimonials: Testimonial[] = [
   {
     id: "colt-advanced-funnel",
     quote: "I super recommend him if you are building an advanced funnel.",
-    name: "Colt B.",
-    role: "Music producer",
+    name: "Colt Blumenthal",
+    role: "Multi-platinum mix engineer",
     reviewer: "coltblumenthalm",
     country: "United States",
     project: "Advanced funnel",

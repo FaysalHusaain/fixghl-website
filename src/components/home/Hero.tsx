@@ -14,8 +14,8 @@ export function Hero() {
 
           <div className="mt-6 grid gap-7 md:mt-10 md:grid-cols-12 md:items-end md:gap-8">
             <p className="t-lead max-w-[40ch] text-ink-200 md:col-span-6">
-              Every day a workflow stays broken, leads go unanswered. FixGHL is a specialist GHL studio that fixes, sets up, migrates and
-              automates GoHighLevel for coaches, agencies and local businesses.
+              We fix broken GoHighLevel accounts, build new ones properly and move businesses over from ClickFunnels, Wix, Kajabi and
+              HubSpot. FixGHL is the specialist GHL studio for coaches, agencies and local businesses.
             </p>
             <div className="flex flex-col gap-4 md:col-span-6 md:items-end">
               <div className="flex flex-col gap-3 sm:flex-row">
