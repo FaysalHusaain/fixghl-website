@@ -153,6 +153,24 @@ ${pages.map((p) => `<template id="tpl-${p.id}" data-title="${p.title.replace(/"/
     main.querySelectorAll("form").forEach(function (f) {
       f.addEventListener("submit", function (e) { e.preventDefault(); go("book-thanks"); });
     });
+    // Client stories
+    main.querySelectorAll("[data-stories]").forEach(function (root) {
+      var tabs = root.querySelectorAll("[data-story-tab]");
+      var panels = root.querySelectorAll("[data-story-panel]");
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      function show(i) {
+        tabs.forEach(function (t, k) {
+          var on = k === i;
+          t.setAttribute("data-active", String(on)); t.setAttribute("aria-selected", String(on));
+          var fill = t.querySelector(".story-fill");
+          var clone = fill.cloneNode(true); fill.parentNode.replaceChild(clone, fill);
+          clone.addEventListener("animationend", function () { if (!reduce) show((i + 1) % tabs.length); });
+        });
+        panels.forEach(function (p, k) { p.setAttribute("data-active", String(k === i)); p.setAttribute("aria-hidden", String(k !== i)); });
+      }
+      tabs.forEach(function (t, k) { t.addEventListener("click", function () { show(k); }); });
+      show(0);
+    });
     // Service finder
     var finder = main.querySelector("[data-finder]");
     if (!finder) return;

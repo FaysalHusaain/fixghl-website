@@ -48,10 +48,13 @@ const URL = 'file:///tmp/claude-0/spa.html';
     const row = p.locator('main a[href="#services-migrations"]').filter({ visible: true }).first();
     await row.scrollIntoViewIfNeeded(); await row.click(); await p.waitForTimeout(80);
     if ((await p.evaluate(() => location.hash)) !== '#services-migrations' || (await p.evaluate(() => scrollY)) !== 0) fails.push(`${vp.width} service row click wrong`);
-    // 4. reviews marquee present and animating (unless reduced motion)
+    // 4. client stories: progress animates, tapping a client switches the quote
     await p.evaluate(() => { history.pushState(null,'','#home'); window.dispatchEvent(new PopStateEvent('popstate')); });
-    const anim = await p.evaluate(() => { const t = [...document.querySelectorAll('.marquee-track')].find(e => e.offsetParent); return t ? getComputedStyle(t).animationName : 'none'; });
-    if (anim !== 'marquee') fails.push(`${vp.width} reviews marquee not animating (${anim})`);
+    const anim = await p.evaluate(() => { const f = document.querySelector('[data-story-tab][data-active="true"] .story-fill'); return f ? getComputedStyle(f).animationName : 'none'; });
+    if (anim !== 'storyfill') fails.push(`${vp.width} story progress not animating (${anim})`);
+    const tab = p.locator('[data-story-tab="3"]'); await tab.scrollIntoViewIfNeeded(); await tab.click(); await p.waitForTimeout(700);
+    const shown = await p.evaluate(() => [...document.querySelectorAll('[data-story-panel]')].filter(x => getComputedStyle(x).visibility === 'visible').map(x => x.getAttribute('data-story-panel')));
+    if (shown.join() !== '3') fails.push(`${vp.width} story switch shows ${shown.join()}`);
     // 5. mobile menu
     if (vp.width < 800) {
       await p.locator('[aria-controls="mobile-menu"]').click();

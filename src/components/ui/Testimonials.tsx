@@ -1,16 +1,7 @@
-import { testimonials, type Testimonial } from "@/content/testimonials";
+"use client";
 
-function Stars({ className = "" }: { className?: string }) {
-  return (
-    <span className={`flex gap-0.5 ${className}`} role="img" aria-label="Rated 5 out of 5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} viewBox="0 0 20 20" className="size-3.5" fill="currentColor" aria-hidden>
-          <path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z" />
-        </svg>
-      ))}
-    </span>
-  );
-}
+import { useState } from "react";
+import { testimonials, type Testimonial } from "@/content/testimonials";
 
 const initials = (name: string) =>
   name
@@ -21,94 +12,96 @@ const initials = (name: string) =>
     .map((w) => w[0])
     .join("");
 
-// One review card: who first (authority), then their words, then the verifiable details.
-function Card({ t, dark = false }: { t: Testimonial; dark?: boolean }) {
+function Avatar({ name, size = "size-12" }: { name: string; size?: string }) {
   return (
-    <figure
-      className={`flex h-full flex-col gap-6 rounded-[1.75rem] p-6 md:p-7 ${
-        dark ? "on-dark bg-ink-900 text-ink-50" : "bg-white text-ink-950"
-      }`}
-    >
-      <figcaption className="flex items-center gap-3.5">
-        <span
-          aria-hidden
-          className="grid size-12 shrink-0 place-items-center rounded-full bg-ink-950 font-display text-[1rem] font-semibold tracking-[-0.01em] text-gold-500"
-        >
-          {initials(t.name)}
-        </span>
-        <span className="min-w-0">
-          <span className="block font-semibold leading-tight">{t.name}</span>
-          <span className={`mt-1 block text-small ${dark ? "text-ink-400" : "text-ink-600"}`}>{t.role ?? t.country}</span>
-        </span>
-      </figcaption>
-      <blockquote className="font-display flex-1 text-[1.125rem] font-medium leading-[1.35] tracking-[-0.015em] md:text-[1.25rem]">
-        “{t.quote}”
-      </blockquote>
-      <div className={`flex flex-col gap-1.5 text-small ${dark ? "text-ink-300" : "text-ink-600"}`}>
-        <span className="flex items-center gap-2 whitespace-nowrap">
-          <Stars className={dark ? "text-gold-500" : "text-ink-950"} />
-          <span>Verified Fiverr review</span>
-        </span>
-        <span>
-          {t.project} · {t.duration}
-          {t.role ? ` · ${t.country}` : ""}
-        </span>
-      </div>
-    </figure>
+    <span aria-hidden className={`grid ${size} shrink-0 place-items-center rounded-full bg-ink-950 font-display text-[1rem] font-semibold text-gold-500`}>
+      {initials(name)}
+    </span>
   );
 }
 
-// Continuous, slow moving row (Apple-style). Pauses on hover and touch; static and scrollable with reduced motion.
-function Marquee({ items, reverse = false }: { items: Testimonial[]; reverse?: boolean }) {
-  const row = (hidden: boolean) =>
-    items.map((t) => (
-      <li key={`${t.id}-${hidden}`} aria-hidden={hidden || undefined} className="w-[17.5rem] shrink-0 md:w-[22rem]">
-        <Card t={t} />
-      </li>
-    ));
-  return (
-    <div className="marquee group">
-      <ul className={`marquee-track flex w-max gap-4 ${reverse ? "marquee-reverse" : ""}`}>
-        {row(false)}
-        {row(true)}
-      </ul>
-    </div>
-  );
-}
+const stories = testimonials.filter((t, i, all) => all.findIndex((x) => x.name === t.name) === i); // one story per client
 
+// Client stories: one large quote at a time. The list of clients beside it doubles as the control:
+// a progress line fills under the active client, then the next story crossfades in. Hover pauses; tap selects.
 export function Testimonials() {
-  const half = Math.ceil(testimonials.length / 2);
+  const [active, setActive] = useState(0);
+  const next = () => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setActive((a) => (a + 1) % stories.length);
+  };
+
   return (
-    <section aria-labelledby="reviews-title" className="overflow-hidden bg-ink-100">
-      <div className="frame pb-10 pt-[var(--section)] md:pb-14">
-        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 id="reviews-title" className="h-title" data-reveal>Trusted by coaches, creators and business owners</h2>
+    <section aria-labelledby="reviews-title" className="section">
+      <div className="frame" data-stories>
+        <h2 id="reviews-title" className="h-title max-w-[16ch]" data-reveal>In our clients’ words</h2>
+
+        <div className="mt-10 grid gap-10 md:mt-16 lg:grid-cols-12 lg:gap-16">
+          <div className="grid lg:col-span-7">
+            {stories.map((t, i) => (
+              <figure key={t.id} data-story-panel={i} data-active={i === active} aria-hidden={i !== active} className="story-panel flex flex-col justify-between gap-8 md:gap-10">
+                <blockquote className="font-display text-[clamp(1.75rem,1.2rem+2.4vw,3.25rem)] font-semibold leading-[1.1] tracking-[-0.035em] text-ink-950">
+                  <span className="-ml-[0.42em] text-ink-300" aria-hidden>“</span>
+                  {t.quote}
+                  <span className="text-ink-300" aria-hidden>”</span>
+                </blockquote>
+                <figcaption className="flex items-center gap-4">
+                  <Avatar name={t.name} size="size-14" />
+                  <span>
+                    <span className="block text-[1.125rem] font-semibold">{t.name}</span>
+                    <span className="mt-0.5 block text-ink-600">
+                      {t.role ? `${t.role}, ` : ""}
+                      {t.country}
+                    </span>
+                  </span>
+                </figcaption>
+              </figure>
+            ))}
           </div>
-          <div className="flex items-center gap-4" data-reveal style={{ ["--i" as string]: 1 }}>
-            <span className="font-display text-[2.75rem] font-semibold leading-none tracking-[-0.04em]">5.0</span>
-            <span className="text-small leading-snug text-ink-700">
-              <Stars className="mb-1.5 text-ink-950" />
-              <span className="block whitespace-nowrap">Five-star Fiverr reviews,</span>
-              <span className="block whitespace-nowrap">quoted word for word</span>
-            </span>
+
+          <div role="tablist" aria-label="Client stories" aria-orientation="vertical" className="flex flex-col lg:col-span-5">
+            {stories.map((t, i) => (
+              <button
+                key={t.id}
+                type="button"
+                role="tab"
+                data-story-tab={i}
+                data-active={i === active}
+                aria-selected={i === active}
+                onClick={() => setActive(i)}
+                className="story-tab group py-3 text-left md:py-4"
+              >
+                <span className="flex items-baseline justify-between gap-4">
+                  <span className="story-name font-semibold">{t.name}</span>
+                  <span className="story-meta text-small">{t.project}</span>
+                </span>
+                <span className="mt-2.5 block h-[2px] overflow-hidden rounded-full bg-ink-200 md:mt-3" aria-hidden>
+                  <span key={i === active ? `on-${active}` : "off"} className="story-fill block h-full bg-ink-950" onAnimationEnd={next} />
+                </span>
+              </button>
+            ))}
           </div>
-        </div>
-      </div>
-      <div className="flex flex-col gap-4 pb-[var(--section)]" data-reveal style={{ ["--i" as string]: 2 }}>
-        <div className="md:hidden">
-          <Marquee items={testimonials} />
-        </div>
-        <div className="hidden flex-col gap-4 md:flex">
-          <Marquee items={testimonials.slice(0, half)} />
-          <Marquee items={testimonials.slice(half)} reverse />
         </div>
       </div>
     </section>
   );
 }
 
-// A single review for service pages and the booking section.
+// A single quote for service pages and the booking section.
 export function QuoteCard({ t, dark = false }: { t: Testimonial; dark?: boolean }) {
-  return <Card t={t} dark={dark} />;
+  return (
+    <figure className={`flex flex-col gap-6 rounded-[1.75rem] p-6 md:p-8 ${dark ? "on-dark bg-ink-900 text-ink-50" : "bg-ink-100 text-ink-950"}`}>
+      <blockquote className="font-display text-[1.375rem] font-semibold leading-[1.25] tracking-[-0.02em]">“{t.quote}”</blockquote>
+      <figcaption className="flex items-center gap-3.5">
+        <Avatar name={t.name} />
+        <span>
+          <span className="block font-semibold">{t.name}</span>
+          <span className={`block text-small ${dark ? "text-ink-400" : "text-ink-600"}`}>
+            {t.role ? `${t.role}, ` : ""}
+            {t.country}
+          </span>
+        </span>
+      </figcaption>
+    </figure>
+  );
 }

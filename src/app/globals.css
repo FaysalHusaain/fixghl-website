@@ -135,20 +135,20 @@
   .prose :where(blockquote) { padding: 1rem 1.25rem; background: var(--color-ink-100); border-radius: 12px; }
 }
 
-/* Testimonial marquee: CSS only, so it also runs without JavaScript */
-.marquee {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-}
-.marquee-track { animation: marquee 70s linear infinite; }
-.marquee-reverse { animation-direction: reverse; animation-duration: 80s; }
-.marquee:hover .marquee-track, .marquee:active .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 0.5rem)); } }
+/* Client stories: crossfading quotes with a progress line under the active client */
+.story-panel { grid-area: 1 / 1; opacity: 0; transform: translateY(14px); visibility: hidden;
+  transition: opacity 600ms var(--ease-out-soft), transform 600ms var(--ease-out-soft), visibility 0s linear 600ms; }
+.story-panel[data-active="true"] { opacity: 1; transform: none; visibility: visible; transition-delay: 0s; }
+.story-name { color: var(--color-ink-600); transition: color 200ms; }
+.story-meta { color: var(--color-ink-600); }
+.story-tab[data-active="true"] .story-name, .story-tab:hover .story-name { color: var(--color-ink-950); }
+.story-fill { transform: scaleX(0); transform-origin: left; }
+.story-tab[data-active="true"] .story-fill { animation: storyfill 7s linear forwards; }
+[data-stories]:hover .story-fill, [data-stories]:focus-within .story-fill { animation-play-state: paused; }
+@keyframes storyfill { to { transform: scaleX(1); } }
 @media (prefers-reduced-motion: reduce) {
-  .marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; padding-inline: var(--gutter); }
-  .marquee-track { animation: none; }
-  .marquee-track > [aria-hidden="true"] { display: none; }
+  .story-tab[data-active="true"] .story-fill { animation: none !important; transform: scaleX(1); }
+  .story-panel { transform: none; }
 }
 
 @utility scrollbar-none {

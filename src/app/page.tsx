@@ -87,8 +87,6 @@ export default function Home() {
     <>
       <Hero />
 
-      <Testimonials />
-
       {/* Problem recognition */}
       <section aria-labelledby="pains-title" className="section">
         <div className="frame grid gap-12 md:grid-cols-12">
@@ -153,6 +151,38 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Migrations */}
+      <section aria-labelledby="mig-title" className="section bg-ink-100">
+        <div className="frame">
+          <div className="grid gap-6 md:grid-cols-12 md:items-end">
+            <h2 id="mig-title" className="h-title md:col-span-7" data-reveal>Moving from ClickFunnels, Wix, Kajabi or HubSpot?</h2>
+            <p className="text-ink-700 md:col-span-5" data-reveal style={{ ["--i" as string]: 1 }}>
+              We move contacts, pages, funnels and automations into GHL in a set order, test before the switch, and keep your old platform
+              live until the new account is proven.
+            </p>
+          </div>
+          <ul className="mt-12 grid gap-2 sm:grid-cols-2 md:mt-16">
+            {migrationServices.map((m, i) => (
+              <li key={m.slug} data-reveal style={{ ["--i" as string]: i }}>
+                <Link href={m.path} className="group flex items-center justify-between gap-4 rounded-2xl bg-white p-6 transition-colors hover:bg-ink-950 hover:text-ink-50 md:p-8">
+                  <span className="font-display text-[clamp(1.75rem,1.2rem+2vw,3rem)] font-semibold leading-none tracking-[-0.035em]">
+                    {m.name.replace(" to GHL", "")}
+                    <span className="text-ink-500 group-hover:text-gold-500"> to GHL</span>
+                    <span className="mt-3 block font-sans text-small font-medium tracking-normal text-ink-600 group-hover:text-ink-300">
+                      See what moves, how and in what order
+                    </span>
+                  </span>
+                  <Icon name="arrow" className="size-7 shrink-0 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 text-ink-600">
+            Moving from somewhere else? <Link href="/services/migrations" className="link font-medium text-ink-950">See how migrations work</Link>.
+          </p>
+        </div>
+      </section>
+
       {/* Why a specialist */}
       <section aria-labelledby="why-title" className="section">
         <div className="frame grid gap-14 lg:grid-cols-12 lg:gap-10">
@@ -214,39 +244,9 @@ export default function Home() {
         </div>
       </section>
 
-      <ProofStrip cta />
+      <Testimonials />
 
-      {/* Migrations */}
-      <section aria-labelledby="mig-title" className="section">
-        <div className="frame">
-          <div className="grid gap-6 md:grid-cols-12 md:items-end">
-            <h2 id="mig-title" className="h-title md:col-span-7" data-reveal>Moving from ClickFunnels, Wix, Kajabi or HubSpot?</h2>
-            <p className="text-ink-700 md:col-span-5" data-reveal style={{ ["--i" as string]: 1 }}>
-              We move contacts, pages, funnels and automations into GHL in a set order, test before the switch, and keep your old platform
-              live until the new account is proven.
-            </p>
-          </div>
-          <ul className="mt-12 grid gap-2 sm:grid-cols-2 md:mt-16">
-            {migrationServices.map((m, i) => (
-              <li key={m.slug} data-reveal style={{ ["--i" as string]: i }}>
-                <Link href={m.path} className="group flex items-center justify-between gap-4 rounded-2xl bg-ink-100 p-6 transition-colors hover:bg-ink-950 hover:text-ink-50 md:p-8">
-                  <span className="font-display text-[clamp(1.75rem,1.2rem+2vw,3rem)] font-semibold leading-none tracking-[-0.035em]">
-                    {m.name.replace(" to GHL", "")}
-                    <span className="text-ink-500 group-hover:text-gold-500"> to GHL</span>
-                    <span className="mt-3 block font-sans text-small font-medium tracking-normal text-ink-600 group-hover:text-ink-300">
-                      See what moves, how and in what order
-                    </span>
-                  </span>
-                  <Icon name="arrow" className="size-7 shrink-0 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-6 text-ink-600">
-            Moving from somewhere else? <Link href="/services/migrations" className="link font-medium text-ink-950">See how migrations work</Link>.
-          </p>
-        </div>
-      </section>
+      <ProofStrip cta />
 
       {/* FAQ */}
       <section aria-labelledby="faq-title" className="bg-ink-100">
