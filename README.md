@@ -22,7 +22,6 @@ npm run build && npm start   # production build
 | `NEXT_PUBLIC_GA_ID` | public | GA4 measurement ID. Enables GA and the consent banner |
 | `GOOGLE_SITE_VERIFICATION` / `BING_SITE_VERIFICATION` | server | Search Console and Bing Webmaster meta tags |
 | `INDEXNOW_KEY` | server | IndexNow key; must match `public/<key>.txt` |
-| `NEXT_PUBLIC_SHOW_TESTIMONIALS` | public | Keep `false` until real, approved testimonials exist |
 
 ## Deploy to Vercel
 
@@ -63,4 +62,4 @@ GA4 loads only with `NEXT_PUBLIC_GA_ID`, runs Consent Mode v2 with analytics den
 
 ## Brand rules enforced in code
 
-"We" voice only. No individuals' names, no fake proof. Approved claims live in `src/lib/site.ts`. Testimonials stay hidden behind a flag, and `/case-studies` is noindexed and left out of nav and the sitemap. Missing facts are written as `[[TODO: ...]]` or `[[VERIFY: ...]]`, highlighted on the page, and listed in `TODO.md`. Before launch, run `grep -rn "\[\[TODO\|\[\[VERIFY" src` and resolve every hit.
+"We" voice only. No individuals' names, no fake proof. Approved claims live in `src/lib/site.ts`. Client reviews live in `src/content/testimonials.ts`: verbatim Fiverr excerpts, with [brackets] where the studio member's name was replaced and … for cuts. Add new ones only from a real source. `/case-studies` is noindexed and left out of nav and the sitemap. Missing facts are written as `[[TODO: ...]]` or `[[VERIFY: ...]]`, highlighted on the page, and listed in `TODO.md`. Before launch, run `grep -rn "\[\[TODO\|\[\[VERIFY" src` and resolve every hit.

@@ -4,6 +4,8 @@ import { Hero } from "@/components/home/Hero";
 import { ServiceFinder, type FinderItem } from "@/components/home/ServiceFinder";
 import { HandoverPanel } from "@/components/ui-fragments/Panels";
 import { ProofStrip } from "@/components/ui/ProofStrip";
+import { Testimonials, QuoteCard } from "@/components/ui/Testimonials";
+import { testimonials } from "@/content/testimonials";
 import { Faq } from "@/components/ui/Faq";
 import { Icon } from "@/components/ui/Icon";
 import { BookingModule } from "@/components/booking/BookingModule";
@@ -212,6 +214,8 @@ export default function Home() {
 
       <ProofStrip cta />
 
+      <Testimonials />
+
       {/* Migrations */}
       <section aria-labelledby="mig-title" className="section">
         <div className="frame">
@@ -281,6 +285,9 @@ export default function Home() {
               ))}
             </ul>
             <p className="mt-10 text-small text-ink-400">{site.proof.years} · {site.proof.projects} · {site.proof.regions}</p>
+            <div className="mt-10 hidden lg:block">
+              <QuoteCard t={testimonials.find((t) => t.id === "kerry-wix-migration")!} dark />
+            </div>
           </div>
           <div className="lg:col-span-7" data-reveal style={{ ["--i" as string]: 1 }}>
             <BookingModule id="home-book" />

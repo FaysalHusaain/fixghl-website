@@ -10,6 +10,8 @@ import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { Icon } from "@/components/ui/Icon";
 import { Txt } from "@/components/ui/Txt";
 import { JsonLd, service as serviceSchema } from "@/lib/schema";
+import { testimonialFor } from "@/content/testimonials";
+import { QuoteCard } from "@/components/ui/Testimonials";
 
 const lower = (s: string) => (s.startsWith("GHL") || s.startsWith("SaaS") ? s : s.charAt(0).toLowerCase() + s.slice(1));
 
@@ -22,6 +24,8 @@ export function ServicePage({ s }: { s: Service }) {
     ...s.relatedGuides.map((g) => getGuide(g)).filter(Boolean).map((g) => ({ href: `/guides/${g!.slug}`, label: g!.title, note: "Guide" })),
     ...s.related.map((r) => getService(r)).map((r) => ({ href: r.path, label: r.h1, note: "Service" })),
   ].slice(0, 4);
+
+  const review = testimonialFor(s.slug);
 
   return (
     <>
@@ -156,6 +160,12 @@ export function ServicePage({ s }: { s: Service }) {
             </p>
           </div>
           <dl className="flex flex-col gap-10 lg:col-span-7">
+            {review && (
+              <div data-reveal>
+                <dt className="sr-only">What a client said</dt>
+                <dd><QuoteCard t={review} /></dd>
+              </div>
+            )}
             {s.questions.map((q, i) => (
               <div key={q.q} data-reveal style={{ ["--i" as string]: i }}>
                 <dt className="font-display text-[clamp(1.375rem,1.15rem+0.9vw,1.875rem)] font-semibold leading-tight tracking-[-0.025em]">{q.q}</dt>

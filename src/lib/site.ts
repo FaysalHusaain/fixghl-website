@@ -20,7 +20,6 @@ export const site = {
   legalEntity: "[[TODO: legal entity name / jurisdiction]]",
   calendarUrl: process.env.NEXT_PUBLIC_GHL_CALENDAR_URL || "",
   affiliateUrl: process.env.NEXT_PUBLIC_GHL_AFFILIATE_URL || "",
-  showTestimonials: process.env.NEXT_PUBLIC_SHOW_TESTIMONIALS === "true",
 } as const;
 
 export const absoluteUrl = (path = "/") => `${site.url}${path === "/" ? "" : path}`;

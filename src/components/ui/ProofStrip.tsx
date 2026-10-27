@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { site } from "@/lib/site";
 import { Icon } from "./Icon";
 
-// Approved claims only. Testimonials render only when real ones exist and NEXT_PUBLIC_SHOW_TESTIMONIALS=true.
+// Approved claims only. Client reviews live in src/content/testimonials.ts.
 const stats = [
   { figure: "7+", label: "years working in GoHighLevel, since 2019" },
   { figure: "100+", label: "GHL projects delivered" },
@@ -34,7 +33,6 @@ export function ProofStrip({ cta = false }: { cta?: boolean }) {
             </Link>
           </div>
         )}
-        {site.showTestimonials && <div id="testimonials" />}
       </div>
     </section>
   );

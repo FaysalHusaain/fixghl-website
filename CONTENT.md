@@ -15,6 +15,6 @@ Comparisons work the same way in `src/content/compare/`. Glossary terms go in `s
 ## Writing rules
 
 - Write as "we". Never "I", never a person's name.
-- Make only verifiable claims. Approved proof: 7+ years in GHL (since 2019), 100+ GHL projects, clients are coaches, agencies and local businesses, clients are in the US, UK, EU and Middle East.
+- Make only verifiable claims. Approved proof: 7+ years in GHL (since 2019), 100+ GHL projects, clients are coaches, agencies and local businesses, clients are in the US, UK, EU and Middle East. Client quotes come only from src/content/testimonials.ts.
 - Don't use hype words (revolutionize, unlock, seamless, supercharge, game-changer), emoji or em dashes.
 - Date every price and platform limit ("as listed in October 2026") and update `updated` when you change a page.

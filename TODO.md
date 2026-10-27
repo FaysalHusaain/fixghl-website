@@ -19,7 +19,11 @@ Resolve each one, then remove the marker from the code. Find all markers with `g
 - [ ] Working hours and time zone; communication channel during projects (studio FAQ)
 - [ ] Data retention periods (privacy policy)
 - [ ] Payment terms and refunds; limitation of liability (terms, needs a lawyer's review)
-- [ ] Testimonials and case studies: none yet. Sections are hidden until real, approved content exists
+- [x] Testimonials: 5 Fiverr reviews added (src/content/testimonials.ts)
+- [ ] More reviews (studio is sending more screenshots)
+- [ ] Confirm clients are happy to be named by business or real name (currently Fiverr username, country and client type only)
+- [ ] Add Australia to approved client regions? (one reviewer is in Australia)
+- [ ] Case studies: none yet; /case-studies stays noindexed
 
 ## Facts to verify against official sources (VERIFY)
 - [ ] GoHighLevel plan prices and SaaS mode plan requirement (official pricing page)
