@@ -168,7 +168,7 @@ export default function Home() {
               live until the new account is proven.
             </p>
           </div>
-          <ul className="mt-12 grid gap-2 sm:grid-cols-2 md:mt-16">
+          <ul className="mt-8 grid gap-2 sm:grid-cols-2 md:mt-12">
             {migrationServices.map((m, i) => (
               <li key={m.slug} data-reveal style={{ ["--i" as string]: i }}>
                 <Link href={m.path} className="group flex items-center justify-between gap-4 rounded-2xl bg-white p-6 transition-colors hover:bg-ink-950 hover:text-ink-50 md:p-8">
@@ -224,7 +224,7 @@ export default function Home() {
             <h2 id="how-title" className="h-title max-w-[16ch]" data-reveal>How does working with us go?</h2>
             <Link href="/how-it-works" className="link font-medium" data-reveal>Read the full process</Link>
           </div>
-          <ol data-ui className="mt-12 grid gap-1.5 md:mt-16 md:grid-cols-4">
+          <ol data-ui className="mt-8 grid gap-1.5 md:mt-12 md:grid-cols-4">
             {stages.map((s, i) => (
               <li
                 key={s.label}

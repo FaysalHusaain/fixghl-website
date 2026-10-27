@@ -1,5 +1,5 @@
 // Service page content. Copy rules: answer first, "we" voice, no invented numbers or names.
-// Unknown facts stay as [[TODO: ...]] and are listed in TODO.md.
+// Keep every claim verifiable. Timelines are set per project in the written quote.
 
 export type QA = { q: string; a: string };
 export type Fragment = "workflow" | "email" | "pipeline" | "calendar" | "saas" | "integrations" | "setup" | "funnel";
@@ -61,7 +61,7 @@ export const services: Service[] = [
       { title: "Written notes", body: "A short record of what was wrong, what we changed and how to spot it next time." },
     ],
     process: commonProcess("Fix and test"),
-    timeline: "[[TODO: typical turnaround for a single fix]]",
+    timeline: "",
     questions: [
       { q: "Will you need full access to my account?", a: "We ask for the narrowest access that lets us do the work, usually a user on the affected sub-account. We list exactly what we need in the quote." },
       { q: "Do you fix the cause or patch the symptom?", a: "We fix the cause. If the right fix is a rebuild, we say so in the quote and explain why before doing anything." },
@@ -70,7 +70,7 @@ export const services: Service[] = [
     faqs: [
       { q: "Can you fix a GoHighLevel workflow that is not triggering?", a: "Yes. Most cases come down to the workflow being in draft, a trigger filter that no contact can meet, re-entry settings, or the wrong trigger type. We check each one in your account and fix the cause." },
       { q: "Do you fix GHL email deliverability?", a: "Yes. We check the sending domain, SPF, DKIM and DMARC records, list hygiene and sending patterns, then fix what is wrong and set up a sensible warm-up." },
-      { q: "How quickly can you start?", a: "[[TODO: typical start time for urgent fixes]]" },
+      { q: "How quickly can you start?", a: "Tell us how urgent it is when you book. We confirm on the call when we can start, and the start date goes into your written quote." },
       { q: "What does a fix cost?", a: "Fixes are quoted after a free 30-minute call, once we have seen the account. The quote is fixed for the agreed scope." },
     ],
     relatedGuides: ["ghl-workflow-not-triggering", "ghl-emails-going-to-spam"],
@@ -101,7 +101,7 @@ export const services: Service[] = [
       { title: "Core workflows", body: "Lead capture, speed-to-lead follow-up, booking reminders and no-show recovery, built and tested." },
     ],
     process: commonProcess("Build"),
-    timeline: "[[TODO: typical timeline for a standard setup]]",
+    timeline: "",
     questions: [
       { q: "Who owns the account after setup?", a: "You do. We build inside your account and hand over full control at the end." },
       { q: "Will the setup work as a snapshot later?", a: "If you ask for it, we build with custom values and clean naming so the account can be saved as a snapshot and reused." },
@@ -140,7 +140,7 @@ export const services: Service[] = [
       { title: "Automations and cut-over", body: "Sequences and automations rebuilt as GHL workflows, then a planned switch of domains and forms with a rollback path." },
     ],
     process: commonProcess("Migrate and test"),
-    timeline: "[[TODO: typical migration timeline by size]]",
+    timeline: "",
     questions: [
       { q: "What will not come across automatically?", a: "We tell you in the migration map before any work starts. Automations, email sequences and some page types usually need rebuilding." },
       { q: "Will my site go down during the move?", a: "We build and test in GHL while the old platform stays live, then switch domains in a planned window." },
@@ -179,14 +179,14 @@ export const services: Service[] = [
       { title: "Domain cut-over", body: "Your domain moved to GHL in a planned window, with redirects for any changed URLs." },
     ],
     moves: [
-      { item: "Funnel pages", how: "Imported page by page by URL where supported, otherwise rebuilt [[VERIFY: importer support for ClickFunnels 2.0 pages]]" },
+      { item: "Funnel pages", how: "Imported page by page by URL where supported, otherwise rebuilt" },
       { item: "Contacts", how: "CSV export and import with mapped fields and tags" },
       { item: "Products and checkout", how: "Rebuilt in GHL and connected to Stripe" },
       { item: "Email sequences and automations", how: "Rebuilt as GHL workflows" },
       { item: "Membership content", how: "Moved into GHL memberships, with member access re-created" },
     ],
     process: commonProcess("Migrate and test"),
-    timeline: "[[TODO: typical ClickFunnels migration timeline]]",
+    timeline: "",
     questions: [
       { q: "Can GHL import my ClickFunnels pages directly?", a: "GHL can import some pages by URL. Results vary by page and ClickFunnels version, so we test the import and rebuild pages that do not come across cleanly." },
       { q: "What happens to my order bumps and upsells?", a: "We rebuild them in GHL's order forms and one-click upsells, then run test purchases before going live." },
@@ -230,7 +230,7 @@ export const services: Service[] = [
       { item: "Search rankings", how: "Kept with matching metadata and 301 redirects" },
     ],
     process: commonProcess("Rebuild and test"),
-    timeline: "[[TODO: typical Wix migration timeline]]",
+    timeline: "",
     questions: [
       { q: "Will I lose my Google rankings?", a: "Rankings are protected by keeping URLs where possible, carrying over titles and descriptions, and redirecting every changed URL. We give you the redirect list." },
       { q: "Can my site look the same?", a: "Yes. We can match the current design, or refresh it during the rebuild if you prefer." },
@@ -271,10 +271,10 @@ export const services: Service[] = [
       { item: "Members", how: "Imported with offer access granted" },
       { item: "Offers and checkout", how: "Rebuilt and connected to your payment provider" },
       { item: "Email sequences", how: "Rebuilt as GHL workflows" },
-      { item: "Active subscriptions", how: "[[VERIFY: subscription transfer options depend on the payment provider]]" },
+      { item: "Active subscriptions", how: "Planned case by case, depending on your payment provider" },
     ],
     process: commonProcess("Migrate and test"),
-    timeline: "[[TODO: typical Kajabi migration timeline]]",
+    timeline: "",
     questions: [
       { q: "Will my students lose access?", a: "No. We grant access in GHL before the switch and send members their new login steps on the date you choose." },
       { q: "What about recurring payments?", a: "That depends on your payment provider and how subscriptions were set up in Kajabi. We check it on the call and plan around it." },
@@ -315,10 +315,10 @@ export const services: Service[] = [
       { item: "Deals", how: "Imported as GHL opportunities in matching stages" },
       { item: "Companies", how: "Mapped to GHL companies or contact fields" },
       { item: "Workflows and sequences", how: "Rebuilt as GHL workflows" },
-      { item: "Activity history", how: "[[VERIFY: which HubSpot activity types can be carried into GHL notes]]" },
+      { item: "Activity history", how: "Carried over where possible, agreed before we start" },
     ],
     process: commonProcess("Migrate and test"),
-    timeline: "[[TODO: typical HubSpot migration timeline]]",
+    timeline: "",
     questions: [
       { q: "Can deal history come across?", a: "Deal stages and values come across. Older activity history is handled case by case; we tell you what is possible before we start." },
       { q: "Will my team need training?", a: "Handover includes a walkthrough of the new pipelines and a written guide for daily use." },
@@ -355,7 +355,7 @@ export const services: Service[] = [
       { title: "Clean-up", body: "Old or duplicate workflows found, documented and retired, if you want the account tidied." },
     ],
     process: commonProcess("Build and test"),
-    timeline: "[[TODO: typical automation project timeline]]",
+    timeline: "",
     questions: [
       { q: "Will I be able to edit the workflows myself?", a: "Yes. We name and document every workflow so your team can change copy, timings and branches safely." },
       { q: "Do you use AI features?", a: "Where they fit. We can set up Conversation AI for replies and qualification, with guardrails and a handoff to a person." },
@@ -392,7 +392,7 @@ export const services: Service[] = [
       { title: "Speed and tracking", body: "Compressed images, minimal scripts, and analytics events on the actions that matter." },
     ],
     process: commonProcess("Design and build"),
-    timeline: "[[TODO: typical funnel build timeline]]",
+    timeline: "",
     questions: [
       { q: "Do you write the copy?", a: "We can write it or work from yours. The quote states which." },
       { q: "Will the pages be fast on mobile?", a: "We build for phones first and check every page on a phone before handover." },
@@ -429,9 +429,9 @@ export const services: Service[] = [
       { title: "White-label and onboarding", body: "Your app domain and branding, plus the signup flow and welcome workflow for new clients." },
     ],
     process: commonProcess("Configure and test"),
-    timeline: "[[TODO: typical SaaS setup timeline]]",
+    timeline: "",
     questions: [
-      { q: "Which GHL plan do I need for SaaS mode?", a: "SaaS mode is part of the Agency Pro plan as of October 2026. [[VERIFY: confirm on HighLevel's official pricing page]]" },
+      { q: "Which GHL plan do I need for SaaS mode?", a: "SaaS mode is part of the Agency Pro plan, as listed in October 2026. Check HighLevel's pricing page for current plans before you upgrade." },
       { q: "Will you build the snapshot too?", a: "Yes, if you want one. A SaaS plan works best when every new sub-account starts with a working build." },
     ],
     faqs: [
@@ -466,7 +466,7 @@ export const services: Service[] = [
       { title: "Documentation", body: "Each connection written up: what triggers it, what it sends and where to check it." },
     ],
     process: commonProcess("Connect and test"),
-    timeline: "[[TODO: typical integration timeline]]",
+    timeline: "",
     questions: [
       { q: "Should I use Zapier, Make or n8n?", a: "It depends on volume, budget and who maintains it. We recommend one on the call and explain the trade-off." },
       { q: "Can you build against the GHL API directly?", a: "Yes, when a native integration or webhook is not enough." },

@@ -78,7 +78,7 @@ export function ServicePage({ s }: { s: Service }) {
           <p className="t-lead mt-5 max-w-[54ch] text-ink-700" data-reveal style={{ ["--i" as string]: 1 }}>
             The exact scope is written into your quote. These are the parts most {lower(s.name)} projects include.
           </p>
-          <dl className="mt-12 grid gap-2 md:mt-16 md:grid-cols-2">
+          <dl className="mt-8 grid gap-2 md:mt-12 md:grid-cols-2">
             {s.included.map((it, i) => (
               <div key={it.title} data-reveal style={{ ["--i" as string]: i % 2 }} className="rounded-2xl bg-ink-100 p-6 md:p-8">
                 <dt className="h-sub">{it.title}</dt>
@@ -97,7 +97,7 @@ export function ServicePage({ s }: { s: Service }) {
           </div>
 
           {s.moves && (
-            <div className="mt-20 md:mt-28">
+            <div className="mt-12 md:mt-16">
               <h2 className="h-sub" data-reveal>What moves, and how?</h2>
               <div className="table-wrap" role="region" aria-label="What moves and how" tabIndex={0}>
                 <table>
@@ -113,7 +113,7 @@ export function ServicePage({ s }: { s: Service }) {
           )}
 
           {s.slug === "migrations" && (
-            <div className="mt-20 md:mt-28">
+            <div className="mt-12 md:mt-16">
               <h2 className="h-sub" data-reveal>Which platform are you moving from?</h2>
               <ul className="mt-8 grid gap-2 sm:grid-cols-2">
                 {migrationServices.map((m) => (
@@ -137,9 +137,9 @@ export function ServicePage({ s }: { s: Service }) {
         <div className="frame section">
           <h2 id="process-title" className="h-title max-w-[20ch]" data-reveal>How does the project run?</h2>
           <p className="t-lead mt-5 max-w-[54ch] text-ink-700" data-reveal style={{ ["--i" as string]: 1 }}>
-            Four stages, from a free call to a documented handover. Typical timeline: <Txt>{s.timeline}</Txt>
+            Four stages, from a free call to a documented handover. Your timeline is set in the written quote, once we have seen the account.
           </p>
-          <ol className="mt-12 grid gap-1.5 md:mt-16 md:grid-cols-4">
+          <ol className="mt-8 grid gap-1.5 md:mt-12 md:grid-cols-4">
             {s.process.map((p, i) => (
               <li key={p.stage} data-reveal style={{ ["--i" as string]: i }} className={`flex flex-col gap-4 rounded-2xl p-6 ${i === 0 ? "on-dark bg-ink-950 text-ink-50" : "bg-ink-50"}`}>
                 <span className="font-display text-[1.5rem] font-semibold tracking-[-0.025em]">{p.stage}</span>

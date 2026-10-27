@@ -40,7 +40,11 @@ export default function Page() {
       </ul>
       <p>Some of these providers process data outside your country, including in the United States, under their own safeguards such as standard contractual clauses.</p>
       <h2>How long do we keep it?</h2>
-      <p><Txt>{"[[TODO: retention periods for enquiries, client records and analytics]]"}</Txt></p>
+      <p>
+        We keep enquiry details for as long as we need them to reply and follow up. We keep client project records for as long as we need
+        them to deliver the service and to meet legal and accounting obligations. Google Analytics data is kept for the retention period set
+        in our Google Analytics account. You can ask us to delete your data at any time.
+      </p>
       <h2>What are your rights?</h2>
       <p>
         Depending on where you live, including under the UK GDPR, the EU GDPR and US state privacy laws such as the CCPA, you can ask to access,

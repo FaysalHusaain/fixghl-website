@@ -14,10 +14,9 @@ export const site = {
     regions: "US, UK, EU and the Middle East",
   },
   callLength: "30-minute",
-  email: "[[TODO: business email]]",
-  replyTime: "[[TODO: reply-time promise]]",
-  sameAs: [] as string[], // [[TODO: social profile URLs]]
-  legalEntity: "[[TODO: legal entity name / jurisdiction]]",
+  email: "hello@fixghl.com",
+  sameAs: [] as string[], // Add social profile URLs here when they exist
+  legalEntity: "FixGHL",
   calendarUrl: process.env.NEXT_PUBLIC_GHL_CALENDAR_URL || "",
   affiliateUrl: process.env.NEXT_PUBLIC_GHL_AFFILIATE_URL || "",
 } as const;

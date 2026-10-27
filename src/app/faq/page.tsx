@@ -31,7 +31,7 @@ export default function Page() {
       />
       <div className="pb-[var(--section)]">
         {groups.map((g) => (
-          <section key={g.id} aria-labelledby={`faq-${g.id}`} className="frame grid gap-8 pb-16 lg:grid-cols-12 md:pb-24">
+          <section key={g.id} aria-labelledby={`faq-${g.id}`} className="frame grid gap-8 pb-12 lg:grid-cols-12 md:pb-16">
             <h2 id={`faq-${g.id}`} className="h-sub lg:col-span-4">{g.title}</h2>
             <div className="lg:col-span-8"><Faq items={g.items} schema={false} openFirst={false} /></div>
           </section>

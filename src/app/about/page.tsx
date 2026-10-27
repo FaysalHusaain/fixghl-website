@@ -45,6 +45,10 @@ export default function Page() {
               No. FixGHL is independent and is not affiliated with or endorsed by HighLevel Inc. We recommend GoHighLevel because we use it
               every day, and we may earn a commission if you sign up through <Link href="/try-ghl">our trial link</Link>.
             </p>
+            <h2>How do I contact FixGHL?</h2>
+            <p>
+              Book a <Link href="/book">free 30-minute call</Link>, or email <a href="mailto:hello@fixghl.com">hello@fixghl.com</a>.
+            </p>
           </div>
           <div className="lg:col-span-5">
             <h2 className="h-sub">How we work</h2>

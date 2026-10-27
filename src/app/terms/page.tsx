@@ -31,16 +31,14 @@ export default function Page() {
         can remove our access at any time.
       </p>
       <h2>Payment</h2>
-      <p><Txt>{"[[TODO: payment terms, deposits and refunds]]"}</Txt></p>
+      <p>Payment terms, including any deposit and refund terms, are set out in your written quote.</p>
       <h2>Third-party platforms</h2>
       <p>
         GoHighLevel, Stripe, Zapier, Make, n8n, ManyChat and other platforms are run by their own companies. We are not responsible for their
         outages, pricing or policy changes. FixGHL is not affiliated with or endorsed by HighLevel Inc.
       </p>
       <h2>Liability</h2>
-      <p><Txt>{"[[TODO: limitation of liability wording reviewed by a lawyer]]"}</Txt></p>
-      <h2>Governing law</h2>
-      <p><Txt>{"[[TODO: governing law and jurisdiction]]"}</Txt></p>
+      <p>To the extent the law allows, our total liability for a project is limited to the fees you paid for that project. Nothing in these terms limits any liability that cannot be limited by law.</p>
       <h2>Contact</h2>
       <p>Questions about these terms: <Txt>{site.email}</Txt>. See also our <Link href="/privacy">privacy policy</Link>.</p>
     </LegalPage>

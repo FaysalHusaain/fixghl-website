@@ -33,7 +33,7 @@ const faqs = [
   { q: "Why don't you publish fixed prices?", a: "Because two problems that look the same from outside can be a small filter change or a full rebuild. We would rather see the account and quote the real job than publish a price that is wrong for most people." },
   { q: "Is the 30-minute call really free?", a: "Yes. There is no charge for the call and no obligation to hire us afterwards." },
   { q: "Can the price change after I approve the quote?", a: "Not for the agreed scope. If you ask for something outside it, we quote that separately before doing it." },
-  { q: "How do I pay?", a: "[[TODO: payment terms and methods]]" },
+  { q: "How do I pay?", a: "Payment terms are set out in your written quote, before any work starts." },
 ];
 
 export default function Page() {

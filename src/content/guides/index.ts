@@ -33,7 +33,7 @@ export const guides: ArticleMeta[] = [
     updated: "2026-10-26",
     faqs: [
       { q: "Why are my GoHighLevel emails going to spam?", a: "Usually because mail is sent from a shared or unauthenticated domain, the domain is missing SPF, DKIM or DMARC, the list contains old or bought addresses, or a new domain is sending too much too soon." },
-      { q: "Does GoHighLevel set up DMARC for me?", a: "GHL's dedicated sending domain setup covers the SPF and DKIM records. A DMARC record is published separately at _dmarc on your domain. [[VERIFY: current GHL setup screens]]" },
+      { q: "Does GoHighLevel set up DMARC for me?", a: "GHL's dedicated sending domain setup covers the SPF and DKIM records. A DMARC record is published separately at _dmarc on your domain." },
       { q: "Should I use a subdomain for GHL email?", a: "Yes, if your main domain already sends mail through Google Workspace or Microsoft 365. A subdomain such as mail.yourdomain.com keeps GHL's records separate from your inbox provider's." },
     ],
     related: [
@@ -53,7 +53,7 @@ export const guides: ArticleMeta[] = [
     published: "2026-10-26",
     updated: "2026-10-26",
     faqs: [
-      { q: "Can I import ClickFunnels funnels into GoHighLevel?", a: "GHL can import ClickFunnels pages by URL, one page at a time. Results vary, and some pages need rebuilding. [[VERIFY: importer support for ClickFunnels 2.0]]" },
+      { q: "Can I import ClickFunnels funnels into GoHighLevel?", a: "GHL can import ClickFunnels pages by URL, one page at a time. Results vary, and some pages need rebuilding." },
       { q: "How do I move contacts from ClickFunnels to GHL?", a: "Export contacts from ClickFunnels as a CSV, create any custom fields in GHL first, then import the file and map every column. Tag the batch so you can check it afterwards." },
       { q: "Do ClickFunnels automations transfer to GHL?", a: "No. Email sequences and automations have to be rebuilt as GHL workflows." },
     ],

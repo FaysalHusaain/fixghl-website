@@ -6,7 +6,7 @@ import { Icon } from "@/components/ui/Icon";
 export function Hero() {
   return (
     <section className="on-dark relative overflow-hidden bg-ink-950 text-ink-50" aria-labelledby="hero-title">
-      <div className="frame pb-[clamp(3.5rem,10vh,8rem)] pt-[clamp(2.5rem,10vh,8rem)]">
+      <div className="frame pb-[clamp(3rem,8vh,6.5rem)] pt-[clamp(2.5rem,8vh,6.5rem)]">
         <div>
           <h1 id="hero-title" className="h-display">
             <span className="block">GoHighLevel, fixed</span> <span className="block">and built right.</span>

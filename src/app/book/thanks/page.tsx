@@ -3,8 +3,6 @@ import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
 import { guides } from "@/content/guides";
 import { Icon } from "@/components/ui/Icon";
-import { Txt } from "@/components/ui/Txt";
-import { site } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "Thanks, We Have Your Details | FixGHL",
@@ -27,7 +25,7 @@ export default function Page() {
             </div>
             <div className="rounded-2xl bg-ink-900 p-6 md:p-8">
               <h2 className="h-sub">If you sent details</h2>
-              <p className="mt-3 text-ink-300">We read every message and reply by email within <Txt>{site.replyTime}</Txt>.</p>
+              <p className="mt-3 text-ink-300">We read every message and reply by email. If it is urgent, write to <a href="mailto:hello@fixghl.com" className="link text-ink-50">hello@fixghl.com</a>.</p>
             </div>
           </div>
         </div>

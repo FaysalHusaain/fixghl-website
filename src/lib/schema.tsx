@@ -12,6 +12,8 @@ export const organization = () => ({
   url: site.url,
   logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png"), width: 512, height: 512 },
   description: site.oneLine,
+  email: site.email,
+  contactPoint: { "@type": "ContactPoint", contactType: "customer support", email: site.email, availableLanguage: ["English"] },
   foundingDate: String(site.proof.since),
   areaServed: site.areaServed.map((name) => ({ "@type": "Place", name })),
   knowsAbout: ["GoHighLevel", "HighLevel CRM", "Marketing automation", "Email deliverability", "Sales funnels", "CRM migration"],
@@ -36,7 +38,6 @@ export const breadcrumbs = (items: { name: string; path: string }[]) => ({
 export const faqPage = (faqs: QA[]) => ({
   "@type": "FAQPage",
   mainEntity: faqs
-    .filter((f) => !f.a.includes("[[TODO"))
     .map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a.replace(/\s*\[\[VERIFY[^\]]*\]\]/g, "") } })),
 });
 

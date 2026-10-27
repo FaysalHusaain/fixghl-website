@@ -81,10 +81,12 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
 
       <div id={`${id}-panel-call`} role="tabpanel" aria-labelledby={`${id}-tab-call`} hidden={tab !== "call"} className="p-3 pt-6 md:p-6">
         <H className="h-sub">Pick a time for a free 30-minute call</H>
-        <p className="mt-2 max-w-[60ch] text-ink-700">
-          The booking form asks four quick questions: what you need, your current platform if you are moving, how urgent it is, and your
-          website or GHL account, if you want to share it.
-        </p>
+        {CALENDAR_URL && (
+          <p className="mt-2 max-w-[60ch] text-ink-700">
+            The booking form asks four quick questions: what you need, your current platform if you are moving, how urgent it is, and your
+            website or GHL account, if you want to share it.
+          </p>
+        )}
         <CalendarEmbed />
       </div>
 
@@ -112,17 +114,16 @@ function CalendarEmbed() {
   }, []);
 
   return (
-    <div ref={ref} className="relative mt-6 h-[46rem] overflow-hidden rounded-2xl bg-white md:h-[44rem]">
+    <div ref={ref} className={`relative mt-6 overflow-hidden rounded-2xl bg-white ${CALENDAR_URL ? "h-[46rem] md:h-[44rem]" : ""}`}>
       {!CALENDAR_URL ? (
-        <div className="grid h-full place-items-center p-6 text-center">
-          <div className="max-w-sm">
-            <Icon name="calendar" className="mx-auto size-8 text-ink-500" />
-            <p className="mt-4 font-semibold">Calendar not connected yet</p>
-            <p className="mt-2 text-small text-ink-600">
-              Set <code className="rounded bg-ink-100 px-1">NEXT_PUBLIC_GHL_CALENDAR_URL</code> to the GHL calendar embed URL. Until then,
-              use the Send details tab. <mark className="todo">[[TODO: GHL calendar embed URL]]</mark>
-            </p>
-          </div>
+        // Shown only until NEXT_PUBLIC_GHL_CALENDAR_URL is set: a working way to book, never a dead end.
+        <div className="flex flex-col items-start gap-4 p-6 md:p-8">
+          <Icon name="calendar" className="size-8 text-ink-950" />
+          <p className="font-semibold">Pick a time by email</p>
+          <p className="text-ink-700">
+            Email <a href="mailto:hello@fixghl.com?subject=Free%2030-minute%20GHL%20call" className="link font-medium text-ink-950">hello@fixghl.com</a> with
+            two or three times that suit you and a line about what you need. We confirm the call by email.
+          </p>
         </div>
       ) : (
         <>

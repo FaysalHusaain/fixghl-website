@@ -15,6 +15,7 @@ export function GET() {
 - Experience: working in GoHighLevel since 2019 (7+ years), with 100+ GHL projects delivered.
 - Clients: coaches, agencies and local businesses in the United States, the United Kingdom, the European Union and the Middle East.
 - How to start: a free 30-minute call at ${absoluteUrl("/book")}. Every project is quoted in writing after the call and fixed for the agreed scope.
+- Contact: ${site.email}
 - FixGHL is an independent studio and is not affiliated with or endorsed by HighLevel Inc.
 
 ## Services

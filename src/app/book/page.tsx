@@ -37,7 +37,10 @@ export default function Page() {
               </li>
             ))}
           </ul>
-          <p className="mt-10 text-small text-ink-400">7+ years in GHL · 100+ projects · US, UK, EU, Middle East</p>
+          <p className="mt-10 text-ink-300">
+            Prefer email? Write to <a href="mailto:hello@fixghl.com" className="link font-medium text-ink-50">hello@fixghl.com</a>
+          </p>
+          <p className="mt-4 text-small text-ink-400">7+ years in GHL · 100+ projects · US, UK, EU, Middle East</p>
         </div>
         <div className="lg:col-span-7" id="describe">
           <BookingModule id="book-page" headingLevel={2} />

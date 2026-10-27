@@ -4,7 +4,7 @@ import { Icon } from "./Icon";
 export function RelatedLinks({ title = "Related", links }: { title?: string; links: { href: string; label: string; note?: string }[] }) {
   return (
     <section aria-labelledby="related-title" className="bg-ink-100">
-      <div className="frame py-16 md:py-24">
+      <div className="frame py-14 md:py-20">
         <h2 id="related-title" className="h-sub">{title}</h2>
         <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {links.map((l) => (

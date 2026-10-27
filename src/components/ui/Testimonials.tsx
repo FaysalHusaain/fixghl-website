@@ -55,10 +55,10 @@ export function Testimonials() {
       <div className="frame" data-stories data-playing={inView && !done} data-done={done} ref={root}>
         <h2 id="reviews-title" className="h-title max-w-[16ch]" data-reveal>In our clients’ words</h2>
 
-        <div className="mt-10 grid gap-10 md:mt-16 lg:grid-cols-12 lg:gap-16">
+        <div className="mt-8 grid gap-10 md:mt-12 lg:grid-cols-12 lg:gap-16">
           <div className="grid lg:col-span-7">
             {stories.map((t, i) => (
-              <figure key={t.id} data-story-panel={i} data-active={i === active} aria-hidden={i !== active} className="story-panel flex flex-col justify-between gap-8 md:gap-10">
+              <figure key={t.id} data-story-panel={i} data-active={i === active} aria-hidden={i !== active} className="story-panel flex flex-col justify-start gap-8 md:gap-10">
                 <blockquote className="font-display text-[clamp(1.75rem,1.2rem+2.4vw,3.25rem)] font-semibold leading-[1.1] tracking-[-0.035em] text-ink-950">
                   <span className="-ml-[0.42em] text-ink-300" aria-hidden>“</span>
                   {t.quote}

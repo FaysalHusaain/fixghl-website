@@ -3,7 +3,6 @@ import Link from "next/link";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { CtaBand } from "@/components/ui/CtaBand";
 import { Icon } from "@/components/ui/Icon";
-import { Txt } from "@/components/ui/Txt";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -38,7 +37,7 @@ export default function Page() {
               Start a GoHighLevel trial <Icon name="arrow" className="size-4" />
             </a>
           ) : (
-            <p className="text-ink-700"><Txt>{"[[TODO: affiliate URL]] Set NEXT_PUBLIC_GHL_AFFILIATE_URL to show the trial button."}</Txt></p>
+            <Link href="/book" className="btn btn-ink">Ask us about the right plan <Icon name="arrow" className="size-4" /></Link>
           )}
         </div>
       </PageHeader>
@@ -58,7 +57,7 @@ export default function Page() {
           </div>
           <p className="max-w-[68ch] text-small text-ink-600">
             Prices are as reported in October 2026 and exclude usage charges for SMS, calls, email and AI. Check HighLevel&apos;s own pricing page
-            before you buy. <Txt>{"[[VERIFY: plan prices and sub-account limits on HighLevel's official pricing page]]"}</Txt>
+            before you buy.
           </p>
           <div className="mt-16 grid gap-2 md:grid-cols-2">
             <div className="rounded-2xl bg-ink-100 p-6 md:p-8">

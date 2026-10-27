@@ -44,7 +44,7 @@ If re-entry is off, a contact who has already entered the workflow will not ente
 
 ## Is it the right trigger for the event?
 
-Each trigger listens for one kind of event. A workflow set to Contact Created will not fire for a contact who already existed and was updated by a form; that needs a form or contact-changed trigger instead. Booking workflows have the same issue: an appointment trigger and a form trigger fire at different moments. <mark className="todo">[[VERIFY: current trigger names in the workflow builder]]</mark>
+Each trigger listens for one kind of event. A workflow set to Contact Created will not fire for a contact who already existed and was updated by a form; that needs a form or contact-changed trigger instead. Booking workflows have the same issue: an appointment trigger and a form trigger fire at different moments.
 
 Write down the real event in plain words ("someone submits the consult form") and pick the trigger that names that event, then add filters to narrow it.
 

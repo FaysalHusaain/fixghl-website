@@ -4,7 +4,7 @@ import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
 export function PageHeader({ crumbs, title, lead, children, updated }: { crumbs: Crumb[]; title: string; lead?: ReactNode; children?: ReactNode; updated?: string }) {
   return (
     <section className="pt-10 md:pt-16">
-      <div className="frame pb-16 md:pb-24">
+      <div className="frame pb-12 md:pb-16">
         <Breadcrumbs items={crumbs} />
         <h1 className="h-title mt-8 max-w-[20ch] md:mt-12">{title}</h1>
         {lead && <div className="t-lead mt-6 max-w-[56ch] text-ink-800">{lead}</div>}

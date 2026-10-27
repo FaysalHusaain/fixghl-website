@@ -5,7 +5,6 @@ import { CtaBand } from "@/components/ui/CtaBand";
 import { Faq } from "@/components/ui/Faq";
 import { HandoverPanel } from "@/components/ui-fragments/Panels";
 import { Icon } from "@/components/ui/Icon";
-import { Txt } from "@/components/ui/Txt";
 import { studioFaqs } from "@/content/faqs";
 import { pageMetadata } from "@/lib/seo";
 
@@ -89,7 +88,7 @@ export default function Page() {
               ))}
             </ul>
             <p className="mt-8 text-ink-700">
-              How long does it take? <Txt>{"[[TODO: typical project timelines by service]]"}</Txt>
+              How long does it take? It depends on the scope, and every written quote includes a timeline.
             </p>
           </div>
           <div className="lg:col-span-6">

@@ -38,8 +38,6 @@ Value: v=DMARC1; p=none; rua=mailto:dmarc@yourdomain.com
 5. Wait for DNS to update, which can take up to a day, then verify the domain in GHL.
 6. Once every legitimate sender passes, tighten DMARC to `p=quarantine`.
 
-<mark className="todo">[[VERIFY: current Email Services menu path and record types shown in GHL]]</mark>
-
 ## Is your list hurting deliverability?
 
 Yes, if it contains contacts who never asked for your email, addresses that bounce, or people who have not opened anything in months. Each of those signals tells inbox providers your mail is unwanted. Google's [email sender guidelines](https://support.google.com/a/answer/81126) ask bulk senders to keep reported spam rates below 0.3% and to offer one-click unsubscribe.

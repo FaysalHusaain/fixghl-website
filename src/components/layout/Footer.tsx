@@ -31,11 +31,16 @@ const groups = [
 export function Footer() {
   return (
     <footer className="on-dark overflow-hidden bg-ink-950 pb-24 text-ink-300 md:pb-0">
-      <div className="frame pt-20 md:pt-28">
+      <div className="frame pt-16 md:pt-20">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-4">
             <p className="max-w-[30ch] text-lead leading-snug text-ink-100">{site.oneLine}</p>
-            <p className="mt-6 text-small">{site.proof.years} · {site.proof.projects} · {site.proof.regions}</p>
+            <p className="mt-6">
+              <a href={`mailto:${site.email}`} className="font-display text-[1.375rem] font-semibold tracking-[-0.02em] text-ink-50 transition-colors hover:text-gold-500">
+                {site.email}
+              </a>
+            </p>
+            <p className="mt-4 text-small">{site.proof.years} · {site.proof.projects} · {site.proof.regions}</p>
           </div>
           <nav aria-label="Footer" className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 md:col-span-8">
             {groups.map((g) => (
@@ -53,7 +58,7 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-16 flex flex-col gap-3 text-small text-ink-400 md:mt-24 md:flex-row md:items-center md:justify-between">
+        <div className="mt-12 flex flex-col gap-3 text-small text-ink-400 md:mt-16 md:flex-row md:items-center md:justify-between">
           <p>
             © {copyrightYear} {site.name}. FixGHL is an independent studio and is not affiliated with or endorsed by HighLevel Inc.
           </p>
