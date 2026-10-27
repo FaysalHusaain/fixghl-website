@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Hero } from "@/components/home/Hero";
-import { ServiceFinder, type FinderItem } from "@/components/home/ServiceFinder";
+import { ServiceList, type ServiceItem } from "@/components/home/ServiceList";
 import { HandoverPanel } from "@/components/ui-fragments/Panels";
 import { ProofStrip } from "@/components/ui/ProofStrip";
 import { Testimonials, QuoteCard } from "@/components/ui/Testimonials";
@@ -59,14 +59,14 @@ const pains = [
   },
 ];
 
-const finder: FinderItem[] = [
-  { href: "/services/ghl-fixes", name: "GHL fixes", symptom: "Workflows not firing, emails in spam, missed bookings, failed syncs", keywords: "broken fix bug trigger spam email deliverability reminder not working error" },
-  { href: "/services/ghl-setup", name: "GHL setup", symptom: "A new account built properly: domains, email, calendars, pipelines", keywords: "new start onboarding setup configure domain dns calendar pipeline" },
-  { href: "/services/migrations", name: "Migrations", symptom: "Moving from ClickFunnels, Wix, Kajabi or HubSpot", keywords: "move switch import export clickfunnels wix kajabi hubspot transfer" },
-  { href: "/services/automation", name: "Workflows & automation", symptom: "Follow-up, reminders and pipeline moves that run without you", keywords: "workflow automation follow up nurture sequence no-show reminder ai" },
-  { href: "/services/funnels-websites", name: "Funnels & websites", symptom: "Pages that work on phones and feed your CRM", keywords: "funnel website landing page checkout order form mobile slow" },
-  { href: "/services/saas-white-label", name: "SaaS mode & white-label", symptom: "Resell GHL under your brand with plans and rebilling", keywords: "saas white label resell agency plans rebilling snapshot stripe" },
-  { href: "/services/integrations", name: "Integrations", symptom: "Stripe, Zapier, Make, n8n, ManyChat, webhooks and APIs", keywords: "integration zapier make n8n stripe manychat webhook api sync connect" },
+const serviceItems: ServiceItem[] = [
+  { href: "/services/ghl-fixes", name: "GHL fixes", symptom: "Workflows not firing, emails in spam, missed bookings, failed syncs" },
+  { href: "/services/ghl-setup", name: "GHL setup", symptom: "A new account built properly: domains, email, calendars, pipelines" },
+  { href: "/services/migrations", name: "Migrations", symptom: "Moving from ClickFunnels, Wix, Kajabi or HubSpot" },
+  { href: "/services/automation", name: "Workflows & automation", symptom: "Follow-up, reminders and pipeline moves that run without you" },
+  { href: "/services/funnels-websites", name: "Funnels & websites", symptom: "Pages that work on phones and feed your CRM" },
+  { href: "/services/saas-white-label", name: "SaaS mode & white-label", symptom: "Resell GHL under your brand with plans and rebilling" },
+  { href: "/services/integrations", name: "Integrations", symptom: "Stripe, Zapier, Make, n8n, ManyChat, webhooks and APIs" },
 ];
 
 const reasons = [
@@ -86,6 +86,8 @@ export default function Home() {
   return (
     <>
       <Hero />
+
+      <Testimonials />
 
       {/* Problem recognition */}
       <section aria-labelledby="pains-title" className="section">
@@ -136,17 +138,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services as a finder */}
+      {/* Services */}
       <section aria-labelledby="services-title" className="on-dark bg-ink-950 text-ink-50">
         <div className="frame section">
           <div className="grid gap-6 md:grid-cols-12 md:items-end">
             <h2 id="services-title" className="h-title md:col-span-7" data-reveal>What do you need done in GHL?</h2>
             <p className="text-ink-300 md:col-span-5" data-reveal style={{ ["--i" as string]: 1 }}>
-              Type the problem and the list narrows to the service that handles it, or tap a service to see what it covers.
+              Pick what you need. Each page covers what is included, how the work runs and what to ask before hiring anyone.
             </p>
           </div>
-          <div className="mt-12 md:mt-16" data-reveal style={{ ["--i" as string]: 2 }}>
-            <ServiceFinder items={finder} />
+          <div className="mt-10 md:mt-14">
+            <ServiceList items={serviceItems} />
           </div>
         </div>
       </section>
@@ -213,8 +215,6 @@ export default function Home() {
       </section>
 
       <ProofStrip cta />
-
-      <Testimonials />
 
       {/* Migrations */}
       <section aria-labelledby="mig-title" className="section">

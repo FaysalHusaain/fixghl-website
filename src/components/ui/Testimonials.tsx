@@ -12,54 +12,97 @@ function Stars({ className = "" }: { className?: string }) {
   );
 }
 
-// One compact review: a single quoted line, then who said it and what we did.
+const initials = (name: string) =>
+  name
+    .replace(/^Dr\.?\s+/, "")
+    .split(/[\s,]+/)
+    .filter((w) => /^[A-Z]/.test(w))
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("");
+
+// One review card: who first (authority), then their words, then the verifiable details.
 function Card({ t, dark = false }: { t: Testimonial; dark?: boolean }) {
   return (
     <figure
-      className={`flex h-full flex-col justify-between gap-7 rounded-[1.5rem] p-6 md:gap-10 md:p-7 ${
+      className={`flex h-full flex-col gap-6 rounded-[1.75rem] p-6 md:p-7 ${
         dark ? "on-dark bg-ink-900 text-ink-50" : "bg-white text-ink-950"
       }`}
     >
-      <div>
-        <Stars className={dark ? "text-gold-500" : "text-ink-950"} />
-        <blockquote className="font-display mt-5 text-[1.25rem] font-medium leading-[1.35] tracking-[-0.015em]">
-          {t.quote}
-        </blockquote>
-      </div>
-      <figcaption className="text-small">
-        <span className="block font-semibold">{t.client ?? t.project}</span>
-        <span className={`mt-0.5 block ${dark ? "text-ink-400" : "text-ink-600"}`}>
-          {t.country} · {t.client ? `${t.project} · ` : ""}
-          {t.duration}
+      <figcaption className="flex items-center gap-3.5">
+        <span
+          aria-hidden
+          className="grid size-12 shrink-0 place-items-center rounded-full bg-ink-950 font-display text-[1rem] font-semibold tracking-[-0.01em] text-gold-500"
+        >
+          {initials(t.name)}
+        </span>
+        <span className="min-w-0">
+          <span className="block font-semibold leading-tight">{t.name}</span>
+          <span className={`mt-1 block text-small ${dark ? "text-ink-400" : "text-ink-600"}`}>{t.role ?? t.country}</span>
         </span>
       </figcaption>
+      <blockquote className="font-display flex-1 text-[1.125rem] font-medium leading-[1.35] tracking-[-0.015em] md:text-[1.25rem]">
+        “{t.quote}”
+      </blockquote>
+      <div className={`flex flex-col gap-1.5 text-small ${dark ? "text-ink-300" : "text-ink-600"}`}>
+        <span className="flex items-center gap-2 whitespace-nowrap">
+          <Stars className={dark ? "text-gold-500" : "text-ink-950"} />
+          <span>Verified Fiverr review</span>
+        </span>
+        <span>
+          {t.project} · {t.duration}
+          {t.role ? ` · ${t.country}` : ""}
+        </span>
+      </div>
     </figure>
   );
 }
 
+// Continuous, slow moving row (Apple-style). Pauses on hover and touch; static and scrollable with reduced motion.
+function Marquee({ items, reverse = false }: { items: Testimonial[]; reverse?: boolean }) {
+  const row = (hidden: boolean) =>
+    items.map((t) => (
+      <li key={`${t.id}-${hidden}`} aria-hidden={hidden || undefined} className="w-[17.5rem] shrink-0 md:w-[22rem]">
+        <Card t={t} />
+      </li>
+    ));
+  return (
+    <div className="marquee group">
+      <ul className={`marquee-track flex w-max gap-4 ${reverse ? "marquee-reverse" : ""}`}>
+        {row(false)}
+        {row(true)}
+      </ul>
+    </div>
+  );
+}
+
 export function Testimonials() {
+  const half = Math.ceil(testimonials.length / 2);
   return (
     <section aria-labelledby="reviews-title" className="overflow-hidden bg-ink-100">
-      <div className="frame section">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <h2 id="reviews-title" className="h-title" data-reveal>What clients say</h2>
-          <p className="flex items-center gap-3 text-small text-ink-700 md:text-body" data-reveal style={{ ["--i" as string]: 1 }}>
-            <Stars className="text-ink-950" />
-            Five-star reviews from Fiverr clients
-          </p>
+      <div className="frame pb-10 pt-[var(--section)] md:pb-14">
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h2 id="reviews-title" className="h-title" data-reveal>Trusted by coaches, creators and business owners</h2>
+          </div>
+          <div className="flex items-center gap-4" data-reveal style={{ ["--i" as string]: 1 }}>
+            <span className="font-display text-[2.75rem] font-semibold leading-none tracking-[-0.04em]">5.0</span>
+            <span className="text-small leading-snug text-ink-700">
+              <Stars className="mb-1.5 text-ink-950" />
+              <span className="block whitespace-nowrap">Five-star Fiverr reviews,</span>
+              <span className="block whitespace-nowrap">quoted word for word</span>
+            </span>
+          </div>
         </div>
-        <ul
-          aria-label="Client reviews"
-          tabIndex={0}
-          className="scrollbar-none -mx-[var(--gutter)] mt-10 flex snap-x snap-mandatory scroll-px-[var(--gutter)] gap-3 overflow-x-auto px-[var(--gutter)] pb-1 md:mx-0 md:mt-14 md:grid md:grid-cols-2 md:overflow-visible md:px-0 lg:grid-cols-3"
-        >
-          {testimonials.map((t, i) => (
-            <li key={t.id} data-reveal style={{ ["--i" as string]: i % 3 }} className="w-[84%] shrink-0 snap-start sm:w-[60%] md:w-auto">
-              <Card t={t} />
-            </li>
-          ))}
-        </ul>
-        <p className="mt-4 text-small text-ink-600 md:hidden" aria-hidden>Swipe for more</p>
+      </div>
+      <div className="flex flex-col gap-4 pb-[var(--section)]" data-reveal style={{ ["--i" as string]: 2 }}>
+        <div className="md:hidden">
+          <Marquee items={testimonials} />
+        </div>
+        <div className="hidden flex-col gap-4 md:flex">
+          <Marquee items={testimonials.slice(0, half)} />
+          <Marquee items={testimonials.slice(half)} reverse />
+        </div>
       </div>
     </section>
   );

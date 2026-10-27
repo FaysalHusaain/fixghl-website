@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileBookBar } from "@/components/layout/MobileBookBar";
 import { Analytics } from "@/components/analytics/Analytics";
 import { Reveal } from "@/components/analytics/Reveal";
+import { ScrollTop } from "@/components/analytics/ScrollTop";
 import { JsonLd, organization, website } from "@/lib/schema";
 import { site } from "@/lib/site";
 import { topServices, migrationServices } from "@/content/services";
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <MobileBookBar />
         <Analytics />
         <Reveal />
+        <ScrollTop />
         {process.env.VERCEL && (
           <>
             <VercelAnalytics />

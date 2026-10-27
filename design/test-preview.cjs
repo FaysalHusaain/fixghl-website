@@ -43,23 +43,15 @@ const URL = 'file:///tmp/claude-0/spa.html';
       }
     }
     console.log(vp.width, 'checked pages', ids.length, 'unique links', seen.size);
-    // 3. finder chips
+    // 3. services list row opens the right page at the top
     await p.evaluate(() => { history.pushState(null,'','#home'); window.dispatchEvent(new PopStateEvent('popstate')); });
-    const expect = { 'workflow not firing': 'GHL fixes', 'emails in spam': 'GHL fixes', 'moving from ClickFunnels': 'Migrations', 'SaaS mode': 'SaaS mode & white-label', 'Stripe not syncing': 'Integrations' };
-    for (const [chip, top] of Object.entries(expect)) {
-      await p.locator(`[data-finder-chip="${chip}"]`).click();
-      const first = await p.locator('[data-finder-item]:not([hidden]) span.font-display').first().textContent();
-      if (first !== top) fails.push(`${vp.width} chip "${chip}": top result ${first}, expected ${top}`);
-    }
-    await p.locator('[data-finder-input]').fill('zzzz');
-    if (!(await p.getByText('Nothing matches that yet').isVisible())) fails.push(`${vp.width} finder empty state missing`);
-    await p.locator('[data-finder-input]').fill('');
-    await p.locator('[data-finder-input]').type('kajabi');
-    const k = await p.locator('[data-finder-item]:not([hidden]) span.font-display').first().textContent();
-    if (k !== 'Migrations') fails.push(`${vp.width} typing kajabi -> ${k}`);
-    // 4. finder row click goes to page top
-    await p.locator('[data-finder-item]:not([hidden]) a').first().click();
-    if ((await p.evaluate(() => location.hash)) !== '#services-migrations' || (await p.evaluate(() => scrollY)) !== 0) fails.push(`${vp.width} finder row click wrong`);
+    const row = p.locator('main a[href="#services-migrations"]').filter({ visible: true }).first();
+    await row.scrollIntoViewIfNeeded(); await row.click(); await p.waitForTimeout(80);
+    if ((await p.evaluate(() => location.hash)) !== '#services-migrations' || (await p.evaluate(() => scrollY)) !== 0) fails.push(`${vp.width} service row click wrong`);
+    // 4. reviews marquee present and animating (unless reduced motion)
+    await p.evaluate(() => { history.pushState(null,'','#home'); window.dispatchEvent(new PopStateEvent('popstate')); });
+    const anim = await p.evaluate(() => { const t = [...document.querySelectorAll('.marquee-track')].find(e => e.offsetParent); return t ? getComputedStyle(t).animationName : 'none'; });
+    if (anim !== 'marquee') fails.push(`${vp.width} reviews marquee not animating (${anim})`);
     // 5. mobile menu
     if (vp.width < 800) {
       await p.locator('[aria-controls="mobile-menu"]').click();

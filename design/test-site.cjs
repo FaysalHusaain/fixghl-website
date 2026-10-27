@@ -17,12 +17,6 @@ const { chromium } = require('playwright');
         if (href.includes('#describe') && !(await p.locator('#book-page-panel-write').isVisible())) fails.push(`${vp.width} ${start} -> ${href}: form tab closed`);
       }
     }
-    await p.goto('http://localhost:3100/', { waitUntil: 'networkidle' });
-    for (const [chip, top] of [['moving from ClickFunnels', 'Migrations'], ['SaaS mode', 'SaaS mode & white-label'], ['Stripe not syncing', 'Integrations'], ['workflow not firing', 'GHL fixes']]) {
-      await p.locator(`[data-finder-chip="${chip}"]`).click(); await p.waitForTimeout(100);
-      const first = await p.locator('[data-finder-item] span.font-display').first().textContent();
-      if (first !== top) fails.push(`${vp.width} chip ${chip}: ${first}`);
-    }
     await p.close();
   }
   console.log('clicked', n, fails.length ? 'FAILURES:\n' + fails.join('\n') : 'ALL REAL-SITE CHECKS PASSED');
