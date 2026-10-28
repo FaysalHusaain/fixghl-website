@@ -191,17 +191,17 @@ body { background: #FFFFFF !important; }
 #appointment_widgets--revamp .appointment_widgets--revamp--steps.step-form { max-height: none !important; }
 /* Approved fixes (details step):
    3. "Confirm my call" sits 24px below the last field, as wide as the fields. GHL pins the button row to the
-      card's bottom edge, so the step reserves room for the 24px gap, the 52px button and GHL's 20px edge,
+      card's bottom edge, so the step reserves room for the 24px gap, the 52px button and 32px below it,
       and the card may grow to hold it. */
-#appointment_widgets--revamp .appointment_widgets--revamp--inner:has(.step-form) { height: auto !important; max-height: none !important; }
+#appointment_widgets--revamp .appointment_widgets--revamp--inner:has(.step-form) { height: auto !important; min-height: 0 !important; max-height: none !important; }
 #appointment_widgets--revamp #_builder-form .form-field-wrapper:has(textarea),
 #appointment_widgets--revamp #_builder-form .payment-block,
 #appointment_widgets--revamp #_builder-form .form-field-wrapper:has(.form-builder--btn-submit) { margin-bottom: 0 !important; }
 #appointment_widgets--revamp #_builder-form .form-builder--btn-submit { margin-top: 0 !important; }
 #appointment_widgets--revamp #_builder-form .fields-container,
 #appointment_widgets--revamp #_builder-form.form-builder--wrap { padding-bottom: 0 !important; }
-#appointment_widgets--revamp .appointment_widgets--revamp--steps.step-form { padding-bottom: 73px !important; }
-#appointment_widgets--revamp .appointment_widgets--revamp--booking:has(.step-form) > .widgets-action-buttons { width: auto !important; padding-left: 0 !important; padding-right: 0 !important; }
+#appointment_widgets--revamp .appointment_widgets--revamp--steps.step-form { padding-bottom: 85px !important; }
+#appointment_widgets--revamp .appointment_widgets--revamp--booking:has(.step-form) > .widgets-action-buttons { width: auto !important; padding-left: 0 !important; padding-right: 0 !important; bottom: 32px !important; }
 #appointment_widgets--revamp.appointment_widgets-sm--revamp .appointment_widgets--revamp--booking:has(.step-form) > .widgets-action-buttons { left: 51px !important; right: 51px !important; }
 #appointment_widgets--revamp.appointment_widgets-md--revamp .appointment_widgets--revamp--booking:has(.step-form) > .widgets-action-buttons { left: 81px !important; right: 81px !important; }
 #appointment_widgets--revamp.appointment_widgets-lg--revamp .appointment_widgets--revamp--booking:has(.step-form) > .widgets-action-buttons,
@@ -240,4 +240,20 @@ body { background: #FFFFFF !important; }
   vertical-align: top !important;
 }
 #appointment_widgets--revamp #_builder-form .multi_select_form .multiselect__select { height: 50px !important; }
+/* 5. Details step header: back arrow and "Enter details" on one row, 24px from the card top, heading's
+      left edge on the field edge, arrow just left of it. */
+#appointment_widgets--revamp .appointment_widgets--revamp--container:has(.step-form) .appointment_widgets--revamp--navigation-container { padding-top: 23px !important; }
+#appointment_widgets--revamp .appointment_widgets--revamp--container:has(.step-form) .appointment_widgets--revamp--back-button { position: relative; z-index: 2; }
+#appointment_widgets--revamp .appointment_widgets--revamp--steps.step-form { margin-top: -35px !important; padding-top: 0 !important; }
+#appointment_widgets--revamp.appointment_widgets-sm--revamp .appointment_widgets--revamp--container:has(.step-form) .appointment_widgets--revamp--navigation-container { padding-left: 3px !important; }
+#appointment_widgets--revamp.appointment_widgets-md--revamp .appointment_widgets--revamp--container:has(.step-form) .appointment_widgets--revamp--navigation-container { padding-left: 29px !important; }
+#appointment_widgets--revamp.appointment_widgets-lg--revamp .appointment_widgets--revamp--container:has(.step-form) .appointment_widgets--revamp--navigation-container,
+#appointment_widgets--revamp.appointment_widgets-xl--revamp .appointment_widgets--revamp--container:has(.step-form) .appointment_widgets--revamp--navigation-container { padding-left: 99px !important; }
+#appointment_widgets--revamp.appointment_widgets-sm--revamp .step-form .custom-form-title,
+#appointment_widgets--revamp.appointment_widgets-lg--revamp .step-form .custom-form-title,
+#appointment_widgets--revamp.appointment_widgets-xl--revamp .step-form .custom-form-title { padding-left: 41px !important; }
+#appointment_widgets--revamp.appointment_widgets-md--revamp .step-form .custom-form-title { padding-left: 61px !important; }
+
+/* 6. "What's going on?" box 110px tall. */
+#appointment_widgets--revamp #_builder-form textarea.form-control { height: 110px !important; min-height: 110px !important; }
 </style>
