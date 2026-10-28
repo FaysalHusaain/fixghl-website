@@ -22,6 +22,10 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // GoHighLevel affiliate link. permanent: false answers with a 307.
+  async redirects() {
+    return [{ source: "/try-ghl", destination: "https://www.gohighlevel.com/highlevel-bootcamp?fp_ref=faisal13&fp_sid=fixghl", permanent: false }];
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

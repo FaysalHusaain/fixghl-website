@@ -18,7 +18,7 @@ export const site = {
   sameAs: [] as string[], // Add social profile URLs here when they exist
   legalEntity: "FixGHL",
   calendarUrl: process.env.NEXT_PUBLIC_GHL_CALENDAR_URL || "",
-  affiliateUrl: process.env.NEXT_PUBLIC_GHL_AFFILIATE_URL || "",
+  gaId: "G-7MHF0P2H0Z",
 } as const;
 
 export const absoluteUrl = (path = "/") => `${site.url}${path === "/" ? "" : path}`;

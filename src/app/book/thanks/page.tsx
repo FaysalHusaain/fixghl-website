@@ -3,6 +3,7 @@ import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
 import { guides } from "@/content/guides";
 import { Icon } from "@/components/ui/Icon";
+import { LeadEvent } from "./LeadEvent";
 
 export const metadata: Metadata = pageMetadata({
   title: "Thanks, We Have Your Details | FixGHL",
@@ -14,6 +15,7 @@ export const metadata: Metadata = pageMetadata({
 export default function Page() {
   return (
     <>
+      <LeadEvent />
       <section className="on-dark bg-ink-950 text-ink-50">
         <div className="frame section">
           <span className="grid size-14 place-items-center rounded-full bg-gold-500 text-ink-950"><Icon name="check" className="size-7" /></span>

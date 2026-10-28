@@ -1,14 +1,8 @@
 "use client";
 
-import Script from "next/script";
 import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
-import { track } from "@/lib/analytics";
-
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-const KEY = "fixghl-consent";
-// Hosts that identify AI assistants in document.referrer. Sent as a GA4 event parameter (ai_source).
-const AI_REFERRERS = ["chatgpt.com", "chat.openai.com", "perplexity.ai", "gemini.google.com", "copilot.microsoft.com", "claude.ai"];
+import { CONSENT_KEY as KEY, track } from "@/lib/analytics";
 
 const noop = () => () => {};
 
@@ -38,18 +32,8 @@ export function Analytics() {
     setChoice(value);
   };
 
-  if (!GA_ID) return null;
-
-  const aiSource = typeof document !== "undefined" ? AI_REFERRERS.find((h) => document.referrer.includes(h)) : undefined;
-
   return (
     <>
-      <Script id="ga-consent" strategy="afterInteractive">
-        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;
-gtag('consent','default',{analytics_storage:${JSON.stringify(readConsent() === "granted" ? "granted" : "denied")},ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
-gtag('js',new Date());gtag('config','${GA_ID}',{anonymize_ip:true${aiSource ? `,ai_source:'${aiSource}'` : ""}});`}
-      </Script>
-      <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
       {consent === null && (
         <div
           role="region"

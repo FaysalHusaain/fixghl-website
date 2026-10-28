@@ -2,12 +2,13 @@
 
 ## Before or at launch
 - [ ] Deploy to Vercel (see README) and connect fixghl.com
-- [ ] Env: NEXT_PUBLIC_GHL_CALENDAR_URL=https://link.codenovahq.com/widget/booking/EJK8Z8tRUS73r8KUbzFV, then Redeploy (until set, the booking box offers email booking at hello@fixghl.com)
+- [x] GHL calendar and form embedded on /book and the homepage
 - [ ] Paste design/ghl-calendar-custom-code.html into the GHL calendar Custom code box (replace any old code)
 - [ ] Env: GHL_FORM_WEBHOOK_URL (the "Send details" form needs it in production)
-- [ ] Env: NEXT_PUBLIC_GA_ID; mark calendar_booked and form_submit as key events; register ai_source dimension
+- [x] GA4 G-7MHF0P2H0Z live, generate_lead fires on /book/thanks
+- [ ] GA4: mark generate_lead as a key event; register ai_source and method custom dimensions
 - [ ] Env: GOOGLE_SITE_VERIFICATION, BING_SITE_VERIFICATION; submit sitemap; run scripts/indexnow.mjs
-- [ ] Env (optional): NEXT_PUBLIC_GHL_AFFILIATE_URL shows the trial button on /try-ghl
+- [x] /try-ghl redirects (307) to the GoHighLevel affiliate link
 - [ ] Test a real booking and confirm the GHL calendar postMessage triggers calendar_booked (see README)
 
 ## Review when convenient

@@ -51,11 +51,22 @@ export function Footer() {
               <div key={g.title}>
                 <p className="text-small font-semibold text-ink-50">{g.title}</p>
                 <ul className="mt-4 flex flex-col gap-1 text-small">
-                  {g.links.map((l) => (
-                    <li key={l.href}>
-                      <Link href={l.href} className="inline-block py-1.5 transition-colors hover:text-ink-50">{l.label}</Link>
-                    </li>
-                  ))}
+                  {g.links.map((l) =>
+                    l.href === "/try-ghl" ? (
+                      <li key={l.href}>
+                        <a href="/try-ghl" rel="sponsored nofollow" data-track="affiliate_click" data-track-location="footer" className="inline-block py-1.5 transition-colors hover:text-ink-50">
+                          {l.label}
+                        </a>
+                        <span className="mt-1 block max-w-[24ch] text-[0.8125rem] leading-snug text-ink-400">
+                          We may earn a commission if you sign up through our link.
+                        </span>
+                      </li>
+                    ) : (
+                      <li key={l.href}>
+                        <Link href={l.href} className="inline-block py-1.5 transition-colors hover:text-ink-50">{l.label}</Link>
+                      </li>
+                    )
+                  )}
                 </ul>
               </div>
             ))}

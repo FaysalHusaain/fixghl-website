@@ -43,7 +43,7 @@ export default function Page() {
             <h2>Are we part of HighLevel?</h2>
             <p>
               No. FixGHL is independent and is not affiliated with or endorsed by HighLevel Inc. We recommend GoHighLevel because we use it
-              every day, and we may earn a commission if you sign up through <Link href="/try-ghl">our trial link</Link>.
+              every day, and we may earn a commission if you sign up through <a href="/try-ghl" rel="sponsored nofollow" data-track="affiliate_click" data-track-location="about">our trial link</a>.
             </p>
             <h2>How do I contact FixGHL?</h2>
             <p>

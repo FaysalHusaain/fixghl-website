@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { LegalPage } from "@/components/ui/LegalPage";
 import { pageMetadata } from "@/lib/seo";
 
@@ -9,8 +8,8 @@ export default function Page() {
   return (
     <LegalPage title="Affiliate disclosure" path="/affiliate-disclosure" updated="2026-10-26">
       <p>
-        FixGHL is a member of the HighLevel affiliate program. If you sign up for GoHighLevel through a link on this site, such as the button on
-        our <Link href="/try-ghl">Try GoHighLevel</Link> page, we may earn a commission from HighLevel. You pay the same price either way.
+        FixGHL is a member of the HighLevel affiliate program. If you sign up for GoHighLevel through a link on this site, such as our{" "}
+        <a href="/try-ghl" rel="sponsored nofollow" data-track="affiliate_click" data-track-location="affiliate_disclosure">Try GoHighLevel</a> link, we may earn a commission from HighLevel. You pay the same price either way.
       </p>
       <h2>How does it affect our advice?</h2>
       <p>

@@ -5,7 +5,10 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBookBar } from "@/components/layout/MobileBookBar";
+import Script from "next/script";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@/components/analytics/Analytics";
+import { consentDefaults } from "@/lib/analytics";
 import { Reveal } from "@/components/analytics/Reveal";
 import { ScrollTop } from "@/components/analytics/ScrollTop";
 import { JsonLd, organization, website } from "@/lib/schema";
@@ -42,6 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${interTight.variable} antialiased`}>
       <body>
+        <Script id="ga-consent" strategy="beforeInteractive">{consentDefaults}</Script>
         <a
           href="#main"
           className="sr-only z-[60] rounded-full bg-gold-500 px-5 py-3 font-semibold text-ink-950 focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
@@ -53,6 +57,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Footer />
         <MobileBookBar />
         <Analytics />
+        <GoogleAnalytics gaId={site.gaId} />
         <Reveal />
         <ScrollTop />
         {process.env.VERCEL && (

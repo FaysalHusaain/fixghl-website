@@ -17,7 +17,6 @@ export const staticPages: RouteEntry[] = [
   { path: "/compare", section: "Compare", title: "GoHighLevel comparisons", description: "GHL compared with the platforms people move from." },
   { path: "/glossary", section: "Glossary", title: "GoHighLevel glossary", description: "GHL terms, defined plainly." },
   { path: "/book", section: "Book", title: "Book a free 30-minute GHL call", description: "Book a call or send us the details." },
-  { path: "/try-ghl", section: "Studio", title: "Try GoHighLevel", description: "Start a GoHighLevel trial." },
   { path: "/privacy", section: "Legal", title: "Privacy policy", description: "How FixGHL handles personal data." },
   { path: "/terms", section: "Legal", title: "Terms of service", description: "Terms for using this site and our services." },
   { path: "/affiliate-disclosure", section: "Legal", title: "Affiliate disclosure", description: "How our GoHighLevel affiliate link works." },

@@ -2,14 +2,16 @@
 
 import { useRouter } from "next/navigation";
 import Script from "next/script";
-import { useEffect, useRef, useState, type FormEvent } from "react";
-import { needOptions, urgencyOptions, platformOptions } from "@/content/lead";
+import { useEffect, useRef, useState } from "react";
 import { track } from "@/lib/analytics";
-import { Icon } from "@/components/ui/Icon";
 
-const CALENDAR_URL = process.env.NEXT_PUBLIC_GHL_CALENDAR_URL || "";
-// GHL calendar embeds are served from these hosts. [[VERIFY: booking postMessage payload in DevTools with a test booking]]
-const GHL_ORIGIN = /(leadconnectorhq\.com|msgsndr\.com|gohighlevel\.com|highlevel\.com)$/i;
+// Live GHL embeds. GHL's embed script (form_embed.js) talks to each widget's built-in resizer, so both iframes
+// always match their content: no fixed heights and no inner scrolling. Styling lives in GHL's "Custom code" boxes.
+const GHL_HOST = "https://link.codenovahq.com";
+const CALENDAR_ID = "EJK8Z8tRUS73r8KUbzFV";
+const FORM_ID = "82ZHqKAiWU0WMYKDwZOr";
+// Booking and form messages arrive from these hosts.
+const GHL_ORIGIN = /(codenovahq\.com|leadconnectorhq\.com|msgsndr\.com|gohighlevel\.com|highlevel\.com)$/i;
 
 type Tab = "call" | "write";
 
@@ -17,6 +19,18 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
   const [tab, setTab] = useState<Tab>("call");
   const router = useRouter();
   const H = headingLevel === 2 ? "h2" : "h3";
+  const root = useRef<HTMLDivElement>(null);
+  const [load, setLoad] = useState(false);
+
+  // Load both widgets as the module nears the viewport.
+  useEffect(() => {
+    if (!root.current) return;
+    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && (setLoad(true), io.disconnect()), {
+      rootMargin: "600px 0px",
+    });
+    io.observe(root.current);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const sync = () => {
@@ -52,7 +66,7 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
   ];
 
   return (
-    <div id={id} className="rounded-[1.75rem] bg-ink-50 p-2 text-ink-950 md:p-3">
+    <div id={id} ref={root} className="rounded-[1.75rem] bg-ink-50 p-2 text-ink-950 md:p-3">
       <div role="tablist" aria-label="How would you like to start?" className="grid grid-cols-2 gap-1 rounded-[1.25rem] bg-ink-100 p-1">
         {tabs.map((t) => (
           <button
@@ -82,197 +96,51 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
 
       <div id={`${id}-panel-call`} role="tabpanel" aria-labelledby={`${id}-tab-call`} hidden={tab !== "call"} className="p-3 pt-6 md:p-6">
         <H className="h-sub">Pick a time for a free 30-minute call</H>
-        {CALENDAR_URL && (
-          <p className="mt-2 max-w-[60ch] text-ink-700">Pick a day and a time, then tell us briefly what you need.</p>
-        )}
-        <CalendarEmbed />
+        <p className="mt-2 max-w-[60ch] text-ink-700">Pick a day and a time, then tell us briefly what you need.</p>
+        <div className="mt-6">
+          {load ? (
+            <iframe
+              src={`${GHL_HOST}/widget/booking/${CALENDAR_ID}`}
+              id={`${CALENDAR_ID}_1793230740499`}
+              title="Book a free 30-minute GHL call with FixGHL"
+              allow="payment"
+              scrolling="no"
+              style={{ width: "100%", border: "none", overflow: "hidden" }}
+            />
+          ) : (
+            <div aria-hidden className="min-h-[36rem] animate-pulse rounded-[20px] bg-ink-100 md:min-h-[44rem]" />
+          )}
+        </div>
       </div>
 
       <div id={`${id}-panel-write`} role="tabpanel" aria-labelledby={`${id}-tab-write`} hidden={tab !== "write"} className="p-3 pt-6 md:p-6">
         <H className="h-sub">Send us the details</H>
         <p className="mt-2 max-w-[60ch] text-ink-700">Tell us what is happening. We reply by email with next steps or a time to talk.</p>
-        <LeadForm />
+        <div className="mt-4">
+          {load && (
+            <iframe
+              src={`${GHL_HOST}/widget/form/${FORM_ID}`}
+              id={`inline-${FORM_ID}`}
+              title="fixGHL"
+              style={{ width: "100%", height: "100%", border: "none", borderRadius: 8 }}
+              data-layout="{'id':'INLINE'}"
+              data-trigger-type="alwaysShow"
+              data-trigger-value=""
+              data-activation-type="alwaysActivated"
+              data-activation-value=""
+              data-deactivation-type="neverDeactivate"
+              data-deactivation-value=""
+              data-form-name="fixGHL"
+              data-height="532"
+              data-layout-iframe-id={`inline-${FORM_ID}`}
+              data-form-id={FORM_ID}
+              data-cookie-consent="true"
+              data-cookie-consent-provider="auto"
+            />
+          )}
+        </div>
       </div>
+      {load && <Script src={`${GHL_HOST}/js/form_embed.js`} strategy="afterInteractive" />}
     </div>
-  );
-}
-
-// The GHL booking widget, loaded as it nears the viewport. GHL's own embed script (form_embed.js) talks to the
-// widget's built-in resizer, so the iframe always matches the current step's height: no inner scrolling and the
-// Confirm button stays visible below the last field. Styling lives in the calendar's "Custom code" box in GHL.
-const EMBED_SCRIPT = "https://link.msgsndr.com/js/form_embed.js";
-const iframeId = `${CALENDAR_URL.split("/").filter(Boolean).pop() ?? "ghl"}_fixghl`;
-
-function CalendarEmbed() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [load, setLoad] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    if (!CALENDAR_URL || !ref.current) return;
-    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && (setLoad(true), io.disconnect()), {
-      rootMargin: "600px 0px",
-    });
-    io.observe(ref.current);
-    return () => io.disconnect();
-  }, []);
-
-  if (!CALENDAR_URL) {
-    // Shown only until NEXT_PUBLIC_GHL_CALENDAR_URL is set: a working way to book, never a dead end.
-    return (
-      <div className="mt-6 flex flex-col items-start gap-4 rounded-2xl bg-white p-6 md:p-8">
-        <Icon name="calendar" className="size-8 text-ink-950" />
-        <p className="font-semibold">Pick a time by email</p>
-        <p className="text-ink-700">
-          Email <a href="mailto:hello@fixghl.com?subject=Free%2030-minute%20GHL%20call" className="link font-medium text-ink-950">hello@fixghl.com</a> with
-          two or three times that suit you and a line about what you need. We confirm the call by email.
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <div ref={ref} className={`relative mt-6 overflow-hidden rounded-[20px] bg-white ${loaded ? "" : "min-h-[36rem] md:min-h-[49rem]"}`}>
-      {!loaded && (
-        <div aria-hidden className="absolute inset-0 animate-pulse p-6">
-          <div className="h-6 w-1/2 rounded bg-ink-100" />
-          <div className="mt-6 grid grid-cols-7 gap-2">
-            {Array.from({ length: 35 }).map((_, i) => (
-              <div key={i} className="aspect-square rounded-full bg-ink-100" />
-            ))}
-          </div>
-        </div>
-      )}
-      {load && (
-        <>
-          <iframe
-            id={iframeId}
-            src={CALENDAR_URL}
-            title="Book a free 30-minute GHL call with FixGHL"
-            scrolling="no"
-            onLoad={() => setLoaded(true)}
-            className={`block w-full overflow-hidden border-0 transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"}`}
-          />
-          <Script src={EMBED_SCRIPT} strategy="afterInteractive" />
-        </>
-      )}
-    </div>
-  );
-}
-
-function LeadForm() {
-  const router = useRouter();
-  const [need, setNeed] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
-  const [message, setMessage] = useState("");
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.currentTarget).entries());
-    setStatus("sending");
-    setErrors({});
-    try {
-      const res = await fetch("/api/lead", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
-      const json = await res.json();
-      if (res.ok && json.ok) {
-        track("form_submit", { need: String(data.need), urgency: String(data.urgency) });
-        router.push("/book/thanks?via=form");
-        return;
-      }
-      setErrors(json.errors ?? {});
-      setMessage(json.message ?? "Check the highlighted fields and try again.");
-      setStatus("error");
-      const first = Object.keys(json.errors ?? {})[0];
-      if (first) document.getElementById(`lead-${first}`)?.focus();
-    } catch {
-      setMessage("Your message did not go through. Check your connection and try again.");
-      setStatus("error");
-    }
-  }
-
-  const field = "mt-2 block w-full rounded-xl bg-white px-4 py-3.5 text-[1rem] text-ink-950 shadow-[inset_0_0_0_1.5px_var(--color-ink-200)] outline-none transition-shadow placeholder:text-ink-500 focus:shadow-[inset_0_0_0_2px_var(--color-ink-950)] aria-[invalid=true]:shadow-[inset_0_0_0_2px_#b42318]";
-  const label = "text-small font-semibold";
-  const err = (k: string) =>
-    errors[k] ? (
-      <p id={`lead-${k}-error`} className="mt-2 text-small text-[#b42318]">{errors[k]}</p>
-    ) : null;
-
-  return (
-    <form onSubmit={onSubmit} noValidate className="mt-6 grid gap-5 md:grid-cols-2">
-      <div>
-        <label htmlFor="lead-name" className={label}>Name</label>
-        <input id="lead-name" name="name" autoComplete="name" required className={field} aria-invalid={!!errors.name} aria-describedby={errors.name ? "lead-name-error" : undefined} />
-        {err("name")}
-      </div>
-      <div>
-        <label htmlFor="lead-email" className={label}>Email</label>
-        <input id="lead-email" name="email" type="email" inputMode="email" autoComplete="email" required className={field} aria-invalid={!!errors.email} aria-describedby={errors.email ? "lead-email-error" : undefined} />
-        {err("email")}
-      </div>
-      <div>
-        <label htmlFor="lead-need" className={label}>What do you need?</label>
-        <select id="lead-need" name="need" required value={need} onChange={(e) => setNeed(e.target.value)} className={field} aria-invalid={!!errors.need}>
-          <option value="" disabled>Choose one</option>
-          {needOptions.map((o) => <option key={o}>{o}</option>)}
-        </select>
-        {err("need")}
-      </div>
-      {need === "Migration" ? (
-        <div>
-          <label htmlFor="lead-platform" className={label}>Moving from</label>
-          <select id="lead-platform" name="platform" defaultValue="" className={field}>
-            <option value="" disabled>Choose a platform</option>
-            {platformOptions.map((o) => <option key={o}>{o}</option>)}
-          </select>
-        </div>
-      ) : (
-        <div>
-          <label htmlFor="lead-website" className={label}>Website or GHL account URL <span className="font-normal text-ink-600">(optional)</span></label>
-          <input id="lead-website" name="website" inputMode="url" autoComplete="url" placeholder="yourbusiness.com" className={field} aria-invalid={!!errors.website} />
-          {err("website")}
-        </div>
-      )}
-      <fieldset className="md:col-span-2">
-        <legend className={label}>How urgent is it?</legend>
-        <div className="mt-2 grid grid-cols-3 gap-2">
-          {urgencyOptions.map((o) => (
-            <label key={o} className="relative">
-              <input type="radio" name="urgency" value={o} required className="peer sr-only" id={o === urgencyOptions[0] ? "lead-urgency" : undefined} />
-              <span className="flex min-h-12 cursor-pointer items-center justify-center rounded-xl bg-white px-2 text-center text-small font-medium shadow-[inset_0_0_0_1.5px_var(--color-ink-200)] transition-colors peer-checked:bg-ink-950 peer-checked:text-ink-50 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ink-950">
-                {o}
-              </span>
-            </label>
-          ))}
-        </div>
-        {err("urgency")}
-      </fieldset>
-      <div className="md:col-span-2">
-        <label htmlFor="lead-details" className={label}>What is happening?</label>
-        <textarea
-          id="lead-details"
-          name="details"
-          rows={5}
-          required
-          placeholder="For example: our booking reminder workflow stopped sending after we changed the form."
-          className={`${field} resize-y`}
-          aria-invalid={!!errors.details}
-          aria-describedby={errors.details ? "lead-details-error" : undefined}
-        />
-        {err("details")}
-      </div>
-      <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
-        <label htmlFor="lead-company-site">Leave this field empty</label>
-        <input id="lead-company-site" name="company_site" tabIndex={-1} autoComplete="off" />
-      </div>
-      <div className="flex flex-col gap-3 md:col-span-2 md:flex-row md:items-center md:justify-between">
-        <p className="text-small text-ink-600">We use your details only to reply. See our <a href="/privacy" className="link">privacy policy</a>.</p>
-        <button type="submit" disabled={status === "sending"} className="btn btn-ink w-full md:w-auto disabled:opacity-60">
-          {status === "sending" ? "Sending…" : "Send details"}
-          <Icon name="arrow" className="size-4" />
-        </button>
-      </div>
-      <p role="status" aria-live="polite" className="text-small text-[#b42318] md:col-span-2">{status === "error" ? message : ""}</p>
-    </form>
   );
 }
