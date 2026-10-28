@@ -1,0 +1,192 @@
+<style>
+/* FixGHL booking widget skin. Colours, fonts, borders, radius and spacing only: no layout changes. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@600&display=swap');
+
+#appointment_widgets--revamp {
+  --appointment_widgets-primary-color: #08080A !important;
+  --appointment_widgets-background-color: #FFFFFF !important;
+  --appointment_widgets-border-color: #ECE9E4 !important;
+  --appointment_widgets-light-primary-color: #F4F3F1 !important;
+  --appointment_widgets-text-color: #08080A !important;
+  --appointment_widgets-light-text-color: #65625D !important;
+  --fx-ring: 0 0 0 2px #FFFFFF, 0 0 0 5px rgba(255, 222, 89, .55);
+}
+#appointment_widgets--revamp,
+#appointment_widgets--revamp *:not(svg):not(path) {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+}
+body { background: #FFFFFF !important; }
+
+/* Card */
+#appointment_widgets--revamp .appointment_widgets--revamp--inner {
+  background: #FFFFFF !important;
+  border: 1px solid #ECE9E4 !important;
+  border-radius: 20px !important;
+  box-shadow: none !important;
+}
+
+/* Headings */
+#appointment_widgets--revamp .label-select-date,
+#appointment_widgets--revamp .custom-form-title {
+  font-family: 'Inter Tight', 'Inter', sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.025em !important;
+  color: #08080A !important;
+}
+
+/* Month header */
+#appointment_widgets--revamp .vdpPeriodControl > button {
+  font-family: 'Inter Tight', 'Inter', sans-serif !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+  color: #08080A !important;
+}
+#appointment_widgets--revamp .arrowPrevious,
+#appointment_widgets--revamp .arrowNext {
+  background: #FFFFFF !important;
+  border: 1px solid #ECE9E4 !important;
+  border-radius: 999px !important;
+  color: #08080A !important;
+  box-shadow: none !important;
+  transition: border-color .16s ease;
+}
+#appointment_widgets--revamp .arrowPrevious:hover,
+#appointment_widgets--revamp .arrowNext:hover { border-color: #08080A !important; }
+#appointment_widgets--revamp .arrowPrevious.disabled { opacity: .35 !important; }
+
+/* Date grid */
+#appointment_widgets--revamp .vdpHeadCellContent { color: #65625D !important; font-size: 13px !important; font-weight: 500 !important; }
+#appointment_widgets--revamp .vdpCell .vdpCellContent { font-size: 15px !important; transition: background-color .16s ease, color .16s ease; }
+#appointment_widgets--revamp .vdpCell.disabled .vdpCellContent { color: #A8A59F !important; background: transparent !important; font-weight: 400 !important; }
+#appointment_widgets--revamp .vdpCell.selectable .vdpCellContent { background: #F4F3F1 !important; color: #08080A !important; font-weight: 600 !important; }
+#appointment_widgets--revamp .vdpCell.selectable:hover .vdpCellContent { background: #E5E4E1 !important; }
+#appointment_widgets--revamp .vdpCell.selected .vdpCellContent,
+#appointment_widgets--revamp .vdpCell.selected:hover .vdpCellContent { background: #08080A !important; color: #FFFFFF !important; }
+
+/* Time slots: the time is the span; "Select" appears beside the chosen time */
+#appointment_widgets--revamp .widgets-time-slot > span {
+  background: #FFFFFF !important;
+  border: 1px solid #ECE9E4 !important;
+  border-radius: 999px !important;
+  color: #08080A !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  font-variant-numeric: tabular-nums;
+  box-shadow: none !important;
+  transition: border-color .16s ease, background-color .16s ease, color .16s ease;
+}
+#appointment_widgets--revamp .widgets-time-slot:hover > span { border-color: #08080A !important; }
+#appointment_widgets--revamp .widgets-time-slot.actived > span {
+  background: #08080A !important;
+  border-color: #08080A !important;
+  color: #FFFFFF !important;
+}
+#appointment_widgets--revamp .widgets-time-slot .selected-slot {
+  background: #FFFFFF !important;
+  border: 1px solid #08080A !important;
+  border-radius: 999px !important;
+  color: #08080A !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  transition: background-color .16s ease, color .16s ease;
+}
+#appointment_widgets--revamp .widgets-time-slot .selected-slot:hover { background: #08080A !important; color: #FFFFFF !important; }
+#appointment_widgets--revamp .widgets-time-slot .selected-slot > div::after { content: " \2192"; }
+
+/* Time zone */
+#appointment_widgets--revamp .timezone-label { color: #08080A !important; font-size: 14px !important; font-weight: 600 !important; }
+#appointment_widgets--revamp .multi_select_calendar .multiselect__single { color: #4B4944 !important; font-size: 14px !important; }
+
+/* Fields: text, email, textarea, dropdowns */
+#appointment_widgets--revamp .form-control,
+#appointment_widgets--revamp .multiselect__tags {
+  background: #FFFFFF !important;
+  border: 1px solid #ECE9E4 !important;
+  border-radius: 14px !important;
+  color: #08080A !important;
+  box-shadow: none !important;
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+#appointment_widgets--revamp .form-control { font-size: 16px !important; }
+#appointment_widgets--revamp .form-control:hover,
+#appointment_widgets--revamp .multiselect:hover .multiselect__tags { border-color: #A8A59F !important; }
+#appointment_widgets--revamp .form-control:focus,
+#appointment_widgets--revamp .multiselect--active .multiselect__tags {
+  border-color: #08080A !important;
+  box-shadow: 0 0 0 4px rgba(255, 222, 89, .55) !important;
+  outline: none !important;
+}
+#appointment_widgets--revamp .form-control::placeholder,
+#appointment_widgets--revamp .multiselect__placeholder,
+#appointment_widgets--revamp .multiselect__input::placeholder { color: #7F7C76 !important; }
+#appointment_widgets--revamp .multiselect__single { color: #08080A !important; }
+#appointment_widgets--revamp label,
+#appointment_widgets--revamp .field-label { color: #08080A !important; font-size: 14px !important; font-weight: 600 !important; }
+#appointment_widgets--revamp label span { color: #65625D !important; }
+
+/* Dropdown lists */
+#appointment_widgets--revamp .multiselect__content-wrapper,
+#teleports .multiselect__content-wrapper {
+  background: #FFFFFF !important;
+  border: 1px solid #ECE9E4 !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+}
+#appointment_widgets--revamp .multiselect__option,
+#teleports .multiselect__option { color: #08080A !important; font-size: 14px !important; }
+#appointment_widgets--revamp .multiselect__option--highlight,
+#teleports .multiselect__option--highlight { background: #F4F3F1 !important; color: #08080A !important; }
+#appointment_widgets--revamp .multiselect__option--selected,
+#teleports .multiselect__option--selected { background: #08080A !important; color: #FFFFFF !important; font-weight: 600 !important; }
+#appointment_widgets--revamp .multiselect__option::after,
+#teleports .multiselect__option::after { display: none !important; }
+
+/* Buttons */
+#appointment_widgets--revamp .hl_button,
+#appointment_widgets--revamp .btn-schedule {
+  background: #08080A !important;
+  border: 1px solid #08080A !important;
+  border-radius: 999px !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+  transition: background-color .16s ease;
+}
+#appointment_widgets--revamp .hl_button:hover,
+#appointment_widgets--revamp .btn-schedule:hover { background: #2E2C29 !important; border-color: #2E2C29 !important; }
+#appointment_widgets--revamp .hl_button .button-text > div,
+#appointment_widgets--revamp .btn-schedule { font-size: 15px !important; font-weight: 600 !important; }
+#appointment_widgets--revamp .hl_button .button-text > div::after,
+#appointment_widgets--revamp .btn-schedule::after { content: "\2192"; margin-left: 6px; }
+#appointment_widgets--revamp .appointment_widgets--revamp--back-button {
+  background: #FFFFFF !important;
+  border: 1px solid #ECE9E4 !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  color: #08080A !important;
+}
+#appointment_widgets--revamp .appointment_widgets--revamp--back-button:hover { border-color: #08080A !important; }
+
+/* Keyboard focus: gold ring on everything clickable */
+#appointment_widgets--revamp button:focus-visible,
+#appointment_widgets--revamp .vdpCell:focus-visible .vdpCellContent {
+  outline: none !important;
+  box-shadow: var(--fx-ring) !important;
+}
+#appointment_widgets--revamp .multiselect:focus,
+#appointment_widgets--revamp .multiselect__input:focus { outline: none !important; box-shadow: none !important; }
+
+/* Approved layout exceptions (2):
+   1. On phones, keep the "What do you need?" list inside the field. */
+@media (max-width: 640px) {
+  #appointment_widgets--revamp .multi_select_form .multiselect__content-wrapper {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+/* 2. No height cap on the details step: the whole form shows and the page embed grows to fit. */
+#appointment_widgets--revamp .appointment_widgets--revamp--steps.step-form { max-height: none !important; }
+</style>

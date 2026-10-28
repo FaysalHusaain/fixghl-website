@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Script from "next/script";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { needOptions, urgencyOptions, platformOptions } from "@/content/lead";
 import { track } from "@/lib/analytics";
@@ -82,10 +83,7 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
       <div id={`${id}-panel-call`} role="tabpanel" aria-labelledby={`${id}-tab-call`} hidden={tab !== "call"} className="p-3 pt-6 md:p-6">
         <H className="h-sub">Pick a time for a free 30-minute call</H>
         {CALENDAR_URL && (
-          <p className="mt-2 max-w-[60ch] text-ink-700">
-            The booking form asks four quick questions: what you need, your current platform if you are moving, how urgent it is, and your
-            website or GHL account, if you want to share it.
-          </p>
+          <p className="mt-2 max-w-[60ch] text-ink-700">Pick a day and a time, then tell us briefly what you need.</p>
         )}
         <CalendarEmbed />
       </div>
@@ -98,6 +96,12 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
     </div>
   );
 }
+
+// The GHL booking widget, loaded as it nears the viewport. GHL's own embed script (form_embed.js) talks to the
+// widget's built-in resizer, so the iframe always matches the current step's height: no inner scrolling and the
+// Confirm button stays visible below the last field. Styling lives in the calendar's "Custom code" box in GHL.
+const EMBED_SCRIPT = "https://link.msgsndr.com/js/form_embed.js";
+const iframeId = `${CALENDAR_URL.split("/").filter(Boolean).pop() ?? "ghl"}_fixghl`;
 
 function CalendarEmbed() {
   const ref = useRef<HTMLDivElement>(null);
@@ -113,39 +117,43 @@ function CalendarEmbed() {
     return () => io.disconnect();
   }, []);
 
+  if (!CALENDAR_URL) {
+    // Shown only until NEXT_PUBLIC_GHL_CALENDAR_URL is set: a working way to book, never a dead end.
+    return (
+      <div className="mt-6 flex flex-col items-start gap-4 rounded-2xl bg-white p-6 md:p-8">
+        <Icon name="calendar" className="size-8 text-ink-950" />
+        <p className="font-semibold">Pick a time by email</p>
+        <p className="text-ink-700">
+          Email <a href="mailto:hello@fixghl.com?subject=Free%2030-minute%20GHL%20call" className="link font-medium text-ink-950">hello@fixghl.com</a> with
+          two or three times that suit you and a line about what you need. We confirm the call by email.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div ref={ref} className={`relative mt-6 overflow-hidden rounded-2xl bg-white ${CALENDAR_URL ? "h-[46rem] md:h-[44rem]" : ""}`}>
-      {!CALENDAR_URL ? (
-        // Shown only until NEXT_PUBLIC_GHL_CALENDAR_URL is set: a working way to book, never a dead end.
-        <div className="flex flex-col items-start gap-4 p-6 md:p-8">
-          <Icon name="calendar" className="size-8 text-ink-950" />
-          <p className="font-semibold">Pick a time by email</p>
-          <p className="text-ink-700">
-            Email <a href="mailto:hello@fixghl.com?subject=Free%2030-minute%20GHL%20call" className="link font-medium text-ink-950">hello@fixghl.com</a> with
-            two or three times that suit you and a line about what you need. We confirm the call by email.
-          </p>
+    <div ref={ref} className={`relative mt-6 overflow-hidden rounded-[20px] bg-white ${loaded ? "" : "min-h-[36rem] md:min-h-[49rem]"}`}>
+      {!loaded && (
+        <div aria-hidden className="absolute inset-0 animate-pulse p-6">
+          <div className="h-6 w-1/2 rounded bg-ink-100" />
+          <div className="mt-6 grid grid-cols-7 gap-2">
+            {Array.from({ length: 35 }).map((_, i) => (
+              <div key={i} className="aspect-square rounded-full bg-ink-100" />
+            ))}
+          </div>
         </div>
-      ) : (
+      )}
+      {load && (
         <>
-          {!loaded && (
-            <div aria-hidden className="absolute inset-0 animate-pulse p-6">
-              <div className="h-6 w-1/2 rounded bg-ink-100" />
-              <div className="mt-6 grid grid-cols-7 gap-2">
-                {Array.from({ length: 35 }).map((_, i) => (
-                  <div key={i} className="aspect-square rounded-lg bg-ink-100" />
-                ))}
-              </div>
-            </div>
-          )}
-          {load && (
-            <iframe
-              src={CALENDAR_URL}
-              title="Book a free 30-minute GHL call with FixGHL"
-              loading="lazy"
-              onLoad={() => setLoaded(true)}
-              className="absolute inset-0 size-full border-0"
-            />
-          )}
+          <iframe
+            id={iframeId}
+            src={CALENDAR_URL}
+            title="Book a free 30-minute GHL call with FixGHL"
+            scrolling="no"
+            onLoad={() => setLoaded(true)}
+            className={`block w-full overflow-hidden border-0 transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"}`}
+          />
+          <Script src={EMBED_SCRIPT} strategy="afterInteractive" />
         </>
       )}
     </div>
