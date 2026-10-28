@@ -189,4 +189,55 @@ body { background: #FFFFFF !important; }
 }
 /* 2. No height cap on the details step: the whole form shows and the page embed grows to fit. */
 #appointment_widgets--revamp .appointment_widgets--revamp--steps.step-form { max-height: none !important; }
+/* Approved fixes (details step):
+   3. "Confirm my call" sits 24px below the last field, as wide as the fields. GHL pins the button row to the
+      card's bottom edge, so the step reserves room for the 24px gap, the 52px button and GHL's 20px edge,
+      and the card may grow to hold it. */
+#appointment_widgets--revamp .appointment_widgets--revamp--inner:has(.step-form) { height: auto !important; max-height: none !important; }
+#appointment_widgets--revamp #_builder-form .form-field-wrapper:has(textarea),
+#appointment_widgets--revamp #_builder-form .payment-block,
+#appointment_widgets--revamp #_builder-form .form-field-wrapper:has(.form-builder--btn-submit) { margin-bottom: 0 !important; }
+#appointment_widgets--revamp #_builder-form .form-builder--btn-submit { margin-top: 0 !important; }
+#appointment_widgets--revamp #_builder-form .fields-container,
+#appointment_widgets--revamp #_builder-form.form-builder--wrap { padding-bottom: 0 !important; }
+#appointment_widgets--revamp .appointment_widgets--revamp--steps.step-form { padding-bottom: 73px !important; }
+#appointment_widgets--revamp .appointment_widgets--revamp--booking:has(.step-form) > .widgets-action-buttons { width: auto !important; padding-left: 0 !important; padding-right: 0 !important; }
+#appointment_widgets--revamp.appointment_widgets-sm--revamp .appointment_widgets--revamp--booking:has(.step-form) > .widgets-action-buttons { left: 51px !important; right: 51px !important; }
+#appointment_widgets--revamp.appointment_widgets-md--revamp .appointment_widgets--revamp--booking:has(.step-form) > .widgets-action-buttons { left: 81px !important; right: 81px !important; }
+#appointment_widgets--revamp.appointment_widgets-lg--revamp .appointment_widgets--revamp--booking:has(.step-form) > .widgets-action-buttons,
+#appointment_widgets--revamp.appointment_widgets-xl--revamp .appointment_widgets--revamp--booking:has(.step-form) > .widgets-action-buttons { left: 151px !important; right: 141px !important; }
+#appointment_widgets--revamp .widgets-action-buttons .btn-schedule {
+  width: 100% !important;
+  height: 52px !important;
+  justify-content: center !important;
+}
+
+/* 4. "What do you need?" is 52px tall like the other fields, text centred. */
+#appointment_widgets--revamp #_builder-form .multi_select_form,
+#appointment_widgets--revamp #_builder-form .multi_select_form .multiselect__tags { min-height: 52px !important; }
+#appointment_widgets--revamp #_builder-form .multi_select_form .multiselect__tags {
+  height: 52px !important;
+  box-sizing: border-box !important;
+  padding: 13px 44px 13px 20px !important;
+}
+#appointment_widgets--revamp #_builder-form .multi_select_form .multiselect__placeholder,
+#appointment_widgets--revamp #_builder-form .multi_select_form .multiselect__single,
+#appointment_widgets--revamp #_builder-form .multi_select_form .multiselect__input {
+  font-size: 16px !important;
+  line-height: 24px !important;
+  min-height: 24px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-indent: 0 !important;
+}
+#appointment_widgets--revamp #_builder-form .multi_select_form .multiselect__placeholder { color: #7F7C76 !important; }
+#appointment_widgets--revamp #_builder-form .multi_select_form .multiselect__single {
+  color: #08080A !important;
+  max-width: 100% !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  vertical-align: top !important;
+}
+#appointment_widgets--revamp #_builder-form .multi_select_form .multiselect__select { height: 50px !important; }
 </style>
