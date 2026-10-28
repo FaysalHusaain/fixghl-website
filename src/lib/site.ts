@@ -17,7 +17,6 @@ export const site = {
   email: "hello@fixghl.com",
   sameAs: [] as string[], // Add social profile URLs here when they exist
   legalEntity: "FixGHL",
-  calendarUrl: process.env.NEXT_PUBLIC_GHL_CALENDAR_URL || "",
   affiliateUrl: process.env.NEXT_PUBLIC_GHL_AFFILIATE_URL || "",
 } as const;
 

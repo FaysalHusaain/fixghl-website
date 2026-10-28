@@ -13,6 +13,7 @@
   --color-ink-800: #2e2c29;
   --color-ink-900: #1b1a18;
   --color-ink-950: #08080a;
+  --color-line: #ece9e4; /* hairline borders on white: booking calendar, form fields */
   --color-gold-400: #ffe680;
   --color-gold-500: #ffde59;
   --color-gold-600: #f2c922;
@@ -157,3 +158,28 @@
   scrollbar-width: none;
   &::-webkit-scrollbar { display: none; }
 }
+
+/* Booking calendar. Black is the only state colour; gold appears only as the keyboard focus ring,
+   drawn outside a 2px black edge so it clears 3:1 on white as well as on black. */
+.bk :focus-visible { outline: 2.5px solid var(--color-gold-500); outline-offset: 2px; }
+.bk button:focus-visible { box-shadow: 0 0 0 2px var(--color-ink-950); }
+.bk-step { animation: bk-in 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes bk-in { from { opacity: 0; transform: translateY(10px); } }
+.bk-day {
+  position: relative; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 9999px;
+  font-size: 1rem; font-variant-numeric: tabular-nums; transition: background-color 160ms, color 160ms;
+}
+@media (min-width: 40rem) { .bk-day { width: 3rem; height: 3rem; } }
+.bk-day[data-state="open"] { background: var(--color-ink-100); color: var(--color-ink-950); font-weight: 600; }
+.bk-day[data-state="open"]:hover { background: var(--color-ink-200); }
+.bk-day[data-state="closed"] { color: var(--color-ink-400); cursor: default; }
+.bk-day[data-state="selected"] { background: var(--color-ink-950); color: #fff; font-weight: 600; }
+.bk-today { position: absolute; bottom: 0.4rem; left: 50%; width: 4px; height: 4px; margin-left: -2px; border-radius: 9999px; background: currentColor; }
+.bk-pill {
+  display: flex; width: 100%; min-height: 3.25rem; align-items: center; justify-content: center; border-radius: 9999px;
+  border: 1px solid var(--color-line); background: #fff; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--color-ink-950);
+  transition: border-color 160ms, background-color 160ms, color 160ms;
+}
+.bk-pill:hover { border-color: var(--color-ink-950); }
+.bk-pill[aria-pressed="true"] { background: var(--color-ink-950); border-color: var(--color-ink-950); color: #fff; }
+@media (prefers-reduced-motion: reduce) { .bk-step { animation: none; } }

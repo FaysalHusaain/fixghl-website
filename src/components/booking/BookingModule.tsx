@@ -1,20 +1,17 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { needOptions, urgencyOptions, platformOptions } from "@/content/lead";
 import { track } from "@/lib/analytics";
 import { Icon } from "@/components/ui/Icon";
-
-const CALENDAR_URL = process.env.NEXT_PUBLIC_GHL_CALENDAR_URL || "";
-// GHL calendar embeds are served from these hosts. [[VERIFY: booking postMessage payload in DevTools with a test booking]]
-const GHL_ORIGIN = /(leadconnectorhq\.com|msgsndr\.com|gohighlevel\.com|highlevel\.com)$/i;
+import { BookingCalendar } from "./BookingCalendar";
+import { field, fieldLabel as label } from "./fieldStyles";
 
 type Tab = "call" | "write";
 
 export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; headingLevel?: 2 | 3 }) {
   const [tab, setTab] = useState<Tab>("call");
-  const router = useRouter();
   const H = headingLevel === 2 ? "h2" : "h3";
 
   useEffect(() => {
@@ -28,22 +25,6 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
     window.addEventListener("hashchange", sync);
     return () => window.removeEventListener("hashchange", sync);
   }, [id]);
-
-  // Calendar booking completion from the GHL iframe.
-  useEffect(() => {
-    const onMessage = (e: MessageEvent) => {
-      let host = "";
-      try { host = new URL(e.origin).hostname; } catch { return; }
-      if (!GHL_ORIGIN.test(host)) return;
-      const raw = typeof e.data === "string" ? e.data : JSON.stringify(e.data ?? "");
-      if (/booking|appointment/i.test(raw) && /complete|confirm|booked|success/i.test(raw)) {
-        track("calendar_booked", { method: "ghl_calendar" });
-        router.push("/book/thanks?via=calendar");
-      }
-    };
-    window.addEventListener("message", onMessage);
-    return () => window.removeEventListener("message", onMessage);
-  }, [router]);
 
   const tabs: { key: Tab; label: string }[] = [
     { key: "call", label: "Book a call" },
@@ -81,13 +62,10 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
 
       <div id={`${id}-panel-call`} role="tabpanel" aria-labelledby={`${id}-tab-call`} hidden={tab !== "call"} className="p-3 pt-6 md:p-6">
         <H className="h-sub">Pick a time for a free 30-minute call</H>
-        {CALENDAR_URL && (
-          <p className="mt-2 max-w-[60ch] text-ink-700">
-            The booking form asks four quick questions: what you need, your current platform if you are moving, how urgent it is, and your
-            website or GHL account, if you want to share it.
-          </p>
-        )}
-        <CalendarEmbed />
+        <p className="mt-2 max-w-[60ch] text-ink-700">Choose a day, then a time. The call runs on Google Meet.</p>
+        <div className="mt-6">
+          <BookingCalendar />
+        </div>
       </div>
 
       <div id={`${id}-panel-write`} role="tabpanel" aria-labelledby={`${id}-tab-write`} hidden={tab !== "write"} className="p-3 pt-6 md:p-6">
@@ -95,59 +73,6 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
         <p className="mt-2 max-w-[60ch] text-ink-700">Tell us what is happening. We reply by email with next steps or a time to talk.</p>
         <LeadForm />
       </div>
-    </div>
-  );
-}
-
-function CalendarEmbed() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [load, setLoad] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    if (!CALENDAR_URL || !ref.current) return;
-    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && (setLoad(true), io.disconnect()), {
-      rootMargin: "600px 0px",
-    });
-    io.observe(ref.current);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <div ref={ref} className={`relative mt-6 overflow-hidden rounded-2xl bg-white ${CALENDAR_URL ? "h-[46rem] md:h-[44rem]" : ""}`}>
-      {!CALENDAR_URL ? (
-        // Shown only until NEXT_PUBLIC_GHL_CALENDAR_URL is set: a working way to book, never a dead end.
-        <div className="flex flex-col items-start gap-4 p-6 md:p-8">
-          <Icon name="calendar" className="size-8 text-ink-950" />
-          <p className="font-semibold">Pick a time by email</p>
-          <p className="text-ink-700">
-            Email <a href="mailto:hello@fixghl.com?subject=Free%2030-minute%20GHL%20call" className="link font-medium text-ink-950">hello@fixghl.com</a> with
-            two or three times that suit you and a line about what you need. We confirm the call by email.
-          </p>
-        </div>
-      ) : (
-        <>
-          {!loaded && (
-            <div aria-hidden className="absolute inset-0 animate-pulse p-6">
-              <div className="h-6 w-1/2 rounded bg-ink-100" />
-              <div className="mt-6 grid grid-cols-7 gap-2">
-                {Array.from({ length: 35 }).map((_, i) => (
-                  <div key={i} className="aspect-square rounded-lg bg-ink-100" />
-                ))}
-              </div>
-            </div>
-          )}
-          {load && (
-            <iframe
-              src={CALENDAR_URL}
-              title="Book a free 30-minute GHL call with FixGHL"
-              loading="lazy"
-              onLoad={() => setLoaded(true)}
-              className="absolute inset-0 size-full border-0"
-            />
-          )}
-        </>
-      )}
     </div>
   );
 }
@@ -183,8 +108,6 @@ function LeadForm() {
     }
   }
 
-  const field = "mt-2 block w-full rounded-xl bg-white px-4 py-3.5 text-[1rem] text-ink-950 shadow-[inset_0_0_0_1.5px_var(--color-ink-200)] outline-none transition-shadow placeholder:text-ink-500 focus:shadow-[inset_0_0_0_2px_var(--color-ink-950)] aria-[invalid=true]:shadow-[inset_0_0_0_2px_#b42318]";
-  const label = "text-small font-semibold";
   const err = (k: string) =>
     errors[k] ? (
       <p id={`lead-${k}-error`} className="mt-2 text-small text-[#b42318]">{errors[k]}</p>

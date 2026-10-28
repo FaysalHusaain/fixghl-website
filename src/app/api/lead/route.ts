@@ -1,22 +1,11 @@
 import { validateLead } from "@/content/lead";
+import { clientIp, rateLimiter } from "@/lib/rate-limit";
 
-// Basic per-instance rate limit: 5 submissions per IP per 10 minutes.
-const WINDOW = 10 * 60 * 1000;
-const LIMIT = 5;
-const hits = new Map<string, number[]>();
-
-function limited(ip: string) {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW);
-  recent.push(now);
-  hits.set(ip, recent);
-  if (hits.size > 5000) hits.clear();
-  return recent.length > LIMIT;
-}
+// 5 submissions per IP per 10 minutes.
+const limited = rateLimiter({ limit: 5, windowMs: 10 * 60 * 1000 });
 
 export async function POST(request: Request) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (limited(ip)) return Response.json({ ok: false, message: "Too many submissions. Wait a few minutes and try again." }, { status: 429 });
+  if (limited(clientIp(request))) return Response.json({ ok: false, message: "Too many submissions. Wait a few minutes and try again." }, { status: 429 });
 
   let body: Record<string, unknown>;
   try {

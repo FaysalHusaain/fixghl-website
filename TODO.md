@@ -2,7 +2,7 @@
 
 ## Before or at launch
 - [ ] Deploy to Vercel (see README) and connect fixghl.com
-- [ ] Env: NEXT_PUBLIC_GHL_CALENDAR_URL (until set, the booking box offers email booking at hello@fixghl.com)
+- [ ] Env: GHL_TOKEN, GHL_LOCATION_ID, GHL_CALENDAR_ID (until set, live offers email booking at hello@fixghl.com). Then make one test booking and check the Meet link
 - [ ] Env: GHL_FORM_WEBHOOK_URL (the "Send details" form needs it in production)
 - [ ] Env: NEXT_PUBLIC_GA_ID; mark calendar_booked and form_submit as key events; register ai_source dimension
 - [ ] Env: GOOGLE_SITE_VERIFICATION, BING_SITE_VERIFICATION; submit sitemap; run scripts/indexnow.mjs

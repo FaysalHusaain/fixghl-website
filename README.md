@@ -16,7 +16,9 @@ npm run build && npm start   # production build
 | Variable | Where | Purpose |
 | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | public | Canonical domain, sitemap, schema, OG URLs |
-| `NEXT_PUBLIC_GHL_CALENDAR_URL` | public | GHL calendar embed (iframe `src`). Without it the booking tab shows a placeholder |
+| `GHL_TOKEN` | server | GHL Private Integration token (scopes: calendars.readonly, calendars/events.write, contacts.write) |
+| `GHL_LOCATION_ID` | server | GHL sub-account (location) ID |
+| `GHL_CALENDAR_ID` | server | ID of the calendar the /book calendar books into. Without the three GHL values, live shows email booking and previews show sample times |
 | `GHL_FORM_WEBHOOK_URL` | server | GHL inbound webhook for the fallback form. Without it, production returns 503 and dev logs the lead |
 | `NEXT_PUBLIC_GHL_AFFILIATE_URL` | public | Trial button on `/try-ghl` (`rel="sponsored"`) |
 | `NEXT_PUBLIC_GA_ID` | public | GA4 measurement ID. Enables GA and the consent banner |
@@ -35,7 +37,7 @@ CLI alternative: `npx vercel` (preview) and `npx vercel --prod`.
 
 ## Booking, form and conversion tracking
 
-- **Calendar (primary):** `/book` and the homepage embed the GHL calendar from `NEXT_PUBLIC_GHL_CALENDAR_URL`, lazy-loaded near the viewport inside a fixed-height box (no layout shift). Put the 4 qualifying questions in the GHL calendar's form: what you need, current platform, urgency, website or GHL URL.
+- **Calendar (primary):** `/book` and the homepage use our own three-step calendar (`src/components/booking/BookingCalendar.tsx`), no GHL iframe. `GET /api/slots` reads GHL free slots, `POST /api/book` upserts the contact, creates the appointment (the calendar's own meeting location, so Google Meet links come from GHL) and saves the answers as the appointment description and a contact note. Both routes are rate limited; booking has a honeypot.
 - **Form (fallback):** posts JSON to `/api/lead`, which validates on the server, drops honeypot submissions (`company_site`), rate-limits to 5 per IP per 10 minutes, and forwards to `GHL_FORM_WEBHOOK_URL` as `{name, email, need, platform, urgency, website, details, source, submitted_at}`. Map those fields in the GHL inbound-webhook workflow.
 - **Success:** both paths land on `/book/thanks` (noindex). For the calendar, set the GHL calendar's confirmation to stay in the widget; the site listens for the booking `postMessage` and redirects. [[VERIFY: GHL booking postMessage payload. Open DevTools, make a test booking, and confirm the message matches the listener in `src/components/booking/BookingModule.tsx`.]]
 
