@@ -256,4 +256,16 @@ body { background: #FFFFFF !important; }
 
 /* 6. "What's going on?" box 110px tall. */
 #appointment_widgets--revamp #_builder-form textarea.form-control { height: 110px !important; min-height: 110px !important; }
+/* 7. Date & time step: 40px above "Select Date & Time", and 24px from the last row of dates to "Time zone".
+      GHL always draws six week rows; when the last one is empty (no dates), the time zone block moves up
+      over that blank row so the gap stays 24px in every month. */
+#appointment_widgets--revamp:not(.appointment_widgets-sm--revamp) .appointment_widgets--revamp--steps:not(.step-form) { padding-top: 15px !important; }
+#appointment_widgets--revamp .widgets-date-block .vdpInnerWrap { margin-bottom: 7px !important; }
+#appointment_widgets--revamp .widgets-date-block .vdpInnerWrap:has(tbody tr:last-child > .vdpCell:first-child.outOfRange) { margin-bottom: -49px !important; }
+@media screen and (max-width: 725px) {
+  #appointment_widgets--revamp .widgets-date-block .vdpInnerWrap:has(tbody tr:last-child > .vdpCell:first-child.outOfRange) { margin-bottom: -45px !important; }
+}
+@media screen and (max-width: 450px) {
+  #appointment_widgets--revamp .widgets-date-block .vdpInnerWrap:has(tbody tr:last-child > .vdpCell:first-child.outOfRange) { margin-bottom: -37px !important; }
+}
 </style>
