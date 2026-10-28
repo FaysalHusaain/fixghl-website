@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Wordmark } from "@/components/brand/Wordmark";
+import { Logo } from "@/components/brand/Logo";
 import { Icon } from "@/components/ui/Icon";
 import { mainNav } from "@/lib/site";
 
@@ -41,7 +41,7 @@ export function Header({ services, migrations }: { services: NavLink[]; migratio
         className={`frame flex items-center justify-between transition-[height] duration-200 ${compact ? "h-15" : "h-[var(--header-h)]"}`}
       >
         <Link href="/" aria-label="FixGHL home" className="text-[1.375rem] leading-none">
-          <Wordmark />
+          <Logo className="w-[9.25rem] md:w-[10.25rem]" title={null} />
         </Link>
 
         <nav aria-label="Main" className="hidden items-center gap-8 lg:flex">

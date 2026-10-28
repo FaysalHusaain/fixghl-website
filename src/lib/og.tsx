@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { LOGO } from "@/components/brand/logo-data";
 
 const fontDir = path.join(process.cwd(), "node_modules/@fontsource/inter-tight/files");
 
@@ -15,9 +16,14 @@ export async function ogImage({ title, section }: { title: string; section: stri
     (
       <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", background: "#08080a", padding: "72px 80px", fontFamily: "Inter Tight" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 30, fontWeight: 500, color: "#a8a59f" }}>
-          <div style={{ display: "flex", fontSize: 40, fontWeight: 600, letterSpacing: "-0.04em", color: "#faf9f8" }}>
-            Fix<span style={{ color: "#ffde59" }}>GHL</span>
-          </div>
+          <svg width={LOGO.width * 1.05} height={LOGO.height * 1.05} viewBox={`0 0 ${LOGO.width} ${LOGO.height}`}>
+            <rect x={LOGO.pill.x} y={LOGO.pill.y} width={LOGO.pill.w} height={LOGO.pill.h} rx={LOGO.pill.r} fill="none" stroke="#ffffff" strokeWidth={LOGO.pill.stroke} />
+            {LOGO.ticks.x.map((x) => (
+              <line key={x} x1={x} y1={LOGO.ticks.y1} x2={x} y2={LOGO.ticks.y2} stroke="#ffffff" strokeWidth={LOGO.ticks.stroke} strokeOpacity={0.4} />
+            ))}
+            <circle cx={LOGO.bubble.cx} cy={LOGO.bubble.cy} r={LOGO.bubble.r} fill="#ffde59" />
+            <path d={LOGO.word} fill="#ffffff" />
+          </svg>
           <div style={{ display: "flex" }}>{section}</div>
         </div>
         <div style={{ display: "flex", fontSize: size, fontWeight: 600, lineHeight: 1.02, letterSpacing: "-0.04em", color: "#faf9f8", maxWidth: 1000 }}>{title}</div>

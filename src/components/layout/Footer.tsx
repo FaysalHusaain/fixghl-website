@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { topServices, migrationServices } from "@/content/services";
 import { site } from "@/lib/site";
+import { Logo } from "@/components/brand/Logo";
 
 const copyrightYear = new Date().getFullYear();
 
@@ -34,7 +35,10 @@ export function Footer() {
       <div className="frame pt-16 md:pt-20">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-4">
-            <p className="max-w-[30ch] text-lead leading-snug text-ink-100">{site.oneLine}</p>
+            <Link href="/" aria-label="FixGHL home" className="inline-block text-ink-50">
+              <Logo className="w-[10.25rem]" title={null} />
+            </Link>
+            <p className="mt-8 max-w-[30ch] text-lead leading-snug text-ink-100">{site.oneLine}</p>
             <p className="mt-6">
               <a href={`mailto:${site.email}`} className="font-display text-[1.375rem] font-semibold tracking-[-0.02em] text-ink-50 transition-colors hover:text-gold-500">
                 {site.email}
@@ -70,11 +74,7 @@ export function Footer() {
         </div>
       </div>
       <div aria-hidden className="frame mt-10 select-none md:mt-14">
-        <svg viewBox="0 0 1000 232" className="block w-full fill-ink-900" role="presentation">
-          <text x="-6" y="262" fontSize="318" fontWeight="600" textLength="1006" lengthAdjust="spacing" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.045em" }}>
-            FixGHL
-          </text>
-        </svg>
+        <Logo className="w-full text-ink-900" title={null} quiet />
       </div>
     </footer>
   );

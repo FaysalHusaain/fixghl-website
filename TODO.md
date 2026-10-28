@@ -11,7 +11,7 @@
 
 ## Review when convenient
 - [ ] Have a lawyer review /terms (liability wording) and /privacy (retention wording)
-- [ ] Final logo (temporary text wordmark and "F" favicon in use)
+- [x] Logo system in public/brand (regenerate with `node design/brand.mjs`)
 - [ ] Social profile URLs for schema sameAs (src/lib/site.ts)
 - [ ] US entity or address, if you want it in the footer and schema
 - [ ] Re-check GHL and ClickFunnels prices each quarter and update the dates on /try-ghl and the comparison

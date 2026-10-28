@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Node QA and asset scripts, not app code:
+    "design/**",
   ]),
 ]);
 
