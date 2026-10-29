@@ -160,18 +160,40 @@ function GhlFrame({
 }) {
   const box = useRef<HTMLDivElement>(null);
 
-  // Lazy widgets ask to load when their placeholder comes within 300px of the viewport, or on the visitor's first
-  // tap, click or key press, whichever comes first.
+  // Lazy widgets load when their placeholder comes within 300px of the viewport, or on the visitor's first tap, click
+  // or key press, whichever comes first. A placeholder that is already near the screen when the page opens also counts
+  // mouse movement, scrolling and focus as that first sign of activity, with a 5s-after-load fallback, so the GHL embed
+  // and its third-party cookies never compete with the page's own first load.
   useEffect(() => {
     if (!lazy || show || !onNear || !box.current) return;
+    let timer = 0;
+    let first = true;
     const near = () => onNear();
-    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && near(), { rootMargin: "300px 0px" });
+    const taps = ["pointerdown", "keydown", "touchstart"] as const;
+    const activity = ["pointermove", "wheel", "scroll", "focusin"] as const;
+    const arm = () => {
+      activity.forEach((e) => window.addEventListener(e, near, { once: true, passive: true }));
+      timer = window.setTimeout(near, 5000);
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.some((e) => e.isIntersecting);
+        if (visible && !first) near();
+        else if (visible) {
+          if (document.readyState === "complete") arm();
+          else window.addEventListener("load", arm, { once: true });
+        }
+        first = false;
+      },
+      { rootMargin: "300px 0px" }
+    );
     io.observe(box.current);
-    const events = ["pointerdown", "keydown", "touchstart"] as const;
-    events.forEach((e) => window.addEventListener(e, near, { once: true, passive: true }));
+    taps.forEach((e) => window.addEventListener(e, near, { once: true, passive: true }));
     return () => {
       io.disconnect();
-      events.forEach((e) => window.removeEventListener(e, near));
+      window.clearTimeout(timer);
+      window.removeEventListener("load", arm);
+      [...taps, ...activity].forEach((e) => window.removeEventListener(e, near));
     };
   }, [lazy, show, onNear]);
   const [drawn, setDrawn] = useState(false);
