@@ -9,6 +9,13 @@ import type { ArticleMeta } from "@/content/types";
 import { formatDate } from "@/lib/content";
 import { JsonLd, article } from "@/lib/schema";
 
+// One wording per article kind, shared by the sidebar box and the closing banner.
+const OFFER = {
+  fix: { title: "Rather have it fixed for you?", line: "We fix this in your account. The first 30-minute call is free." },
+  migration: { title: "Rather have us move it for you?", line: "We move it into GHL for you. The first 30-minute call is free." },
+  setup: { title: "Rather have it set up for you?", line: "We set this up in your account. The first 30-minute call is free." },
+};
+
 export function ArticleLayout({
   meta,
   crumbs,
@@ -22,6 +29,7 @@ export function ArticleLayout({
   toc: { id: string; text: string }[];
   children: ReactNode;
 }) {
+  const offer = OFFER[meta.kind ?? "setup"];
   return (
     <>
       <JsonLd data={article({ title: meta.title, description: meta.description, path, published: meta.published, updated: meta.updated, type: "TechArticle" })} />
@@ -57,8 +65,8 @@ export function ArticleLayout({
               </ol>
             </details>
             <div className="on-dark hidden rounded-2xl bg-ink-950 p-5 text-ink-50 lg:block">
-              <p className="font-semibold">Rather have it fixed?</p>
-              <p className="mt-2 text-small text-ink-300">We fix this in your account. The first 30-minute call is free.</p>
+              <p className="font-semibold">{offer.title}</p>
+              <p className="mt-2 text-small text-ink-300">{offer.line}</p>
               <Link href="/book" data-track="book_call_click" data-track-location={`article_${meta.slug}_sidebar`} className="btn btn-gold mt-4 min-h-11 w-full">
                 Book a free call
               </Link>
@@ -87,7 +95,7 @@ export function ArticleLayout({
         </div>
       </article>
       <RelatedLinks title="Related" links={meta.related} />
-      <CtaBand title={meta.kind === "setup" ? "Rather have it set up for you?" : "Rather have it fixed for you?"} location={`article_${meta.slug}`} />
+      <CtaBand title={offer.title} location={`article_${meta.slug}`} />
     </>
   );
 }

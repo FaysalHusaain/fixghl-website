@@ -3,6 +3,7 @@ import type { ArticleMeta } from "../types";
 export const guides: ArticleMeta[] = [
   {
     slug: "ghl-workflow-not-triggering",
+    kind: "fix",
     title: "GoHighLevel workflow not triggering: how to fix it",
     metaTitle: "GoHighLevel Workflow Not Triggering? How to Fix It",
     description:
@@ -24,6 +25,7 @@ export const guides: ArticleMeta[] = [
   },
   {
     slug: "ghl-emails-going-to-spam",
+    kind: "fix",
     title: "GHL emails going to spam: domain, DNS and warm-up fixes",
     metaTitle: "GHL Emails Going to Spam? Domain, DNS & Warm-Up Fixes",
     description:
@@ -45,7 +47,7 @@ export const guides: ArticleMeta[] = [
   },
   {
     slug: "migrate-clickfunnels-to-gohighlevel",
-    kind: "setup",
+    kind: "migration",
     title: "How to migrate from ClickFunnels to GoHighLevel without losing data",
     metaTitle: "Migrate ClickFunnels to GoHighLevel Without Losing Data",
     description:
@@ -67,7 +69,6 @@ export const guides: ArticleMeta[] = [
   },
   {
     slug: "what-is-gohighlevel",
-    kind: "setup",
     title: "What is GoHighLevel? A plain-English guide",
     metaTitle: "What Is GoHighLevel (GHL)? A Plain-English Guide",
     description:
@@ -89,7 +90,6 @@ export const guides: ArticleMeta[] = [
   },
   {
     slug: "how-much-does-gohighlevel-cost",
-    kind: "setup",
     title: "How much does GoHighLevel cost per month?",
     metaTitle: "GoHighLevel Pricing: How Much Does GHL Cost per Month?",
     description:
@@ -111,6 +111,7 @@ export const guides: ArticleMeta[] = [
   },
   {
     slug: "is-gohighlevel-down",
+    kind: "fix",
     title: "Is GoHighLevel down? How to check and what to do",
     metaTitle: "Is GoHighLevel Down? How to Check GHL Status and Fix It",
     description:

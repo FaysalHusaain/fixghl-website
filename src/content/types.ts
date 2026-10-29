@@ -11,7 +11,7 @@ export type ArticleMeta = {
   faqs: QA[];
   related: { href: string; label: string }[];
   ctaLine?: string; // inline booking prompt; defaults to the troubleshooting line
-  kind?: "fix" | "setup"; // closing banner wording; guides default to fix
+  kind?: "fix" | "migration"; // sidebar and closing banner wording; unmarked articles use the set-up wording
 };
 
 export type TermMeta = {

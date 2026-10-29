@@ -3,7 +3,6 @@ import type { ArticleMeta } from "../types";
 export const comparisons: ArticleMeta[] = [
   {
     slug: "gohighlevel-vs-clickfunnels",
-    kind: "setup",
     title: "GoHighLevel vs ClickFunnels: which fits your business?",
     metaTitle: "GoHighLevel vs ClickFunnels (2026): Which Fits You?",
     description:
