@@ -21,7 +21,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/",
 });
 
-// Funnel order: hero, the problem in the visitor's words, services, why a specialist, process, proof, booking, FAQ.
+// Funnel order: hero, the problem in the visitor's words, services, why a specialist, process, reviews, booking, FAQ, stats.
 
 const pains = [
   {
@@ -215,8 +215,6 @@ export default function Home() {
 
       <Testimonials />
 
-      <ProofStrip />
-
       {/* Booking */}
       <section aria-labelledby="final-title" className="on-dark bg-ink-950 text-ink-50" id="describe">
         <div className="frame section grid gap-12 lg:grid-cols-12">
@@ -269,6 +267,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <ProofStrip />
     </>
   );
 }
