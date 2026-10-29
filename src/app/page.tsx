@@ -26,25 +26,29 @@ export const metadata: Metadata = pageMetadata({
 const pains = [
   {
     quote: "Our workflow worked last week. Now it enrolls nobody.",
-    line: "Usually a draft status, a filter no contact meets, or re-entry switched off. We find it, fix it and test with a fresh contact.",
+    cause: "It's in draft, a filter no contact meets, or re-entry is off.",
+    fix: "We find the setting at fault, fix it and test with a fresh contact.",
     href: "/guides/ghl-workflow-not-triggering",
     cta: "Read the step-by-step guide",
   },
   {
     quote: "We bought GoHighLevel months ago and still haven't set it up.",
-    line: "We build it in the right order: domains, email, calendars, pipeline and follow-up. Then we walk your team through it.",
+    cause: "Too many settings and no clear order to do them in.",
+    fix: "We build domains, email, calendars, pipeline and follow-up in order, then hand it over.",
     href: "/services/ghl-setup",
     cta: "See our GHL setup service",
   },
   {
     quote: "Our follow-up still happens by hand, when someone remembers.",
-    line: "We turn new leads, bookings and no-shows into workflows that reply on their own, and test every branch.",
+    cause: "Leads, bookings and no-shows aren't connected to workflows.",
+    fix: "We build the follow-up as workflows and test every branch.",
     href: "/services/automation",
     cta: "See our automation service",
   },
   {
     quote: "We want to leave ClickFunnels, but our funnels are live and earning.",
-    line: "We rebuild and test everything in GHL while the old platform stays live, then switch on a date you pick.",
+    cause: "Contacts, pages, checkout and sequences each move differently.",
+    fix: "We rebuild and test in GHL while the old platform stays live, then switch on a date you pick.",
     href: "/services/migrations",
     cta: "See our migration service",
   },
@@ -86,32 +90,50 @@ export default function Home() {
 
       {/* Problem recognition */}
       <section aria-labelledby="pains-title" className="section">
-        <div className="frame">
-          <div className="grid gap-4 md:grid-cols-12 md:items-end">
-            <h2 id="pains-title" className="h-title md:col-span-7" data-reveal>Sound familiar?</h2>
-            <p className="t-lead text-ink-600 md:col-span-5" data-reveal style={{ ["--i" as string]: 1 }}>
-              Most of our calls start with one of these.
-            </p>
+        <div className="frame grid gap-8 md:grid-cols-12 md:gap-12">
+          <div className="md:col-span-4">
+            <div className="md:sticky md:top-28">
+              <h2 id="pains-title" className="h-title" data-reveal>Sound familiar?</h2>
+              <p className="mt-5 max-w-[30ch] text-ink-600" data-reveal style={{ ["--i" as string]: 1 }}>
+                Most of our calls start with one of these.
+              </p>
+            </div>
           </div>
-          <ul className="mt-8 grid gap-2 md:mt-12 md:grid-cols-2">
+          <ul className="flex flex-col gap-2 md:col-span-8">
             {pains.map((p, i) => (
-              <li key={p.quote} data-reveal style={{ ["--i" as string]: i % 2 }} className="flex flex-col rounded-[1.5rem] bg-ink-100 p-5 md:p-8">
-                <p className="font-display text-[clamp(1.25rem,1rem+1vw,1.75rem)] font-semibold leading-[1.15] tracking-[-0.025em]">
+              <li key={p.quote} data-reveal style={{ ["--i" as string]: i % 3 }} className="rounded-[1.5rem] bg-ink-100 p-5 md:p-8">
+                <p className="font-display text-[clamp(1.25rem,1.05rem+1.1vw,2rem)] font-semibold leading-[1.15] tracking-[-0.025em]">
                   “{p.quote}”
                 </p>
-                <p className="mt-3 text-ink-700 md:mt-4">{p.line}</p>
-                <Link href={p.href} className="mt-3 inline-flex min-h-11 items-center gap-2 self-start font-medium text-ink-700 hover:text-ink-950 md:mt-auto md:pt-4">
+                <dl className="mt-4 grid gap-3 md:mt-5 md:grid-cols-2 md:gap-8">
+                  <div>
+                    <dt className="text-small font-semibold text-ink-600">Why it happens</dt>
+                    <dd className="mt-1 text-ink-800">{p.cause}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-small font-semibold text-ink-600">What we do</dt>
+                    <dd className="mt-1 text-ink-800">{p.fix}</dd>
+                  </div>
+                </dl>
+                <Link href={p.href} className="mt-3 inline-flex min-h-11 items-center gap-2 font-medium text-ink-700 hover:text-ink-950 md:mt-4">
                   {p.cta} <Icon name="arrow" className="size-4" />
                 </Link>
               </li>
             ))}
+            <li data-reveal className="on-dark flex flex-col gap-6 rounded-[1.5rem] bg-ink-950 p-5 text-ink-50 md:flex-row md:items-center md:justify-between md:p-8">
+              <div>
+                <p className="font-display text-[clamp(1.25rem,1.05rem+1.1vw,2rem)] font-semibold leading-[1.15] tracking-[-0.025em]">
+                  Recognize one of these?
+                </p>
+                <p className="mt-2 max-w-[44ch] text-ink-300">
+                  We&apos;ll tell you what we&apos;d do and what it costs, whether or not you hire us.
+                </p>
+              </div>
+              <Link href="/book" data-track="book_call_click" data-track-location="home_pains" className="btn btn-gold shrink-0">
+                Book a free 30-minute call <Icon name="arrow" className="size-4" />
+              </Link>
+            </li>
           </ul>
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6 md:mt-10" data-reveal>
-            <Link href="/book" data-track="book_call_click" data-track-location="home_pains" className="btn btn-ink shrink-0">
-              Book a free 30-minute call <Icon name="arrow" className="size-4" />
-            </Link>
-            <p className="max-w-[46ch] text-ink-600">We&apos;ll tell you what we&apos;d do and what it costs, whether or not you hire us.</p>
-          </div>
         </div>
       </section>
 
