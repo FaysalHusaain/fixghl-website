@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Script from "next/script";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { track } from "@/lib/analytics";
 
 // Live GHL embeds. GHL's embed script (form_embed.js) talks to each widget's built-in resizer, so both iframes
@@ -14,9 +14,10 @@ const FORM_ID = "82ZHqKAiWU0WMYKDwZOr";
 const GHL_ORIGIN = /(codenovahq\.com|leadconnectorhq\.com|msgsndr\.com|gohighlevel\.com|highlevel\.com)$/i;
 
 type Tab = "call" | "write";
+const noop = () => () => {};
 
-// calendar="immediate": the calendar is the page's main job (/book), so its iframe is in the server-rendered HTML and
-// starts loading while the page parses. calendar="near": it loads when the module is within 1200px of the viewport
+// calendar="immediate": the calendar is the page's main job (/book), so its iframe is injected as soon as the page
+// hydrates. Keeping it out of the server HTML lets the page paint first instead of racing GHL's ~100 files. calendar="near": it loads when the module is within 1200px of the viewport
 // or 2s after the page has loaded and gone idle, whichever comes first (homepage).
 export function BookingModule({
   id = "book",
@@ -30,7 +31,9 @@ export function BookingModule({
   const [tab, setTab] = useState<Tab>("call");
   const router = useRouter();
   const H = headingLevel === 2 ? "h2" : "h3";
-  const [calendarOn, setCalendarOn] = useState(calendar === "immediate");
+  const hydrated = useSyncExternalStore(noop, () => true, () => false);
+  const [nearOn, setNearOn] = useState(false);
+  const calendarOn = nearOn || (calendar === "immediate" && hydrated);
   const [formOn, setFormOn] = useState(false); // the form loads as the visitor reaches for "Send details"
   const loadForm = () => setFormOn(true);
   const openTab = (t: Tab) => {
@@ -108,7 +111,7 @@ export function BookingModule({
       <div id={`${id}-panel-call`} role="tabpanel" aria-labelledby={`${id}-tab-call`} hidden={tab !== "call"} className="p-3 pt-6 md:p-6">
         <H className="h-sub">Pick a time for a free 30-minute call</H>
         <p className="mt-2 max-w-[60ch] text-ink-700">After you pick a time, we ask your name, email, what you need and a line about your account.</p>
-        <GhlFrame kind="calendar" className="mt-6" show={calendarOn} lazy={calendar === "near"} onNear={() => setCalendarOn(true)}>
+        <GhlFrame kind="calendar" className="mt-6" show={calendarOn} lazy={calendar === "near"} onNear={() => setNearOn(true)}>
           {(onReady) => (
             <iframe
               src={`${GHL_HOST}/widget/booking/${CALENDAR_ID}`}
@@ -206,7 +209,7 @@ function GhlFrame({
 
   useEffect(() => {
     if (!show || drawn) return;
-    // A server-rendered iframe can finish loading before React attaches onLoad; GHL's own reveal check still gates the swap.
+    // Backstop in case onload and GHL's message are both missed; GHL's own reveal check still gates the swap.
     const backstop = window.setTimeout(() => setDrawn(true), 3000);
     const onMessage = (e: MessageEvent) => {
       const frame = box.current?.querySelector("iframe");
