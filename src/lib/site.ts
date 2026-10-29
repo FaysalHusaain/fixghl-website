@@ -15,7 +15,7 @@ export const site = {
   },
   callLength: "30-minute",
   email: "hello@fixghl.com",
-  sameAs: [] as string[], // Add social profile URLs here when they exist
+  sameAs: ["https://www.crunchbase.com/organization/fixghl"] as string[], // Profiles that represent FixGHL elsewhere
   legalEntity: "FixGHL",
   calendarUrl: process.env.NEXT_PUBLIC_GHL_CALENDAR_URL || "",
   gaId: "G-7MHF0P2H0Z",
