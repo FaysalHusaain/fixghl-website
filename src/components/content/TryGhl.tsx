@@ -1,5 +1,5 @@
-// Affiliate trial prompt for guides. The link goes through /try-ghl and carries the disclosure next to it.
-export function TryGhl({ location, line = "Want to try it yourself? HighLevel offers a 14-day free trial on every plan." }: { location: string; line?: string }) {
+// Affiliate trial prompt for guides. /try-ghl lands on HighLevel's bootcamp page, which carries the 30-day trial.
+export function TryGhl({ location, line = "Start a 30-day free trial through our link (HighLevel's standard trial is 14 days)." }: { location: string; line?: string }) {
   return (
     <div className="not-prose flex flex-col gap-4 rounded-[1.5rem] bg-ink-100 p-6 md:flex-row md:items-center md:justify-between md:p-8">
       <div>

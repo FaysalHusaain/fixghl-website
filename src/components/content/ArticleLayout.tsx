@@ -87,7 +87,7 @@ export function ArticleLayout({
         </div>
       </article>
       <RelatedLinks title="Related" links={meta.related} />
-      <CtaBand title="Rather have it fixed for you?" location={`article_${meta.slug}`} />
+      <CtaBand title={meta.kind === "setup" ? "Rather have it set up for you?" : "Rather have it fixed for you?"} location={`article_${meta.slug}`} />
     </>
   );
 }

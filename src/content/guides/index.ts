@@ -45,6 +45,7 @@ export const guides: ArticleMeta[] = [
   },
   {
     slug: "migrate-clickfunnels-to-gohighlevel",
+    kind: "setup",
     title: "How to migrate from ClickFunnels to GoHighLevel without losing data",
     metaTitle: "Migrate ClickFunnels to GoHighLevel Without Losing Data",
     description:
@@ -66,6 +67,7 @@ export const guides: ArticleMeta[] = [
   },
   {
     slug: "what-is-gohighlevel",
+    kind: "setup",
     title: "What is GoHighLevel? A plain-English guide",
     metaTitle: "What Is GoHighLevel (GHL)? A Plain-English Guide",
     description:
@@ -87,6 +89,7 @@ export const guides: ArticleMeta[] = [
   },
   {
     slug: "how-much-does-gohighlevel-cost",
+    kind: "setup",
     title: "How much does GoHighLevel cost per month?",
     metaTitle: "GoHighLevel Pricing: How Much Does GHL Cost per Month?",
     description:
