@@ -45,10 +45,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${interTight.variable} antialiased`}>
       <head>
-        {/* GHL embeds. The iframe and form_embed.js are no-CORS requests, which use the plain connection; the crossorigin
-            one serves the widget's CORS fetches. */}
+        {/* GHL embeds: the iframe and form_embed.js are no-CORS requests, so they use this plain connection. */}
         <link rel="preconnect" href="https://link.codenovahq.com" />
-        <link rel="preconnect" href="https://link.codenovahq.com" crossOrigin="" />
       </head>
       <body>
         <Script id="ga-consent" strategy="beforeInteractive">{consentDefaults}</Script>
