@@ -46,7 +46,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${interTight.variable} antialiased`}>
       <head>
         <link rel="preconnect" href="https://link.codenovahq.com" />
-        <link rel="dns-prefetch" href="https://link.codenovahq.com" />
       </head>
       <body>
         <Script id="ga-consent" strategy="beforeInteractive">{consentDefaults}</Script>

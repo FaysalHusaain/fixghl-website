@@ -19,23 +19,12 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
   const [tab, setTab] = useState<Tab>("call");
   const router = useRouter();
   const H = headingLevel === 2 ? "h2" : "h3";
-  const root = useRef<HTMLDivElement>(null);
-  const [load, setLoad] = useState(false);
+  const [calendarOn, setCalendarOn] = useState(false); // calendar iframe injected
   const [formOpened, setFormOpened] = useState(false); // the form iframe loads only once "Send details" is opened
   const openTab = (t: Tab) => {
     setTab(t);
     if (t === "write") setFormOpened(true);
   };
-
-  // Load both widgets as the module nears the viewport.
-  useEffect(() => {
-    if (!root.current) return;
-    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && (setLoad(true), io.disconnect()), {
-      rootMargin: "600px 0px",
-    });
-    io.observe(root.current);
-    return () => io.disconnect();
-  }, []);
 
   useEffect(() => {
     const sync = () => {
@@ -71,7 +60,7 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
   ];
 
   return (
-    <div id={id} ref={root} className="rounded-[1.75rem] bg-ink-50 p-2 text-ink-950 md:p-3">
+    <div id={id} className="rounded-[1.75rem] bg-ink-50 p-2 text-ink-950 md:p-3">
       <div role="tablist" aria-label="How would you like to start?" className="grid grid-cols-2 gap-1 rounded-[1.25rem] bg-ink-100 p-1">
         {tabs.map((t) => (
           <button
@@ -102,7 +91,7 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
       <div id={`${id}-panel-call`} role="tabpanel" aria-labelledby={`${id}-tab-call`} hidden={tab !== "call"} className="p-3 pt-6 md:p-6">
         <H className="h-sub">Pick a time for a free 30-minute call</H>
         <p className="mt-2 max-w-[60ch] text-ink-700">Pick a day and a time, then tell us briefly what you need.</p>
-        <GhlFrame kind="calendar" className="mt-6" show={load}>
+        <GhlFrame kind="calendar" className="mt-6" show={calendarOn} lazy onNear={() => setCalendarOn(true)}>
           {(onReady) => (
             <iframe
               src={`${GHL_HOST}/widget/booking/${CALENDAR_ID}`}
@@ -120,7 +109,7 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
       <div id={`${id}-panel-write`} role="tabpanel" aria-labelledby={`${id}-tab-write`} hidden={tab !== "write"} className="p-3 pt-6 md:p-6">
         <H className="h-sub">Send us the details</H>
         <p className="mt-2 max-w-[60ch] text-ink-700">Tell us what is happening. We reply by email with next steps or a time to talk.</p>
-        <GhlFrame kind="form" className="mt-4" show={load && formOpened}>
+        <GhlFrame kind="form" className="mt-4" show={formOpened}>
           {(onReady) => (
             <iframe
               src={`${GHL_HOST}/widget/form/${FORM_ID}`}
@@ -145,7 +134,8 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
           )}
         </GhlFrame>
       </div>
-      {load && <Script src={`${GHL_HOST}/js/form_embed.js`} strategy="afterInteractive" />}
+      {/* GHL's resizer script, once, as soon as the first GHL iframe is on the page. */}
+      {(calendarOn || formOpened) && <Script src={`${GHL_HOST}/js/form_embed.js`} strategy="afterInteractive" />}
     </div>
   );
 }
@@ -153,8 +143,37 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
 // Holds a GHL iframe behind a skeleton the size of the real widget, so there is no blank gap and no jump.
 // The widget is drawn when GHL posts "iframeLoaded" (iframe onload is the backstop); the swap waits until the
 // resizer has settled the iframe's height.
-function GhlFrame({ kind, show, className = "", children }: { kind: "calendar" | "form"; show: boolean; className?: string; children: (onReady: () => void) => ReactNode }) {
+function GhlFrame({
+  kind,
+  show,
+  lazy = false,
+  onNear,
+  className = "",
+  children,
+}: {
+  kind: "calendar" | "form";
+  show: boolean;
+  lazy?: boolean;
+  onNear?: () => void;
+  className?: string;
+  children: (onReady: () => void) => ReactNode;
+}) {
   const box = useRef<HTMLDivElement>(null);
+
+  // Lazy widgets ask to load when their placeholder comes within 300px of the viewport, or on the visitor's first
+  // tap, click or key press, whichever comes first.
+  useEffect(() => {
+    if (!lazy || show || !onNear || !box.current) return;
+    const near = () => onNear();
+    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && near(), { rootMargin: "300px 0px" });
+    io.observe(box.current);
+    const events = ["pointerdown", "keydown", "touchstart"] as const;
+    events.forEach((e) => window.addEventListener(e, near, { once: true, passive: true }));
+    return () => {
+      io.disconnect();
+      events.forEach((e) => window.removeEventListener(e, near));
+    };
+  }, [lazy, show, onNear]);
   const [drawn, setDrawn] = useState(false);
   const [ready, setReady] = useState(false);
 
