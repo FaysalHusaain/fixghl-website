@@ -160,8 +160,8 @@
 [data-ghl] { position: relative; container-type: inline-size; }
 .ghl-stage { transition: opacity 360ms ease; }
 [data-ghl]:not([data-ready="true"]) > .ghl-stage { position: absolute; inset: 0 0 auto 0; opacity: 0; pointer-events: none; }
-.ghl-skeleton { transition: opacity 360ms ease, visibility 0s linear 360ms; }
-[data-ghl][data-ready="true"] > .ghl-skeleton { position: absolute; inset: 0 0 auto 0; opacity: 0; visibility: hidden; }
+.ghl-skeleton { transition: opacity 360ms ease; } /* opacity only, so the fade stays on the compositor */
+[data-ghl][data-ready="true"] > .ghl-skeleton { position: absolute; inset: 0 0 auto 0; opacity: 0; pointer-events: none; }
 .ghl-skeleton--calendar { min-height: 530px; }
 .ghl-skeleton--form { min-height: 632px; }
 @container (max-width: 450px) {
