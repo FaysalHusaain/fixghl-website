@@ -1,6 +1,6 @@
 import { LOGO } from "./logo-data";
 
-// FixGHL lockup: spirit-level mark + outlined wordmark. Colours come from currentColor; the bubble is always gold.
+// FixGHL lockup: spirit-level mark + outlined wordmark. Colors come from currentColor; the bubble is always gold.
 // `tone="light"` uses the deeper gold that holds up on white grounds; `quiet` dims the bubble for decorative use.
 export function Logo({
   className = "",

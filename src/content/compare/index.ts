@@ -11,7 +11,7 @@ export const comparisons: ArticleMeta[] = [
     published: "2026-10-26",
     updated: "2026-10-26",
     faqs: [
-      { q: "Is GoHighLevel better than ClickFunnels?", a: "It depends on what you need. GoHighLevel suits businesses and agencies that want CRM, pipelines, SMS, calendars and funnels in one account. ClickFunnels suits sellers whose business centres on funnels, checkout and courses." },
+      { q: "Is GoHighLevel better than ClickFunnels?", a: "It depends on what you need. GoHighLevel suits businesses and agencies that want CRM, pipelines, SMS, calendars and funnels in one account. ClickFunnels suits sellers whose business centers on funnels, checkout and courses." },
       { q: "Is GoHighLevel cheaper than ClickFunnels?", a: "Both start at $97 a month on their entry plans as listed in October 2026. GoHighLevel adds usage charges for SMS, calls and email, so compare total monthly cost, not plan price alone." },
       { q: "Can I move from ClickFunnels to GoHighLevel?", a: "Yes. Contacts import by CSV, some pages import by URL, and products, checkout and email sequences are rebuilt in GHL." },
     ],

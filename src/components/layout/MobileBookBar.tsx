@@ -5,47 +5,51 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 
-// Phones only: a booking bar that appears once the first screen has scrolled away.
+// Phones only: a slim booking bar that appears once the hero (or the page's first section) has scrolled away, and
+// steps aside while a booking module is on screen. Never on /book pages. Taps are tracked as book_call_click.
 export function MobileBookBar() {
   const pathname = usePathname();
-  const [show, setShow] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
+  const [bookingInView, setBookingInView] = useState(false);
   const hidden = pathname.startsWith("/book");
 
   useEffect(() => {
-    const onScroll = () => setShow(window.scrollY > window.innerHeight * 0.7);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    if (hidden) return;
+    const hero = document.querySelector("[data-hero]") ?? document.querySelector("main section");
+    const heroIo = new IntersectionObserver(([e]) => setPastHero(!e.isIntersecting && e.boundingClientRect.top < 0));
+    if (hero) heroIo.observe(hero);
+    const visible = new Set<Element>();
+    const bookIo = new IntersectionObserver((entries) => {
+      entries.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
+      setBookingInView(visible.size > 0);
+    });
+    document.querySelectorAll("[data-booking-module]").forEach((el) => bookIo.observe(el));
+    return () => {
+      heroIo.disconnect();
+      bookIo.disconnect();
+    };
+  }, [hidden, pathname]);
 
   if (hidden) return null;
+  const show = pastHero && !bookingInView;
   return (
     <div
-      className={`on-dark fixed inset-x-0 bottom-0 z-40 bg-ink-950 px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 transition-transform duration-300 md:hidden ${
+      className={`on-dark fixed inset-x-0 bottom-0 z-40 border-t border-ink-800 bg-ink-950 pb-[env(safe-area-inset-bottom)] transition-transform duration-300 md:hidden ${
         show ? "translate-y-0" : "translate-y-full"
       }`}
       aria-hidden={!show}
+      data-mobile-book-bar
     >
-      <div className="flex items-center gap-3">
-        <Link
-          href="/book"
-          tabIndex={show ? 0 : -1}
-          data-track="book_call_click"
-          data-track-location="mobile_bar"
-          className="btn btn-gold flex-1"
-        >
-          Book a free 30-minute call
-          <Icon name="arrow" className="size-4" />
-        </Link>
-        <Link
-          href="/book#describe"
-          tabIndex={show ? 0 : -1}
-          className="grid size-[3.25rem] shrink-0 place-items-center rounded-full text-ink-50 shadow-[inset_0_0_0_1.5px_var(--color-ink-700)]"
-          aria-label="Describe your issue instead"
-        >
-          <Icon name="pen" className="size-5" />
-        </Link>
-      </div>
+      <Link
+        href="/book"
+        tabIndex={show ? 0 : -1}
+        data-track="book_call_click"
+        data-track-location="mobile_bar"
+        className="flex min-h-14 items-center justify-center gap-2 px-4 font-semibold text-ink-50"
+      >
+        Book a free 30-minute call
+        <Icon name="arrow" className="size-4" />
+      </Link>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 
-export type ServiceItem = { href: string; name: string; symptom: string };
+export type ServiceItem = { href: string; name: string; symptom: string; links?: { href: string; label: string }[] };
 
-// Clean list of services: each row is one tap to that service's page.
+// Clean list of services: each row is one tap to that service's page. A row can carry a line of sub-links under it.
 export function ServiceList({ items }: { items: ServiceItem[] }) {
   return (
     <ul className="flex flex-col">
@@ -17,6 +17,20 @@ export function ServiceList({ items }: { items: ServiceItem[] }) {
             <Icon name="arrow" className="row-span-2 size-6 text-ink-500 transition-transform group-hover:translate-x-1 group-hover:text-ink-950 md:size-7" />
             <span className="text-ink-400 group-hover:text-ink-800 group-focus-visible:text-ink-800">{it.symptom}</span>
           </Link>
+          {it.links && (
+            <ul aria-label={`${it.name} by platform`} className="flex flex-wrap gap-2 px-4 pb-4 md:px-6">
+              {it.links.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="inline-flex min-h-11 items-center rounded-full px-4 text-small font-medium text-ink-200 shadow-[inset_0_0_0_1.5px_var(--color-ink-700)] transition-colors hover:bg-gold-500 hover:text-ink-950 hover:shadow-none"
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
         </li>
       ))}
     </ul>

@@ -40,7 +40,7 @@ export function WorkflowCanvas({ compact = false }: { compact?: boolean }) {
       </figcaption>
       <div className="rounded-2xl bg-ink-900 text-left md:rounded-b-none">
         <div className="flex items-center justify-between gap-4 px-4 py-3 text-[0.8125rem] text-ink-400 md:px-5">
-          <span className="text-ink-200">Workflow · New enquiry to booked call</span>
+          <span className="text-ink-200">Workflow · New inquiry to booked call</span>
           <span className="flex shrink-0 items-center gap-2">
             <span aria-hidden className="size-2 rounded-full bg-gold-500" />
             Published
@@ -67,7 +67,7 @@ export function WorkflowCanvas({ compact = false }: { compact?: boolean }) {
             <Connector />
             <Step kind="Wait" title="Until appointment" detail="Reminder the day before" />
             <Connector />
-            <Step kind="Action" title="Move opportunity" detail="New enquiries to Booked" />
+            <Step kind="Action" title="Move opportunity" detail="New inquiries to Booked" />
           </div>
           <p className="ml-1 mt-3 text-[0.8125rem] text-ink-400 md:hidden">+ 3 more steps: SMS or email, reminder, pipeline move</p>
         </div>
@@ -82,13 +82,13 @@ function CompactCanvas() {
     { kind: "Trigger", title: "Form submitted", detail: "Filter: Free consult form", fixed: true },
     { kind: "If / else", title: "Phone number exists", detail: "Yes: send SMS. No: send email." },
     { kind: "Wait", title: "Until appointment", detail: "Reminder the day before" },
-    { kind: "Action", title: "Move opportunity", detail: "New enquiries to Booked" },
+    { kind: "Action", title: "Move opportunity", detail: "New inquiries to Booked" },
   ];
   return (
     <figure data-ui className="on-dark rounded-2xl bg-ink-900 text-left text-ink-50">
       <figcaption className="sr-only">Illustration of a GoHighLevel workflow with its trigger fixed.</figcaption>
       <div className="flex items-center justify-between gap-4 px-4 py-3 text-[0.8125rem] text-ink-400 md:px-5">
-        <span className="min-w-0 text-ink-200 [overflow-wrap:anywhere]">Workflow · New enquiry to booked call</span>
+        <span className="min-w-0 text-ink-200 [overflow-wrap:anywhere]">Workflow · New inquiry to booked call</span>
         <span className="flex shrink-0 items-center gap-2"><span aria-hidden className="size-2 rounded-full bg-gold-500" />Published</span>
       </div>
       <div className="flex flex-col px-4 pb-5 md:px-5">

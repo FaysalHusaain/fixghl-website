@@ -47,7 +47,7 @@ export const services: Service[] = [
       "GHL fixes is our troubleshooting service for GoHighLevel accounts that have stopped doing what they should. We find the cause of broken workflows, missed bookings, email deliverability problems and failed integrations, fix it at the source, and document what changed. It suits coaches, agencies and local businesses already running on GHL.",
     fragment: "workflow",
     problems: [
-      "A workflow that worked last month now enrols nobody, or enrols the same contact twice.",
+      "A workflow that worked last month now enrolls nobody, or enrolls the same contact twice.",
       "Emails reach Promotions or spam, or stop sending after a domain change.",
       "Calendar bookings come in, but confirmations and reminders never go out.",
       "Leads from a form, Facebook lead ad or website never appear as contacts or opportunities.",
@@ -57,7 +57,7 @@ export const services: Service[] = [
     included: [
       { title: "Diagnosis in your account", body: "We trace the problem from the trigger to the last action, using execution logs, contact history and test contacts, until we can show you the cause." },
       { title: "The fix, done at the source", body: "We correct the trigger, filter, field mapping, DNS record or integration that caused it, rather than adding another workflow on top." },
-      { title: "A regression check", body: "We test the paths around the fix so the change does not break a neighbouring automation." },
+      { title: "A regression check", body: "We test the paths around the fix so the change does not break a neighboring automation." },
       { title: "Written notes", body: "A short record of what was wrong, what we changed and how to spot it next time." },
     ],
     process: commonProcess("Fix and test"),
@@ -436,7 +436,7 @@ export const services: Service[] = [
     ],
     faqs: [
       { q: "What is GoHighLevel SaaS mode?", a: "SaaS mode lets an agency sell GHL sub-accounts as its own software, with plans, Stripe billing and usage rebilling managed inside GHL." },
-      { q: "Can my clients see that it is GoHighLevel?", a: "With white-labelling, clients log in on your domain with your branding. Some system emails and links may still need configuring." },
+      { q: "Can my clients see that it is GoHighLevel?", a: "With white-labeling, clients log in on your domain with your branding. Some system emails and links may still need configuring." },
     ],
     relatedGuides: ["ghl-emails-going-to-spam"],
     related: ["ghl-setup", "automation", "integrations"],

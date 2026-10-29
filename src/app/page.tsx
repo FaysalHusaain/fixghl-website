@@ -15,69 +15,59 @@ import { migrationServices } from "@/content/services";
 import { homeFaqs } from "@/content/faqs";
 
 export const metadata: Metadata = pageMetadata({
-  title: "FixGHL | GoHighLevel Fixes, Setups & Migrations",
+  title: "FixGHL | GoHighLevel Setup, Automation & Migrations",
   description:
-    "Specialist GoHighLevel studio. We fix broken workflows and email, set up new accounts, and migrate you from ClickFunnels, Wix, Kajabi or HubSpot.",
+    "Specialist GoHighLevel studio. We set up GHL accounts, build automations and funnels, migrate you from ClickFunnels, Wix, Kajabi or HubSpot, and fix what broke.",
   path: "/",
 });
 
+// Funnel order: hero, the problem in the visitor's words, services, why a specialist, process, proof, booking, FAQ.
+
 const pains = [
   {
-    quote: "Our workflow worked last week. Now it enrols nobody.",
-    cause: "The workflow is in draft, a trigger filter no contact meets, or re-entry is switched off.",
-    fix: "We check each setting in your account, correct the one at fault and test with a fresh contact.",
+    quote: "Our workflow worked last week. Now it enrolls nobody.",
+    line: "Usually a draft status, a filter no contact meets, or re-entry switched off. We find it, fix it and test with a fresh contact.",
     href: "/guides/ghl-workflow-not-triggering",
     cta: "Read the step-by-step guide",
   },
   {
-    quote: "We bought GoHighLevel months ago and still have not set it up.",
-    cause: "Too many settings, no clear order, and the business still runs out of an inbox and a spreadsheet.",
-    fix: "We build the account in the right order: domains, email, calendars, pipeline and follow-up, then hand it over.",
+    quote: "We bought GoHighLevel months ago and still haven't set it up.",
+    line: "We build it in the right order: domains, email, calendars, pipeline and follow-up. Then we walk your team through it.",
     href: "/services/ghl-setup",
     cta: "See our GHL setup service",
   },
   {
-    quote: "Half our emails are landing in spam.",
-    cause: "Mail goes out from a shared or unauthenticated sending domain.",
-    fix: "We set up your own sending domain with SPF, DKIM and DMARC, then warm it up.",
-    href: "/guides/ghl-emails-going-to-spam",
-    cta: "Read the step-by-step guide",
-  },
-  {
-    quote: "We want to leave ClickFunnels, but our funnels are live and earning.",
-    cause: "Contacts, pages, checkout and sequences all move differently, and nothing can go down mid-move.",
-    fix: "We map every asset, build and test in GHL while the old platform stays live, then switch on a set date.",
-    href: "/services/migrations",
-    cta: "See our migration service",
-  },
-  {
     quote: "Our follow-up still happens by hand, when someone remembers.",
-    cause: "Leads, bookings and no-shows are not connected to workflows, so replies depend on a person.",
-    fix: "We build follow-up, reminders and pipeline moves as workflows, test every branch and document them.",
+    line: "We turn new leads, bookings and no-shows into workflows that reply on their own, and test every branch.",
     href: "/services/automation",
     cta: "See our automation service",
   },
   {
-    quote: "SaaS mode is switched on and we still cannot sell it.",
-    cause: "Plans, Stripe rebilling and snapshots were never connected.",
-    fix: "We set up the plans, the rebilling and the snapshot each plan loads.",
-    href: "/services/saas-white-label",
-    cta: "See our SaaS mode service",
+    quote: "We want to leave ClickFunnels, but our funnels are live and earning.",
+    line: "We rebuild and test everything in GHL while the old platform stays live, then switch on a date you pick.",
+    href: "/services/migrations",
+    cta: "See our migration service",
   },
 ];
 
+// Done-for-you work first, fixes after.
 const serviceItems: ServiceItem[] = [
-  { href: "/services/ghl-fixes", name: "GHL fixes", symptom: "Workflows not firing, emails in spam, missed bookings, failed syncs" },
   { href: "/services/ghl-setup", name: "GHL setup", symptom: "A new account built properly: domains, email, calendars, pipelines" },
-  { href: "/services/migrations", name: "Migrations", symptom: "Moving from ClickFunnels, Wix, Kajabi or HubSpot" },
   { href: "/services/automation", name: "Workflows & automation", symptom: "Follow-up, reminders and pipeline moves that run without you" },
   { href: "/services/funnels-websites", name: "Funnels & websites", symptom: "Pages that work on phones and feed your CRM" },
+  {
+    href: "/services/migrations",
+    name: "Migrations",
+    symptom: "Moving from ClickFunnels, Wix, Kajabi or HubSpot",
+    links: migrationServices.map((m) => ({ href: m.path, label: m.name })),
+  },
+  { href: "/services/ghl-fixes", name: "GHL fixes", symptom: "Workflows not firing, emails in spam, missed bookings, failed syncs" },
   { href: "/services/saas-white-label", name: "SaaS mode & white-label", symptom: "Resell GHL under your brand with plans and rebilling" },
   { href: "/services/integrations", name: "Integrations", symptom: "Stripe, Zapier, Make, n8n, ManyChat, webhooks and APIs" },
 ];
 
 const reasons = [
-  { title: "GoHighLevel is all we do", body: "Every project we have taken on since 2019 has been a GHL project. Across more than 100 of them, we have usually seen your problem before." },
+  { title: "GoHighLevel is all we do", body: "Every project we have taken on since 2019 has been a GHL project. After more than 100 of them, we have usually seen your problem before." },
   { title: "We work across the whole account", body: "CRM, pipelines, email deliverability, workflows, funnels, SaaS mode and integrations. A broken reminder is often a calendar problem, and we can follow it there." },
   { title: "You get notes your team can use", body: "Every job ends with a written record of what was wrong, what we changed and what to watch, so your team can run the account without us." },
 ];
@@ -96,97 +86,47 @@ export default function Home() {
 
       {/* Problem recognition */}
       <section aria-labelledby="pains-title" className="section">
-        <div className="frame grid gap-12 md:grid-cols-12">
-          <div className="md:col-span-4">
-            <div className="md:sticky md:top-28">
-              <h2 id="pains-title" className="h-title" data-reveal>Sound familiar?</h2>
-              <p className="mt-5 max-w-[30ch] text-ink-600" data-reveal style={{ ["--i" as string]: 1 }}>
-                Whether the account is broken, unfinished or still on another platform, this is usually why, and what we do about it.
-              </p>
-            </div>
+        <div className="frame">
+          <div className="grid gap-4 md:grid-cols-12 md:items-end">
+            <h2 id="pains-title" className="h-title md:col-span-7" data-reveal>Sound familiar?</h2>
+            <p className="t-lead text-ink-600 md:col-span-5" data-reveal style={{ ["--i" as string]: 1 }}>
+              Most of our calls start with one of these.
+            </p>
           </div>
-          <ul className="flex flex-col gap-2 md:col-span-8">
+          <ul className="mt-8 grid gap-2 md:mt-12 md:grid-cols-2">
             {pains.map((p, i) => (
-              <li key={p.quote} data-reveal style={{ ["--i" as string]: i % 3 }} className="rounded-[1.5rem] bg-ink-100 p-6 md:p-8">
-                <p className="font-display text-[clamp(1.375rem,1.1rem+1.2vw,2rem)] font-semibold leading-[1.15] tracking-[-0.025em]">
+              <li key={p.quote} data-reveal style={{ ["--i" as string]: i % 2 }} className="flex flex-col rounded-[1.5rem] bg-ink-100 p-5 md:p-8">
+                <p className="font-display text-[clamp(1.25rem,1rem+1vw,1.75rem)] font-semibold leading-[1.15] tracking-[-0.025em]">
                   “{p.quote}”
                 </p>
-                <dl className="mt-5 grid gap-4 md:grid-cols-2 md:gap-8">
-                  <div>
-                    <dt className="text-small font-semibold text-ink-600">Why it happens</dt>
-                    <dd className="mt-1 text-ink-800">{p.cause}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-small font-semibold text-ink-600">What we do</dt>
-                    <dd className="mt-1 text-ink-800">{p.fix}</dd>
-                  </div>
-                </dl>
-                <Link href={p.href} className="mt-4 inline-flex min-h-11 items-center gap-2 font-medium text-ink-700 hover:text-ink-950">
+                <p className="mt-3 text-ink-700 md:mt-4">{p.line}</p>
+                <Link href={p.href} className="mt-3 inline-flex min-h-11 items-center gap-2 self-start font-medium text-ink-700 hover:text-ink-950 md:mt-auto md:pt-4">
                   {p.cta} <Icon name="arrow" className="size-4" />
                 </Link>
               </li>
             ))}
-            <li data-reveal className="on-dark flex flex-col gap-6 rounded-[1.5rem] bg-ink-950 p-6 text-ink-50 md:flex-row md:items-center md:justify-between md:p-8">
-              <div>
-                <p className="font-display text-[clamp(1.375rem,1.1rem+1.2vw,2rem)] font-semibold leading-[1.15] tracking-[-0.025em]">
-                  Recognise one of these?
-                </p>
-                <p className="mt-2 max-w-[44ch] text-ink-300">
-                  Book a free 30-minute call. We look at where you are, tell you what we would do and what it involves, whether or not you hire us.
-                </p>
-              </div>
-              <Link href="/book" data-track="book_call_click" data-track-location="home_pains" className="btn btn-gold shrink-0">
-                Talk it through on a free call <Icon name="arrow" className="size-4" />
-              </Link>
-            </li>
           </ul>
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6 md:mt-10" data-reveal>
+            <Link href="/book" data-track="book_call_click" data-track-location="home_pains" className="btn btn-ink shrink-0">
+              Book a free 30-minute call <Icon name="arrow" className="size-4" />
+            </Link>
+            <p className="max-w-[46ch] text-ink-600">We&apos;ll tell you what we&apos;d do and what it costs, whether or not you hire us.</p>
+          </div>
         </div>
       </section>
 
-      {/* Services */}
+      {/* Services, with the migration platforms under Migrations */}
       <section aria-labelledby="services-title" className="on-dark bg-ink-950 text-ink-50">
         <div className="frame section">
           <div className="grid gap-6 md:grid-cols-12 md:items-end">
             <h2 id="services-title" className="h-title md:col-span-7" data-reveal>What do you need done in GHL?</h2>
             <p className="text-ink-300 md:col-span-5" data-reveal style={{ ["--i" as string]: 1 }}>
-              Pick what you need. Each page covers what is included, how the work runs and what to ask before hiring anyone.
+              Each service page covers what is included, how the work runs and what to ask before you hire anyone.
             </p>
           </div>
           <div className="mt-10 md:mt-14">
             <ServiceList items={serviceItems} />
           </div>
-        </div>
-      </section>
-
-      {/* Migrations */}
-      <section aria-labelledby="mig-title" className="section bg-ink-100">
-        <div className="frame">
-          <div className="grid gap-6 md:grid-cols-12 md:items-end">
-            <h2 id="mig-title" className="h-title md:col-span-7" data-reveal>Moving from ClickFunnels, Wix, Kajabi or HubSpot?</h2>
-            <p className="text-ink-700 md:col-span-5" data-reveal style={{ ["--i" as string]: 1 }}>
-              We move contacts, pages, funnels and automations into GHL in a set order, test before the switch, and keep your old platform
-              live until the new account is proven.
-            </p>
-          </div>
-          <ul className="mt-8 grid gap-2 sm:grid-cols-2 md:mt-12">
-            {migrationServices.map((m, i) => (
-              <li key={m.slug} data-reveal style={{ ["--i" as string]: i }}>
-                <Link href={m.path} className="group flex items-center justify-between gap-4 rounded-2xl bg-white p-6 transition-colors hover:bg-ink-950 hover:text-ink-50 md:p-8">
-                  <span className="font-display text-[clamp(1.75rem,1.2rem+2vw,3rem)] font-semibold leading-none tracking-[-0.035em]">
-                    {m.name.replace(" to GHL", "")}
-                    <span className="text-ink-500 group-hover:text-gold-500"> to GHL</span>
-                    <span className="mt-3 block font-sans text-small font-medium tracking-normal text-ink-600 group-hover:text-ink-300">
-                      See what moves, how and in what order
-                    </span>
-                  </span>
-                  <Icon name="arrow" className="size-7 shrink-0 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-6 text-ink-600">
-            Moving from somewhere else? <Link href="/services/migrations" className="link font-medium text-ink-950">See how migrations work</Link>.
-          </p>
         </div>
       </section>
 
@@ -253,24 +193,9 @@ export default function Home() {
 
       <Testimonials />
 
-      <ProofStrip cta />
+      <ProofStrip />
 
-      {/* FAQ */}
-      <section aria-labelledby="faq-title" className="bg-ink-100">
-        <div className="frame section grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <h2 id="faq-title" className="h-title lg:sticky lg:top-28" data-reveal>Questions before you book</h2>
-          </div>
-          <div className="lg:col-span-8">
-            <Faq items={homeFaqs} />
-            <p className="mt-8 text-ink-600">
-              More answers on the <Link href="/faq" className="link font-medium text-ink-950">full FAQ page</Link>.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA with booking */}
+      {/* Booking */}
       <section aria-labelledby="final-title" className="on-dark bg-ink-950 text-ink-50" id="describe">
         <div className="frame section grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
@@ -298,6 +223,27 @@ export default function Home() {
           </div>
           <div className="lg:col-span-7" data-reveal style={{ ["--i" as string]: 1 }}>
             <BookingModule id="home-book" />
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section aria-labelledby="faq-title" className="bg-ink-100">
+        <div className="frame section grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <h2 id="faq-title" className="h-title lg:sticky lg:top-28" data-reveal>Questions before you book</h2>
+          </div>
+          <div className="lg:col-span-8">
+            <Faq items={homeFaqs} />
+            <p className="mt-8 text-ink-600">
+              More answers on the <Link href="/faq" className="link font-medium text-ink-950">full FAQ page</Link>.
+            </p>
+            <div className="mt-10 flex flex-col gap-4 rounded-[1.5rem] bg-ink-50 p-6 sm:flex-row sm:items-center sm:justify-between md:p-8">
+              <p className="h-sub max-w-[26ch]">Didn&apos;t see your question? Ask it on the call.</p>
+              <Link href="/book" data-track="book_call_click" data-track-location="home_faq" className="btn btn-ink shrink-0">
+                Book the free call <Icon name="arrow" className="size-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

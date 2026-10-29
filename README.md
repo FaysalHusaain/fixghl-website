@@ -16,7 +16,6 @@ npm run build && npm start   # production build
 | Variable | Where | Purpose |
 | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | public | Canonical domain, sitemap, schema, OG URLs |
-| `GHL_FORM_WEBHOOK_URL` | server | GHL inbound webhook for the fallback form. Without it, production returns 503 and dev logs the lead |
 | `GOOGLE_SITE_VERIFICATION` / `BING_SITE_VERIFICATION` | server | Search Console and Bing Webmaster meta tags |
 | `INDEXNOW_KEY` | server | IndexNow key; must match `public/<key>.txt` |
 
@@ -33,7 +32,6 @@ CLI alternative: `npx vercel` (preview) and `npx vercel --prod`.
 ## Booking, form and conversion tracking
 
 - **Calendar and form:** `/book` and the homepage embed the GHL calendar ("Book a call") and the GHL form ("Send details") from `link.codenovahq.com`, loaded near the viewport. GHL's `form_embed.js` sizes both iframes to their content. Styling for the calendar is in `design/ghl-calendar-custom-code.html` (paste into the calendar's Custom code box).
-- **Form (fallback):** posts JSON to `/api/lead`, which validates on the server, drops honeypot submissions (`company_site`), rate-limits to 5 per IP per 10 minutes, and forwards to `GHL_FORM_WEBHOOK_URL` as `{name, email, need, platform, urgency, website, details, source, submitted_at}`. Map those fields in the GHL inbound-webhook workflow.
 - **Success:** both paths land on `/book/thanks` (noindex). For the calendar, set the GHL calendar's confirmation to stay in the widget; the site listens for the booking `postMessage` and redirects. [[VERIFY: GHL booking postMessage payload. Open DevTools, make a test booking, and confirm the message matches the listener in `src/components/booking/BookingModule.tsx`.]]
 
 ### GA4 events
@@ -42,7 +40,6 @@ CLI alternative: `npx vercel` (preview) and `npx vercel --prod`.
 | --- | --- | --- |
 | `book_call_click` | Any "Book a call" link (`data-track`), with `location` param | No |
 | `calendar_booked` | GHL calendar iframe reports a completed booking | Yes |
-| `form_submit` | Fallback form accepted by `/api/lead`, with `need` and `urgency` | Yes |
 | `affiliate_click` | Any `/try-ghl` link (307 to the GoHighLevel affiliate URL, set in `next.config.ts`) | No |
 
 GA4 (`G-7MHF0P2H0Z`, set in `src/lib/site.ts`) loads through `@next/third-parties` on the first interaction or 4s after load (`DeferredGA`), runs Consent Mode v2 with analytics denied by default, and updates on the visitor's choice. Ads storage stays denied.

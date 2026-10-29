@@ -55,13 +55,13 @@ export function EmailAuthPanel() {
 
 export function PipelinePanel() {
   const stages = [
-    { name: "New enquiry", cards: ["Form · Free consult", "Facebook lead ad"] },
+    { name: "New inquiry", cards: ["Form · Free consult", "Facebook lead ad"] },
     { name: "Booked", cards: ["Calendar · Discovery call"] },
     { name: "Proposal sent", cards: ["Imported from HubSpot"] },
     { name: "Won", cards: ["Stripe · Paid"] },
   ];
   return (
-    <Shell title="Opportunities · Sales pipeline" status="Imported" caption="Illustration of a GHL pipeline with stages from new enquiry to won.">
+    <Shell title="Opportunities · Sales pipeline" status="Imported" caption="Illustration of a GHL pipeline with stages from new inquiry to won.">
       <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
         {stages.map((s) => (
           <div key={s.name} className="rounded-xl bg-ink-800/50 p-2.5">
@@ -204,7 +204,7 @@ export function HandoverPanel() {
   const notes = [
     { t: "Fixed", d: "Form trigger pointed at a deleted form. Re-pointed and tested with three test contacts." },
     { t: "Changed", d: "Merged two duplicate reminder workflows into one. Old version archived, not deleted." },
-    { t: "Watch", d: "If you rename the consult form, update the trigger filter in 'New enquiry to booked call'." },
+    { t: "Watch", d: "If you rename the consult form, update the trigger filter in 'New inquiry to booked call'." },
   ];
   return (
     <Shell title="Handover notes · Sub-account" status="Shared with your team" caption="Illustration of FixGHL handover notes describing what was fixed and changed.">

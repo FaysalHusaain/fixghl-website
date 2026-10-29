@@ -7,7 +7,7 @@ export const guides: ArticleMeta[] = [
     metaTitle: "GoHighLevel Workflow Not Triggering? How to Fix It",
     description:
       "Why a GoHighLevel workflow stops triggering and how to fix it: draft status, trigger filters, re-entry, wrong trigger type and how to read execution logs.",
-    summary: "A step-by-step check for GHL workflows that enrol nobody, enrol the wrong contacts or stop part way.",
+    summary: "A step-by-step check for GHL workflows that enroll nobody, enroll the wrong contacts or stop part way.",
     published: "2026-10-26",
     updated: "2026-10-26",
     faqs: [

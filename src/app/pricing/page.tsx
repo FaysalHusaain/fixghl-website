@@ -12,7 +12,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/pricing",
 });
 
-// Offer cards are ready for real prices: set `price` when offers are confirmed. [[TODO: offers/pricing]]
+// Offer cards are ready for real prices: set `price` when offers are confirmed.
 const offers = [
   { name: "GHL fix", href: "/services/ghl-fixes", for: "One problem, found and fixed at the cause", price: null as string | null },
   { name: "Account setup", href: "/services/ghl-setup", for: "A new GHL account built properly from day one", price: null },

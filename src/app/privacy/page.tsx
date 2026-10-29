@@ -29,19 +29,19 @@ export default function Page() {
       <p>We do not sell personal data and we do not use it for advertising.</p>
       <h2>What is our legal basis?</h2>
       <p>
-        For enquiries and projects, we rely on steps taken at your request before entering a contract, and on the contract itself. For
+        For inquiries and projects, we rely on steps taken at your request before entering a contract, and on the contract itself. For
         analytics cookies, we rely on your consent, which you can withdraw at any time by clearing this site&apos;s cookies and choosing Decline.
       </p>
       <h2>Who processes it for us?</h2>
       <ul>
         <li><strong>HighLevel (LeadConnector)</strong> hosts our booking calendar, form submissions and client records in our CRM.</li>
-        <li><strong>Google</strong> provides Google Analytics 4, with IP anonymisation and advertising features turned off.</li>
+        <li><strong>Google</strong> provides Google Analytics 4, with IP anonymization and advertising features turned off.</li>
         <li><strong>Vercel</strong> hosts this website and provides cookie-free analytics and performance monitoring.</li>
       </ul>
       <p>Some of these providers process data outside your country, including in the United States, under their own safeguards such as standard contractual clauses.</p>
       <h2>How long do we keep it?</h2>
       <p>
-        We keep enquiry details for as long as we need them to reply and follow up. We keep client project records for as long as we need
+        We keep inquiry details for as long as we need them to reply and follow up. We keep client project records for as long as we need
         them to deliver the service and to meet legal and accounting obligations. Google Analytics data is kept for the retention period set
         in our Google Analytics account. You can ask us to delete your data at any time.
       </p>

@@ -16,7 +16,7 @@ export function CtaBand({
             <Link href="/book" data-track="book_call_click" data-track-location={location} className="btn btn-gold">
               Book a free 30-minute GHL call <Icon name="arrow" className="size-4" />
             </Link>
-            <Link href="/book#describe" className="btn btn-outline-dark">Describe your issue</Link>
+            <Link href="/book#describe" className="btn btn-outline-dark">Describe your project</Link>
           </div>
         </div>
       </div>

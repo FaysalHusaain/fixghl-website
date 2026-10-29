@@ -42,7 +42,7 @@ export function ServicePage({ s }: { s: Service }) {
               <Link href="/book" data-track="book_call_click" data-track-location={`service_${s.slug}`} className="btn btn-ink">
                 Book a free 30-minute GHL call <Icon name="arrow" className="size-4" />
               </Link>
-              <Link href="/book#describe" className="btn btn-outline-light">Describe your issue</Link>
+              <Link href="/book#describe" className="btn btn-outline-light">Describe your project</Link>
             </div>
             <p className="mt-6 text-small text-ink-600">7+ years in GHL · 100+ projects · US, UK, EU, Middle East</p>
           </div>

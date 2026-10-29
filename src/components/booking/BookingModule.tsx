@@ -15,21 +15,34 @@ const GHL_ORIGIN = /(codenovahq\.com|leadconnectorhq\.com|msgsndr\.com|gohighlev
 
 type Tab = "call" | "write";
 
-export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; headingLevel?: 2 | 3 }) {
+// calendar="immediate": the calendar is the page's main job (/book), so its iframe is in the server-rendered HTML and
+// starts loading while the page parses. calendar="near": it loads when the module is within 1200px of the viewport
+// or 2s after the page has loaded and gone idle, whichever comes first (homepage).
+export function BookingModule({
+  id = "book",
+  headingLevel = 2,
+  calendar = "near",
+}: {
+  id?: string;
+  headingLevel?: 2 | 3;
+  calendar?: "immediate" | "near";
+}) {
   const [tab, setTab] = useState<Tab>("call");
   const router = useRouter();
   const H = headingLevel === 2 ? "h2" : "h3";
-  const [calendarOn, setCalendarOn] = useState(false); // calendar iframe injected
-  const [formOpened, setFormOpened] = useState(false); // the form iframe loads only once "Send details" is opened
+  const [calendarOn, setCalendarOn] = useState(calendar === "immediate");
+  const [formOn, setFormOn] = useState(false); // the form loads as the visitor reaches for "Send details"
+  const loadForm = () => setFormOn(true);
   const openTab = (t: Tab) => {
     setTab(t);
-    if (t === "write") setFormOpened(true);
+    if (t === "write") loadForm();
   };
 
   useEffect(() => {
     const sync = () => {
       if (window.location.hash === "#describe") {
-        openTab("write");
+        setTab("write");
+        setFormOn(true);
         document.getElementById(`${id}-panel-write`)?.scrollIntoView({ block: "start" });
       }
     };
@@ -60,7 +73,7 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
   ];
 
   return (
-    <div id={id} className="rounded-[1.75rem] bg-ink-50 p-2 text-ink-950 md:p-3">
+    <div id={id} data-booking-module className="rounded-[1.75rem] bg-ink-50 p-2 text-ink-950 md:p-3">
       <div role="tablist" aria-label="How would you like to start?" className="grid grid-cols-2 gap-1 rounded-[1.25rem] bg-ink-100 p-1">
         {tabs.map((t) => (
           <button
@@ -72,6 +85,10 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
             aria-controls={`${id}-panel-${t.key}`}
             tabIndex={tab === t.key ? 0 : -1}
             onClick={() => openTab(t.key)}
+            // Start the form while the pointer or focus is on its tab, so it is ready when the tab opens.
+            onPointerEnter={t.key === "write" ? loadForm : undefined}
+            onFocus={t.key === "write" ? loadForm : undefined}
+            onTouchStart={t.key === "write" ? loadForm : undefined}
             onKeyDown={(e) => {
               if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
                 const next = tab === "call" ? "write" : "call";
@@ -90,8 +107,8 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
 
       <div id={`${id}-panel-call`} role="tabpanel" aria-labelledby={`${id}-tab-call`} hidden={tab !== "call"} className="p-3 pt-6 md:p-6">
         <H className="h-sub">Pick a time for a free 30-minute call</H>
-        <p className="mt-2 max-w-[60ch] text-ink-700">Pick a day and a time, then tell us briefly what you need.</p>
-        <GhlFrame kind="calendar" className="mt-6" show={calendarOn} lazy onNear={() => setCalendarOn(true)}>
+        <p className="mt-2 max-w-[60ch] text-ink-700">After you pick a time, we ask your name, email, what you need and a line about your account.</p>
+        <GhlFrame kind="calendar" className="mt-6" show={calendarOn} lazy={calendar === "near"} onNear={() => setCalendarOn(true)}>
           {(onReady) => (
             <iframe
               src={`${GHL_HOST}/widget/booking/${CALENDAR_ID}`}
@@ -109,7 +126,7 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
       <div id={`${id}-panel-write`} role="tabpanel" aria-labelledby={`${id}-tab-write`} hidden={tab !== "write"} className="p-3 pt-6 md:p-6">
         <H className="h-sub">Send us the details</H>
         <p className="mt-2 max-w-[60ch] text-ink-700">Tell us what is happening. We reply by email with next steps or a time to talk.</p>
-        <GhlFrame kind="form" className="mt-4" show={formOpened}>
+        <GhlFrame kind="form" className="mt-4" show={formOn}>
           {(onReady) => (
             <iframe
               src={`${GHL_HOST}/widget/form/${FORM_ID}`}
@@ -135,14 +152,14 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
         </GhlFrame>
       </div>
       {/* GHL's resizer script, once, as soon as the first GHL iframe is on the page. */}
-      {(calendarOn || formOpened) && <Script src={`${GHL_HOST}/js/form_embed.js`} strategy="afterInteractive" />}
+      {(calendarOn || formOn) && <Script src={`${GHL_HOST}/js/form_embed.js`} strategy="afterInteractive" />}
     </div>
   );
 }
 
 // Holds a GHL iframe behind a skeleton the size of the real widget, so there is no blank gap and no jump.
-// The widget is drawn when GHL posts "iframeLoaded" (iframe onload is the backstop); the swap waits until the
-// resizer has settled the iframe's height.
+// The swap starts at iframe onload (or GHL's "iframeLoaded" message) and completes once GHL has revealed the widget and
+// its height has settled, so the visitor never sees a blank box or a jump.
 function GhlFrame({
   kind,
   show,
@@ -160,40 +177,28 @@ function GhlFrame({
 }) {
   const box = useRef<HTMLDivElement>(null);
 
-  // Lazy widgets load when their placeholder comes within 300px of the viewport, or on the visitor's first tap, click
-  // or key press, whichever comes first. A placeholder that is already near the screen when the page opens also counts
-  // mouse movement, scrolling and focus as that first sign of activity, with a 5s-after-load fallback, so the GHL embed
-  // and its third-party cookies never compete with the page's own first load.
+  // Lazy widgets load when their placeholder is within 1200px of the viewport, or 2s after the page has loaded and
+  // the browser is idle, whichever comes first.
   useEffect(() => {
     if (!lazy || show || !onNear || !box.current) return;
     let timer = 0;
-    let first = true;
+    let idle = 0;
     const near = () => onNear();
-    const taps = ["pointerdown", "keydown", "touchstart"] as const;
-    const activity = ["pointermove", "wheel", "scroll", "focusin"] as const;
-    const arm = () => {
-      activity.forEach((e) => window.addEventListener(e, near, { once: true, passive: true }));
-      timer = window.setTimeout(near, 5000);
-    };
-    const io = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.some((e) => e.isIntersecting);
-        if (visible && !first) near();
-        else if (visible) {
-          if (document.readyState === "complete") arm();
-          else window.addEventListener("load", arm, { once: true });
-        }
-        first = false;
-      },
-      { rootMargin: "300px 0px" }
-    );
+    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && near(), { rootMargin: "1200px 0px" });
     io.observe(box.current);
-    taps.forEach((e) => window.addEventListener(e, near, { once: true, passive: true }));
+    const afterLoad = () => {
+      timer = window.setTimeout(() => {
+        if ("requestIdleCallback" in window) idle = window.requestIdleCallback(near, { timeout: 1000 });
+        else near();
+      }, 2000);
+    };
+    if (document.readyState === "complete") afterLoad();
+    else window.addEventListener("load", afterLoad, { once: true });
     return () => {
       io.disconnect();
       window.clearTimeout(timer);
-      window.removeEventListener("load", arm);
-      [...taps, ...activity].forEach((e) => window.removeEventListener(e, near));
+      if (idle) window.cancelIdleCallback(idle);
+      window.removeEventListener("load", afterLoad);
     };
   }, [lazy, show, onNear]);
   const [drawn, setDrawn] = useState(false);
@@ -201,15 +206,20 @@ function GhlFrame({
 
   useEffect(() => {
     if (!show || drawn) return;
+    // A server-rendered iframe can finish loading before React attaches onLoad; GHL's own reveal check still gates the swap.
+    const backstop = window.setTimeout(() => setDrawn(true), 3000);
     const onMessage = (e: MessageEvent) => {
       const frame = box.current?.querySelector("iframe");
       if (frame && e.source === frame.contentWindow && Array.isArray(e.data) && e.data[0] === "iframeLoaded") setDrawn(true);
     };
     window.addEventListener("message", onMessage);
-    return () => window.removeEventListener("message", onMessage);
+    return () => {
+      window.clearTimeout(backstop);
+      window.removeEventListener("message", onMessage);
+    };
   }, [show, drawn]);
 
-  // Swap once GHL has revealed the iframe and its height has held steady for two checks (or after 6s at most).
+  // Swap once GHL has revealed the iframe and its height has held steady for two checks (or after 8s at most).
   useEffect(() => {
     if (!drawn || ready) return;
     let last = -1;
@@ -221,15 +231,15 @@ function GhlFrame({
       const revealed = !!frame && frame.style.visibility !== "hidden"; // GHL's form_embed.js has finished its own reveal
       steady = revealed && h > 200 && h === last ? steady + 1 : 0;
       last = h;
-      if (steady >= 2 || Date.now() - started > 6000) {
+      if (steady >= 2 || Date.now() - started > 8000) {
         window.clearInterval(t);
         setReady(true);
       }
-    }, 200);
+    }, 120);
     return () => window.clearInterval(t);
   }, [drawn, ready]);
 
-  const onLoad = () => window.setTimeout(() => setDrawn(true), 1200);
+  const onLoad = () => setDrawn(true);
 
   return (
     <div ref={box} className={className} data-ghl={kind} data-ready={ready}>

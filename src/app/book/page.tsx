@@ -43,7 +43,7 @@ export default function Page() {
           <p className="mt-4 text-small text-ink-400">7+ years in GHL · 100+ projects · US, UK, EU, Middle East</p>
         </div>
         <div className="lg:col-span-7" id="describe">
-          <BookingModule id="book-page" headingLevel={2} />
+          <BookingModule id="book-page" headingLevel={2} calendar="immediate" />
         </div>
       </div>
     </section>

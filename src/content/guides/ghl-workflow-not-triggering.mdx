@@ -4,7 +4,7 @@ This guide walks through each check, shows where to look in the workflow builder
 
 ## Why is my GoHighLevel workflow not triggering?
 
-Most trigger failures come from settings, not bugs. A workflow only enrols a contact when it is published, the event matches the trigger type, every trigger filter is true for that contact at that moment, and the re-entry rules allow it. If any one of those is false, nothing happens and GHL shows no error.
+Most trigger failures come from settings, not bugs. A workflow only enrolls a contact when it is published, the event matches the trigger type, every trigger filter is true for that contact at that moment, and the re-entry rules allow it. If any one of those is false, nothing happens and GHL shows no error.
 
 | Check | Where to look | What usually fixes it |
 | --- | --- | --- |
@@ -24,7 +24,7 @@ After publishing, trigger the event again with a test contact. Events that happe
 
 ## Does the contact meet every trigger filter?
 
-Trigger filters must all be true at the moment the event fires. Filters on the same trigger are combined with AND, so one filter that a contact fails stops the whole enrolment. A common case is a filter on a tag that a later step adds, which does not exist yet when the trigger is checked.
+Trigger filters must all be true at the moment the event fires. Filters on the same trigger are combined with AND, so one filter that a contact fails stops the whole enrollment. A common case is a filter on a tag that a later step adds, which does not exist yet when the trigger is checked.
 
 To check:
 

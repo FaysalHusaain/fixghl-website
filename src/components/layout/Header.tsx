@@ -124,7 +124,7 @@ export function Header({ services, migrations }: { services: NavLink[]; migratio
               <Link href="/book" data-track="book_call_click" data-track-location="mobile_menu" className="btn btn-gold w-full">
                 Book a free 30-minute GHL call
               </Link>
-              <Link href="/book#describe" className="btn btn-outline-dark w-full">Describe your issue</Link>
+              <Link href="/book#describe" className="btn btn-outline-dark w-full">Describe your project</Link>
             </div>
           </nav>
         </div>
