@@ -1,16 +1,16 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { sendGAEvent } from "@next/third-parties/google";
+import { track } from "@/lib/analytics";
 
-// GA4 conversion: fires once each time /book/thanks loads.
+// GA4 conversion: fires once each time /book/thanks loads. gtag() is defined before GA loads (consent defaults in
+// the root layout), so the event queues in dataLayer and is sent when the deferred tag arrives.
 export function LeadEvent() {
   const sent = useRef(false);
   useEffect(() => {
     if (sent.current) return;
     sent.current = true;
-    const via = new URLSearchParams(window.location.search).get("via") ?? "unknown";
-    sendGAEvent("event", "generate_lead", { method: via });
+    track("generate_lead", { method: new URLSearchParams(window.location.search).get("via") ?? "unknown" });
   }, []);
   return null;
 }

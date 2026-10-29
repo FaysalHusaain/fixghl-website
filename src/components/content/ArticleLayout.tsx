@@ -43,17 +43,17 @@ export function ArticleLayout({
           <aside className="lg:order-2 lg:col-span-3 lg:col-start-10">
             <div className="flex flex-col gap-3 lg:sticky lg:top-24">
             <details className="group rounded-2xl bg-ink-100 p-5" open>
-              <summary className="flex cursor-pointer list-none items-center justify-between font-semibold [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between font-semibold [&::-webkit-details-marker]:hidden">
                 On this page
                 <Icon name="plus" className="size-4 transition-transform group-open:rotate-45" />
               </summary>
               <ol className="mt-4 flex flex-col gap-2 text-small">
                 {toc.map((t) => (
                   <li key={t.id}>
-                    <a href={`#${t.id}`} className="block py-1 text-ink-700 hover:text-ink-950">{t.text}</a>
+                    <a href={`#${t.id}`} className="flex min-h-11 items-center py-1 text-ink-700 hover:text-ink-950">{t.text}</a>
                   </li>
                 ))}
-                <li><a href="#faq" className="block py-1 text-ink-700 hover:text-ink-950">Frequently asked questions</a></li>
+                <li><a href="#faq" className="flex min-h-11 items-center py-1 text-ink-700 hover:text-ink-950">Frequently asked questions</a></li>
               </ol>
             </details>
             <div className="on-dark hidden rounded-2xl bg-ink-950 p-5 text-ink-50 lg:block">

@@ -42,7 +42,7 @@ export default async function Page({ params }: PageProps<"/glossary/[term]">) {
             <p className="font-semibold">More GHL terms</p>
             <ul className="mt-4 flex flex-col gap-1 text-small">
               {others.map((o) => (
-                <li key={o.slug}><Link href={`/glossary/${o.slug}`} className="block py-1.5 text-ink-700 hover:text-ink-950">{o.term}</Link></li>
+                <li key={o.slug}><Link href={`/glossary/${o.slug}`} className="flex min-h-11 items-center text-ink-700 hover:text-ink-950">{o.term}</Link></li>
               ))}
             </ul>
           </nav>

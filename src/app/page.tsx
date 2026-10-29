@@ -121,7 +121,7 @@ export default function Home() {
                     <dd className="mt-1 text-ink-800">{p.fix}</dd>
                   </div>
                 </dl>
-                <Link href={p.href} className="mt-6 inline-flex items-center gap-2 font-medium text-ink-700 hover:text-ink-950">
+                <Link href={p.href} className="mt-4 inline-flex min-h-11 items-center gap-2 font-medium text-ink-700 hover:text-ink-950">
                   {p.cta} <Icon name="arrow" className="size-4" />
                 </Link>
               </li>
@@ -222,7 +222,7 @@ export default function Home() {
         <div className="frame section">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <h2 id="how-title" className="h-title max-w-[16ch]" data-reveal>How does working with us go?</h2>
-            <Link href="/how-it-works" className="link font-medium" data-reveal>Read the full process</Link>
+            <Link href="/how-it-works" className="link inline-flex min-h-11 items-center font-medium" data-reveal>Read the full process</Link>
           </div>
           <ol data-ui className="mt-8 grid gap-1.5 md:mt-12 md:grid-cols-4">
             {stages.map((s, i) => (

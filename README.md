@@ -45,7 +45,7 @@ CLI alternative: `npx vercel` (preview) and `npx vercel --prod`.
 | `form_submit` | Fallback form accepted by `/api/lead`, with `need` and `urgency` | Yes |
 | `affiliate_click` | Any `/try-ghl` link (307 to the GoHighLevel affiliate URL, set in `next.config.ts`) | No |
 
-GA4 (`G-7MHF0P2H0Z`, set in `src/lib/site.ts`) loads through `@next/third-parties`, runs Consent Mode v2 with analytics denied by default, and updates on the visitor's choice. Ads storage stays denied.
+GA4 (`G-7MHF0P2H0Z`, set in `src/lib/site.ts`) loads through `@next/third-parties` on the first interaction or 4s after load (`DeferredGA`), runs Consent Mode v2 with analytics denied by default, and updates on the visitor's choice. Ads storage stays denied.
 
 **AI referrals.** When the referrer is chatgpt.com, chat.openai.com, perplexity.ai, gemini.google.com, copilot.microsoft.com or claude.ai, the GA config sends `ai_source`. In GA4 Admin, register `ai_source` as an event-scoped custom dimension. Also build an exploration filtered on session source matching `chatgpt|openai|perplexity|gemini|copilot|claude` to see AI traffic, including visits where the parameter is missing.
 

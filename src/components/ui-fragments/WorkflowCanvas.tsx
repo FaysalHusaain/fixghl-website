@@ -88,7 +88,7 @@ function CompactCanvas() {
     <figure data-ui className="on-dark rounded-2xl bg-ink-900 text-left text-ink-50">
       <figcaption className="sr-only">Illustration of a GoHighLevel workflow with its trigger fixed.</figcaption>
       <div className="flex items-center justify-between gap-4 px-4 py-3 text-[0.8125rem] text-ink-400 md:px-5">
-        <span className="truncate text-ink-200">Workflow · New enquiry to booked call</span>
+        <span className="min-w-0 text-ink-200 [overflow-wrap:anywhere]">Workflow · New enquiry to booked call</span>
         <span className="flex shrink-0 items-center gap-2"><span aria-hidden className="size-2 rounded-full bg-gold-500" />Published</span>
       </div>
       <div className="flex flex-col px-4 pb-5 md:px-5">

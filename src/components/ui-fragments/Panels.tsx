@@ -9,7 +9,7 @@ function Shell({ title, status, children, caption }: { title: string; status?: s
     <figure data-ui className="on-dark overflow-hidden rounded-2xl bg-ink-900 text-left text-ink-50">
       <figcaption className="sr-only">{caption}</figcaption>
       <div className="flex items-center justify-between gap-4 px-4 py-3 text-[0.8125rem] text-ink-400 md:px-5">
-        <span className="truncate text-ink-200">{title}</span>
+        <span className="min-w-0 text-ink-200 [overflow-wrap:anywhere]">{title}</span>
         {status && (
           <span className="flex shrink-0 items-center gap-2">
             <span aria-hidden className="size-2 rounded-full bg-gold-500" />
@@ -41,8 +41,8 @@ export function EmailAuthPanel() {
           <li key={r.type} className="grid grid-cols-[3.5rem_1fr_auto] items-center gap-3 rounded-xl bg-ink-800/70 p-3 text-[0.8125rem]">
             <span className="font-semibold text-ink-50">{r.type}</span>
             <span className="min-w-0">
-              <span className="block truncate text-ink-200">{r.host}</span>
-              <span className="block truncate text-ink-400">{r.value}</span>
+              <span className="block text-ink-200 [overflow-wrap:anywhere]">{r.host}</span>
+              <span className="block text-ink-400 [overflow-wrap:anywhere]">{r.value}</span>
             </span>
             <Pass />
           </li>
@@ -144,7 +144,7 @@ export function IntegrationsPanel() {
           <li key={r.event} className="grid grid-cols-[1fr_auto] items-center gap-3 rounded-xl bg-ink-800/70 p-3 text-[0.8125rem]">
             <span className="min-w-0">
               <span className="block font-medium text-ink-50">{r.from}</span>
-              <span className="block truncate text-ink-400">{r.event}</span>
+              <span className="block text-ink-400 [overflow-wrap:anywhere]">{r.event}</span>
             </span>
             <span className="flex items-center gap-2 text-ink-200">
               <Icon name="arrow" className="size-4 text-gold-500" />

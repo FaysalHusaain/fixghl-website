@@ -35,7 +35,7 @@ export function Footer() {
       <div className="frame pt-16 md:pt-20">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-4">
-            <Link href="/" aria-label="FixGHL home" className="inline-block text-ink-50">
+            <Link href="/" aria-label="FixGHL home" className="inline-flex min-h-11 items-center text-ink-50">
               <Logo className="w-[10.25rem]" title={null} />
             </Link>
             <p className="mt-8 max-w-[30ch] text-lead leading-snug text-ink-100">{site.oneLine}</p>
@@ -50,20 +50,20 @@ export function Footer() {
             {groups.map((g) => (
               <div key={g.title}>
                 <p className="text-small font-semibold text-ink-50">{g.title}</p>
-                <ul className="mt-4 flex flex-col gap-1 text-small">
+                <ul className="mt-3 flex flex-col text-small">
                   {g.links.map((l) =>
                     l.href === "/try-ghl" ? (
                       <li key={l.href}>
-                        <a href="/try-ghl" rel="sponsored nofollow" data-track="affiliate_click" data-track-location="footer" className="inline-block py-1.5 transition-colors hover:text-ink-50">
+                        <a href="/try-ghl" rel="sponsored nofollow" data-track="affiliate_click" data-track-location="footer" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-ink-50">
                           {l.label}
                         </a>
-                        <span className="mt-1 block max-w-[24ch] text-[0.8125rem] leading-snug text-ink-400">
+                        <span className="block max-w-[24ch] text-[0.8125rem] leading-snug text-ink-400">
                           We may earn a commission if you sign up through our link.
                         </span>
                       </li>
                     ) : (
                       <li key={l.href}>
-                        <Link href={l.href} className="inline-block py-1.5 transition-colors hover:text-ink-50">{l.label}</Link>
+                        <Link href={l.href} className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-ink-50">{l.label}</Link>
                       </li>
                     )
                   )}
@@ -78,9 +78,9 @@ export function Footer() {
             © {copyrightYear} {site.name}. FixGHL is an independent studio and is not affiliated with or endorsed by HighLevel Inc.
           </p>
           <ul className="flex gap-6">
-            <li><Link href="/privacy" className="hover:text-ink-50">Privacy</Link></li>
-            <li><Link href="/terms" className="hover:text-ink-50">Terms</Link></li>
-            <li><Link href="/affiliate-disclosure" className="hover:text-ink-50">Affiliate disclosure</Link></li>
+            <li><Link href="/privacy" className="inline-flex min-h-11 min-w-11 items-center hover:text-ink-50">Privacy</Link></li>
+            <li><Link href="/terms" className="inline-flex min-h-11 min-w-11 items-center hover:text-ink-50">Terms</Link></li>
+            <li><Link href="/affiliate-disclosure" className="inline-flex min-h-11 min-w-11 items-center hover:text-ink-50">Affiliate disclosure</Link></li>
           </ul>
         </div>
       </div>

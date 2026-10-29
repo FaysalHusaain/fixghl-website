@@ -153,6 +153,29 @@
   .story-panel { transform: none; }
 }
 
+/* GHL embeds. While a widget boots, the skeleton holds the space at the widget's real size (by box width) and the
+   iframe loads invisibly in a stage on top, out of flow, so its interim heights (and GHL's own reveal styles) never
+   move the page. Once its height settles they swap: no blank gap, no layout jump. */
+[data-ghl] { position: relative; container-type: inline-size; }
+.ghl-stage { transition: opacity 360ms ease; }
+[data-ghl]:not([data-ready="true"]) > .ghl-stage { position: absolute; inset: 0 0 auto 0; opacity: 0; pointer-events: none; }
+.ghl-skeleton { transition: opacity 360ms ease, visibility 0s linear 360ms; }
+[data-ghl][data-ready="true"] > .ghl-skeleton { position: absolute; inset: 0 0 auto 0; opacity: 0; visibility: hidden; }
+.ghl-skeleton--calendar { min-height: 530px; }
+.ghl-skeleton--form { min-height: 632px; }
+@container (max-width: 450px) {
+  .ghl-skeleton--calendar { min-height: 480px; }
+  .ghl-skeleton--form { min-height: 620px; }
+}
+.ghl-skeleton > * { min-height: inherit; }
+.ghl-shimmer {
+  background: linear-gradient(90deg, var(--color-ink-100) 0%, var(--color-ink-50) 45%, var(--color-ink-100) 90%);
+  background-size: 220% 100%;
+  animation: ghl-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes ghl-shimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+@media (prefers-reduced-motion: reduce) { .ghl-shimmer { animation: none; } .ghl-skeleton, .ghl-stage { transition: none; } }
+
 @utility scrollbar-none {
   scrollbar-width: none;
   &::-webkit-scrollbar { display: none; }

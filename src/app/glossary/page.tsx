@@ -24,11 +24,11 @@ export default function Page() {
             <div key={t.slug} data-reveal style={{ ["--i" as string]: i % 2 }} className="flex flex-col justify-between gap-6 rounded-2xl bg-ink-100 p-6 md:p-8">
               <div>
                 <dt className="font-display text-[1.75rem] font-semibold leading-tight tracking-[-0.03em]">
-                  <Link href={`/glossary/${t.slug}`} className="hover:underline hover:underline-offset-4">{t.term}</Link>
+                  <Link href={`/glossary/${t.slug}`} className="inline-flex min-h-11 items-center hover:underline hover:underline-offset-4">{t.term}</Link>
                 </dt>
                 <dd className="mt-3 text-ink-700"><Txt>{t.definition}</Txt></dd>
               </div>
-              <Link href={`/glossary/${t.slug}`} className="link self-start text-small font-medium" aria-label={`Read more about ${t.term}`}>Read more</Link>
+              <Link href={`/glossary/${t.slug}`} className="link inline-flex min-h-11 items-center self-start text-small font-medium" aria-label={`Read more about ${t.term}`}>Read more</Link>
             </div>
           ))}
         </dl>

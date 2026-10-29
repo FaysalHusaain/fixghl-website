@@ -56,7 +56,7 @@ export default function Page() {
                 </div>
                 <div>
                   <p className="font-display text-[1.25rem] font-semibold tracking-[-0.02em]">{o.price ?? "Custom quote after a 30-minute call"}</p>
-                  <Link href={o.href} className="mt-4 inline-flex items-center gap-2 font-medium">
+                  <Link href={o.href} className="mt-4 inline-flex min-h-11 items-center gap-2 font-medium">
                     What is included <Icon name="arrow" className="size-4" />
                   </Link>
                 </div>

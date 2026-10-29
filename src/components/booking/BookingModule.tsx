@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Script from "next/script";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { track } from "@/lib/analytics";
 
 // Live GHL embeds. GHL's embed script (form_embed.js) talks to each widget's built-in resizer, so both iframes
@@ -21,6 +21,11 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
   const H = headingLevel === 2 ? "h2" : "h3";
   const root = useRef<HTMLDivElement>(null);
   const [load, setLoad] = useState(false);
+  const [formOpened, setFormOpened] = useState(false); // the form iframe loads only once "Send details" is opened
+  const openTab = (t: Tab) => {
+    setTab(t);
+    if (t === "write") setFormOpened(true);
+  };
 
   // Load both widgets as the module nears the viewport.
   useEffect(() => {
@@ -35,7 +40,7 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
   useEffect(() => {
     const sync = () => {
       if (window.location.hash === "#describe") {
-        setTab("write");
+        openTab("write");
         document.getElementById(`${id}-panel-write`)?.scrollIntoView({ block: "start" });
       }
     };
@@ -77,11 +82,11 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
             aria-selected={tab === t.key}
             aria-controls={`${id}-panel-${t.key}`}
             tabIndex={tab === t.key ? 0 : -1}
-            onClick={() => setTab(t.key)}
+            onClick={() => openTab(t.key)}
             onKeyDown={(e) => {
               if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
                 const next = tab === "call" ? "write" : "call";
-                setTab(next);
+                openTab(next);
                 document.getElementById(`${id}-tab-${next}`)?.focus();
               }
             }}
@@ -97,31 +102,31 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
       <div id={`${id}-panel-call`} role="tabpanel" aria-labelledby={`${id}-tab-call`} hidden={tab !== "call"} className="p-3 pt-6 md:p-6">
         <H className="h-sub">Pick a time for a free 30-minute call</H>
         <p className="mt-2 max-w-[60ch] text-ink-700">Pick a day and a time, then tell us briefly what you need.</p>
-        <div className="mt-6">
-          {load ? (
+        <GhlFrame kind="calendar" className="mt-6" show={load}>
+          {(onReady) => (
             <iframe
               src={`${GHL_HOST}/widget/booking/${CALENDAR_ID}`}
               id={`${CALENDAR_ID}_1793230740499`}
               title="Book a free 30-minute GHL call with FixGHL"
               allow="payment"
               scrolling="no"
+              onLoad={onReady}
               style={{ width: "100%", border: "none", overflow: "hidden" }}
             />
-          ) : (
-            <div aria-hidden className="min-h-[36rem] animate-pulse rounded-[20px] bg-ink-100 md:min-h-[44rem]" />
           )}
-        </div>
+        </GhlFrame>
       </div>
 
       <div id={`${id}-panel-write`} role="tabpanel" aria-labelledby={`${id}-tab-write`} hidden={tab !== "write"} className="p-3 pt-6 md:p-6">
         <H className="h-sub">Send us the details</H>
         <p className="mt-2 max-w-[60ch] text-ink-700">Tell us what is happening. We reply by email with next steps or a time to talk.</p>
-        <div className="mt-4">
-          {load && (
+        <GhlFrame kind="form" className="mt-4" show={load && formOpened}>
+          {(onReady) => (
             <iframe
               src={`${GHL_HOST}/widget/form/${FORM_ID}`}
               id={`inline-${FORM_ID}`}
               title="fixGHL"
+              onLoad={onReady}
               style={{ width: "100%", height: "100%", border: "none", borderRadius: 8 }}
               data-layout="{'id':'INLINE'}"
               data-trigger-type="alwaysShow"
@@ -138,9 +143,97 @@ export function BookingModule({ id = "book", headingLevel = 2 }: { id?: string; 
               data-cookie-consent-provider="auto"
             />
           )}
-        </div>
+        </GhlFrame>
       </div>
       {load && <Script src={`${GHL_HOST}/js/form_embed.js`} strategy="afterInteractive" />}
+    </div>
+  );
+}
+
+// Holds a GHL iframe behind a skeleton the size of the real widget, so there is no blank gap and no jump.
+// The widget is drawn when GHL posts "iframeLoaded" (iframe onload is the backstop); the swap waits until the
+// resizer has settled the iframe's height.
+function GhlFrame({ kind, show, className = "", children }: { kind: "calendar" | "form"; show: boolean; className?: string; children: (onReady: () => void) => ReactNode }) {
+  const box = useRef<HTMLDivElement>(null);
+  const [drawn, setDrawn] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    if (!show || drawn) return;
+    const onMessage = (e: MessageEvent) => {
+      const frame = box.current?.querySelector("iframe");
+      if (frame && e.source === frame.contentWindow && Array.isArray(e.data) && e.data[0] === "iframeLoaded") setDrawn(true);
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [show, drawn]);
+
+  // Swap once GHL has revealed the iframe and its height has held steady for two checks (or after 6s at most).
+  useEffect(() => {
+    if (!drawn || ready) return;
+    let last = -1;
+    let steady = 0;
+    const started = Date.now();
+    const t = window.setInterval(() => {
+      const frame = box.current?.querySelector("iframe");
+      const h = frame?.getBoundingClientRect().height ?? 0;
+      const revealed = !!frame && frame.style.visibility !== "hidden"; // GHL's form_embed.js has finished its own reveal
+      steady = revealed && h > 200 && h === last ? steady + 1 : 0;
+      last = h;
+      if (steady >= 2 || Date.now() - started > 6000) {
+        window.clearInterval(t);
+        setReady(true);
+      }
+    }, 200);
+    return () => window.clearInterval(t);
+  }, [drawn, ready]);
+
+  const onLoad = () => window.setTimeout(() => setDrawn(true), 1200);
+
+  return (
+    <div ref={box} className={className} data-ghl={kind} data-ready={ready}>
+      {show && <div className="ghl-stage">{children(onLoad)}</div>}
+      <div aria-hidden className={`ghl-skeleton ${kind === "calendar" ? "ghl-skeleton--calendar" : "ghl-skeleton--form"}`}>
+        {kind === "calendar" ? <CalendarSkeleton /> : <FormSkeleton />}
+      </div>
+      {!ready && <span className="sr-only" role="status">Loading the {kind === "calendar" ? "booking calendar" : "form"}</span>}
+    </div>
+  );
+}
+
+const Bar = ({ className }: { className: string }) => <span className={`ghl-shimmer block ${className}`} />;
+
+function CalendarSkeleton() {
+  return (
+    <div className="rounded-[20px] border border-line bg-white px-5 py-6 sm:px-8">
+      <div className="flex items-center justify-center gap-6">
+        <Bar className="size-10 rounded-full" />
+        <Bar className="h-5 w-32 rounded-full" />
+        <Bar className="size-10 rounded-full" />
+      </div>
+      <div className="mt-6 grid grid-cols-7 justify-items-center gap-y-3">
+        {Array.from({ length: 35 }).map((_, i) => (
+          <Bar key={i} className={`size-8 rounded-full sm:size-10 ${i < 4 ? "opacity-0" : ""}`} />
+        ))}
+      </div>
+      <Bar className="mt-8 h-4 w-20 rounded-full" />
+      <Bar className="mt-3 h-10 w-full max-w-[22rem] rounded-[14px]" />
+    </div>
+  );
+}
+
+function FormSkeleton() {
+  return (
+    <div className="px-1 py-2 sm:px-4">
+      {["w-24", "w-16", "w-36"].map((w) => (
+        <div key={w} className="mb-6">
+          <Bar className={`h-4 rounded-full ${w}`} />
+          <Bar className="mt-3 h-[52px] w-full rounded-[14px]" />
+        </div>
+      ))}
+      <Bar className="h-4 w-32 rounded-full" />
+      <Bar className="mt-3 h-[110px] w-full rounded-[14px]" />
+      <Bar className="mt-8 h-[52px] w-full rounded-full" />
     </div>
   );
 }

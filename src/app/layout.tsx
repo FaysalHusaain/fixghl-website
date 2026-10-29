@@ -6,7 +6,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBookBar } from "@/components/layout/MobileBookBar";
 import Script from "next/script";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { DeferredGA } from "@/components/analytics/DeferredGA";
 import { Analytics } from "@/components/analytics/Analytics";
 import { consentDefaults } from "@/lib/analytics";
 import { Reveal } from "@/components/analytics/Reveal";
@@ -44,6 +44,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${interTight.variable} antialiased`}>
+      <head>
+        <link rel="preconnect" href="https://link.codenovahq.com" />
+        <link rel="dns-prefetch" href="https://link.codenovahq.com" />
+      </head>
       <body>
         <Script id="ga-consent" strategy="beforeInteractive">{consentDefaults}</Script>
         <a
@@ -57,7 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Footer />
         <MobileBookBar />
         <Analytics />
-        <GoogleAnalytics gaId={site.gaId} />
+        <DeferredGA gaId={site.gaId} />
         <Reveal />
         <ScrollTop />
         {process.env.VERCEL && (
