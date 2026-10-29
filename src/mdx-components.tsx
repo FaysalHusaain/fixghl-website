@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
+import { TryGhl } from "@/components/content/TryGhl";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -14,6 +15,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         <table {...props} />
       </div>
     ),
+    TryGhl,
     ...components,
   };
 }

@@ -64,6 +64,68 @@ export const guides: ArticleMeta[] = [
       { href: "/services/funnels-websites", label: "Funnels and websites in GHL" },
     ],
   },
+  {
+    slug: "what-is-gohighlevel",
+    title: "What is GoHighLevel? A plain-English guide",
+    metaTitle: "What Is GoHighLevel (GHL)? A Plain-English Guide",
+    description:
+      "GoHighLevel (HighLevel, GHL) in plain English: what it does, who it suits, which tools it replaces, what it costs and how to start the free trial.",
+    summary: "What GoHighLevel is, who it suits, which tools it replaces, how agencies and sub-accounts work, and how to start.",
+    published: "2026-10-29",
+    updated: "2026-10-29",
+    ctaLine: "Not sure GoHighLevel fits your business? Tell us what you run today and we'll tell you straight on a free 30-minute call.",
+    faqs: [
+      { q: "Is GoHighLevel the same as HighLevel?", a: "Yes. GoHighLevel, HighLevel and GHL are names for the same platform. The company is HighLevel LLC, a subsidiary of GoHighLevel Inc., based in Dallas, Texas." },
+      { q: "Does GoHighLevel have a free trial?", a: "Yes. Every plan starts with a 14-day free trial with full access to that plan's features. Billing starts automatically when the trial ends unless you cancel, and usage fees for phone and email can apply during the trial." },
+      { q: "Do I need to be an agency to use GoHighLevel?", a: "No. HighLevel describes its $97 Starter plan as for smaller businesses and solo marketers. A single business usually runs everything from one sub-account." },
+    ],
+    related: [
+      { href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost per month?" },
+      { href: "/services/ghl-setup", label: "GHL account setup" },
+      { href: "/compare/gohighlevel-vs-clickfunnels", label: "GoHighLevel vs ClickFunnels" },
+    ],
+  },
+  {
+    slug: "how-much-does-gohighlevel-cost",
+    title: "How much does GoHighLevel cost per month?",
+    metaTitle: "GoHighLevel Pricing: How Much Does GHL Cost per Month?",
+    description:
+      "GoHighLevel pricing: every plan ($97, $297, $497), what each includes, phone, SMS, email and AI usage rates, add-ons, and which plan fits which business.",
+    summary: "Every GoHighLevel plan and price, the usage rates for phone, SMS, email and AI, add-on costs and which plan to choose.",
+    published: "2026-10-29",
+    updated: "2026-10-29",
+    ctaLine: "Not sure which plan or add-ons you need? We'll work it out with you on a free 30-minute call.",
+    faqs: [
+      { q: "Does GoHighLevel charge per contact or per user?", a: "No. Every plan includes unlimited contacts and unlimited users. The plan price changes with the number of sub-accounts and the rebilling options, not with list or team size." },
+      { q: "Is SMS included in the GoHighLevel price?", a: "No. Texts, calls, phone numbers and email sending are billed by usage from a prepaid wallet. In the US and Canada an SMS segment costs $0.00747 sent or received, plus carrier fees." },
+      { q: "Can I charge my clients for their GoHighLevel usage?", a: "Yes, on the $297 Unlimited plan you can rebill phone and email to clients at cost. The $497 plan also lets you add a markup and rebill AI usage." },
+    ],
+    related: [
+      { href: "/guides/what-is-gohighlevel", label: "What is GoHighLevel?" },
+      { href: "/services/saas-white-label", label: "SaaS mode and white-label setup" },
+      { href: "/glossary/saas-mode", label: "What is SaaS mode?" },
+    ],
+  },
+  {
+    slug: "is-gohighlevel-down",
+    title: "Is GoHighLevel down? How to check and what to do",
+    metaTitle: "Is GoHighLevel Down? How to Check GHL Status and Fix It",
+    description:
+      "Check if GoHighLevel is down on the official status page, tell an outage from an account problem, fix loading and login issues, and reach GHL support.",
+    summary: "How to check HighLevel's status page, tell an outage from an account problem, fix loading and login issues and contact support.",
+    published: "2026-10-29",
+    updated: "2026-10-29",
+    faqs: [
+      { q: "Is GoHighLevel down right now?", a: "Check HighLevel's official status page at status.gohighlevel.com. It shows whether all services are online, the uptime of each part of the platform and any incidents reported today." },
+      { q: "Why is GoHighLevel not loading for me when it works for others?", a: "The cause is usually local: stored site data or cookies, a browser extension, a VPN or web protection software, or your user's access. Try an incognito window and a different network first." },
+      { q: "How do I report a GoHighLevel outage?", a: "Agency admins and agency users can contact HighLevel support 24/7 through live chat from the blue question mark in the app, or call +1 (888) 732-4197 if they cannot log in." },
+    ],
+    related: [
+      { href: "/services/ghl-fixes", label: "GHL fixes and troubleshooting" },
+      { href: "/guides/ghl-workflow-not-triggering", label: "GoHighLevel workflow not triggering" },
+      { href: "/guides/ghl-emails-going-to-spam", label: "GHL emails going to spam" },
+    ],
+  },
 ];
 
 export const getGuide = (slug: string) => guides.find((g) => g.slug === slug);

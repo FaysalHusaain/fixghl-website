@@ -69,7 +69,7 @@ export function ArticleLayout({
             {children}
             <div className="not-prose on-dark mt-12 flex flex-col gap-5 rounded-[1.5rem] bg-ink-950 p-6 text-ink-50 md:flex-row md:items-center md:justify-between md:p-8">
               <p className="max-w-[44ch] text-[1.125rem] leading-snug">
-                Tried these steps and it still is not working? We find the cause in your account on a free 30-minute call.
+                {meta.ctaLine ?? "Tried these steps and it still is not working? We find the cause in your account on a free 30-minute call."}
               </p>
               <Link href="/book" data-track="book_call_click" data-track-location={`article_${meta.slug}_inline`} className="btn btn-gold shrink-0">
                 Book a free 30-minute call

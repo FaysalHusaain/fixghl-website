@@ -10,6 +10,7 @@ export type ArticleMeta = {
   updated: string; // ISO date
   faqs: QA[];
   related: { href: string; label: string }[];
+  ctaLine?: string; // inline booking prompt; defaults to the troubleshooting line
 };
 
 export type TermMeta = {

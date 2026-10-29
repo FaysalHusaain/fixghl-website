@@ -1,0 +1,103 @@
+<p className="answer">To check whether GoHighLevel is down, open HighLevel's official status page at status.gohighlevel.com. It shows every part of the platform, from the app and workflows to LC Phone, LC Email and Voice AI, with current incidents and uptime. If everything shows online, the problem is most likely in your account, browser or network, not GHL itself.</p>
+
+This guide shows how to read the status page, how to tell a platform outage from an account problem, the usual causes when only you are affected, and how to reach HighLevel support. Details were checked against HighLevel's status page and help center on 29 October 2026.
+
+## Where is the official GoHighLevel status page?
+
+HighLevel's public status page is [status.gohighlevel.com](https://status.gohighlevel.com/). It shows whether all services are online, lists each part of the platform with its uptime, and keeps a log of past incidents by day. You can subscribe from the page to receive status updates, which is worth doing before you need it.
+
+The page groups services the way the app does. When something breaks, find the group that matches what you were doing:
+
+| If this is not working | Check this part of the status page |
+| --- | --- |
+| Logging in, or the whole app | Main page: app.gohighlevel.com |
+| Texts or calls | Sub Account Settings: LC Phone |
+| Email sending | Sub Account Settings: LC Email, and Marketing: Emails |
+| Automations | Automation: Workflows |
+| Bookings | Calendars |
+| Funnels, websites or forms | Sites: Funnels & Websites, Forms |
+| Payments or invoices | Payments |
+| AI agents | AI: Voice AI, AI Employees, Agent Execution |
+| SaaS mode or snapshots | Agency: Saas Service, Snapshots |
+
+Third-party sites that collect outage reports from users can hint at a problem, but HighLevel's own page is the source to trust.
+
+## Is it GoHighLevel or your account?
+
+If the status page shows all services online and the problem only affects you, it is almost always local: your browser, your network, your user's access or a setting in the account. Run these checks in order. Each one takes a minute and rules out a whole group of causes.
+
+1. **Check the status page** for the service you are using, including today's incidents.
+2. **Open GHL in a private or incognito window.** HighLevel's help center suggests this first. If it works there, the cause is your browser's stored data or an extension.
+3. **Try another browser, device or network.** Switching from office Wi-Fi to a phone hotspot rules out your network and its security software.
+4. **Open a different sub-account.** If only one sub-account fails, the cause is in that account's settings or data.
+5. **Ask a teammate to try** with their own login. If it works for them, look at your user's permissions.
+
+| What you see | Most likely cause |
+| --- | --- |
+| Status page shows an incident for that service | A HighLevel outage. Wait for the fix and follow the incident updates |
+| Works in incognito, fails in your normal browser | Cached site data, cookies or a browser extension |
+| Works on a hotspot, fails on your network | A VPN, firewall or your internet provider's security feature |
+| Works for a teammate, fails for you | Your user's role or sub-account access |
+| One sub-account fails, the rest work | A setting, integration or custom code in that sub-account |
+
+## What should you do if GoHighLevel won't load?
+
+When the app keeps loading, wait for HighLevel's built-in prompt first. If a page does not load within about 30 seconds, the app shows a "Click Here to refresh" option, which refreshes the page and sends HighLevel an error report. If that does not work, clear the site's data and cookies, then hard refresh.
+
+HighLevel's help center gives these steps for a stuck loader:
+
+1. Right-click the page and choose **Inspect**.
+2. Open the **Application** tab, choose **Storage**, and click **Clear site data**.
+3. Click the lock icon next to the address, open **Cookies**, and remove the site's cookies.
+4. Hard refresh: Command+R on a Mac, Ctrl+F5 on Windows.
+
+Two account-side causes are worth checking too. Custom CSS or JavaScript added to a white-labeled app can interfere with the loader. And a user who has not been added to at least one sub-account can get stuck loading, so an agency admin should check that user's role.
+
+## What should you do if you cannot log in?
+
+Most login problems come from cookies, security software or two-factor codes. HighLevel's help center says to allow cookies for app.gohighlevel.com first. VPNs and web protection tools, such as NordVPN or the security features some internet providers switch on, can stop the login page from loading or redirecting.
+
+- **The page does not redirect after you log in.** Allow cookies for app.gohighlevel.com, then turn off any VPN or web protection software and try again.
+- **"Web server is returning an Unknown Error".** Clear the site data, as in the steps above.
+- **The security code does not arrive.** Check your spam folder for "Login Security Code", or ask an agency admin to add a phone number to your user so the code can go by text. HighLevel suggests agency users who cannot get a code try signing in with Google.
+- **"User does not exist in this Agency".** You are signing in on a white-labeled domain your user does not belong to. Use the login page of the agency that added you.
+
+## What if only one feature is broken?
+
+When the app loads but one feature fails, the cause is usually that feature's setup, not an outage. Check the matching line on the status page first. If it shows online, work through the feature's own requirements, starting with the ones below, because these settings cause most of the problems we are asked to fix.
+
+- **Texts not sending.** Check A2P registration for US numbers, the number assigned to the sub-account, and the agency wallet and card on file, since phone usage is paid from the wallet.
+- **Emails not arriving.** Check the sending domain and its DNS records. Our guide to [GHL emails going to spam](/guides/ghl-emails-going-to-spam) covers this.
+- **Workflows not firing.** Check that the workflow is published and its trigger filters match. See [GoHighLevel workflow not triggering](/guides/ghl-workflow-not-triggering).
+- **A funnel or website is down.** Check the custom domain's DNS records and that the domain is still connected in the sub-account.
+- **Bookings not coming through.** Check the calendar's availability, team member assignment and any connected Google or Outlook calendar.
+
+## How do you contact HighLevel support?
+
+Agency admins and agency users can reach HighLevel support 24/7 through live chat, from the blue question mark at the top right of the desktop app. Zoom support calls and email tickets are also available. Sub-account users do not see the support button, so they need to go through their agency.
+
+| Channel | How to use it |
+| --- | --- |
+| Live chat | Blue question mark in the app. Choose AI Support Chat or Agent Chat |
+| Zoom call | Join the support queue from the same menu |
+| Support ticket | Raised from the app. HighLevel has no general support email address |
+| Phone | +1 (888) 732-4197 for sales, billing and login problems. Callers are verified as agency admins |
+| Billing | billing@gohighlevel.com, or the phone number above, option 2 |
+
+If you cannot log in at all, use the phone number or the chat widget on gohighlevel.com. Have your agency relationship number and agency login email ready.
+
+## When is it worth getting help?
+
+Get help when the status page is clear, the checks above pass and the problem keeps costing you leads or bookings. Faults that sit between settings, such as a form posting to the wrong sub-account, a workflow that stops part way or texts failing registration, take longer to trace than a browser fix.
+
+Our [GHL fixes service](/services/ghl-fixes) finds and fixes these in your account. The first 30-minute call is free, and you get a written note of what was wrong and what we changed.
+
+## Sources
+
+All checked on 29 October 2026.
+
+- [HighLevel status page](https://status.gohighlevel.com/): service list, groups, uptime, incident history and status update subscriptions.
+- [24/7 Customer Support Options](https://help.gohighlevel.com/support/solutions/articles/155000000969-24-7-customer-support-options), help center, last modified 3 August 2026: support channels, who can access support, phone numbers and billing contact.
+- [CRM Loading States: Troubleshooting lags](https://help.gohighlevel.com/support/solutions/articles/48001176375-crm-loading-states-troubleshooting-lags-and-impact-of-custom-css-and-js), help center: the infinite loading prompt, clearing site data and cookies, and custom CSS and JS.
+- [Troubleshooting Login issues](https://help.gohighlevel.com/support/solutions/articles/48001207047-troubleshooting-login-issues), help center: cookies, VPN and web protection software, security codes and login errors.
+- [My CRM data is loading slowly](https://help.gohighlevel.com/support/solutions/articles/48001210187-my-crm-data-is-loading-slowly-what-can-i-do-), help center: testing in an incognito window.
