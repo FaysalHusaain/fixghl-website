@@ -203,7 +203,7 @@ Added the Crunchbase URL to the Organization `sameAs`.
 - Homepage title is "GoHighLevel Expert for Fixes, Setup & Migrations | FixGHL", with the eyebrow "GoHighLevel expert studio" above the unchanged H1.
 - Intros of 120–180 words sit under the H1 on /compare, /services and /guides (`src/content/hubs.ts`, `HubIntro.tsx`). They link to /pricing and the two top guides. The /compare meta description was rewritten.
 - Every glossary term has a "Common problems" paragraph in its MDX. The bottom Related block lists the guide, the service and related terms (`related` in `src/content/glossary/index.ts`).
-- IndexNow: `.github/workflows/indexnow.yml` runs `scripts/indexnow.mjs` after each successful Vercel production deploy. The key is read from `public/<key>.txt`; run it by hand with `npm run indexnow`.
+- IndexNow: `.github/workflows/indexnow.yml` runs `scripts/indexnow.mjs` on every push to main, after waiting 4 minutes for Vercel to deploy. The key is read from `public/<key>.txt`; run it by hand with `npm run indexnow`.
 
 ## 6. Current scores (live, mobile, Lighthouse with PageSpeed's settings)
 

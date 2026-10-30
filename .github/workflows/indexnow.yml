@@ -1,17 +1,28 @@
-# After Vercel reports a successful production deploy, submit every sitemap URL to IndexNow.
+# After each production deploy, submit every sitemap URL to IndexNow.
+# Vercel deploys main on every push and does not report deployments to GitHub here, so this waits for the
+# build to go live, then submits. It can also be run by hand from the Actions tab.
 name: IndexNow
 
-on: deployment_status
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: true
 
 jobs:
   submit:
-    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Wait for the Vercel production deploy
+        if: github.event_name == 'push'
+        run: sleep 240
       - run: node scripts/indexnow.mjs
         env:
           NEXT_PUBLIC_SITE_URL: https://fixghl.com

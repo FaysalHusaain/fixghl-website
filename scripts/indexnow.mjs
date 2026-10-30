@@ -1,5 +1,5 @@
 // Submit every sitemap URL to IndexNow (Bing, Yandex and others). Runs after each production deploy
-// (.github/workflows/indexnow.yml) and can be run by hand: node scripts/indexnow.mjs
+// (.github/workflows/indexnow.yml, on every push to main) and can be run by hand: npm run indexnow
 // The key is public by design: it is served at https://fixghl.com/<key>.txt from public/.
 import { readdirSync } from "node:fs";
 
