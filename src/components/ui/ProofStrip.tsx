@@ -2,13 +2,13 @@ import Link from "next/link";
 import { Icon } from "./Icon";
 
 // Approved claims only. Client reviews live in src/content/testimonials.ts.
-const stats = [
+const defaultStats = [
   { figure: "7+", label: "years working in GoHighLevel, since 2019" },
   { figure: "100+", label: "GHL projects delivered" },
   { figure: "4", label: "regions: the US, the UK, the EU and the Middle East" },
 ];
 
-export function ProofStrip({ cta = false }: { cta?: boolean }) {
+export function ProofStrip({ cta = false, stats = defaultStats }: { cta?: boolean; stats?: { figure: string; label: string }[] }) {
   return (
     <section className="on-dark bg-ink-950 text-ink-50" aria-labelledby="proof-title">
       <div className="frame section">

@@ -5,7 +5,9 @@ export function CtaBand({
   title = "Tell us what is broken. We will tell you how we would fix it.",
   body = "A free 30-minute call with a GHL specialist. You leave with a clear next step, whether or not you hire us.",
   location = "cta_band",
-}: { title?: string; body?: string; location?: string }) {
+  ctaLabel = "Book a free 30-minute GHL call",
+  secondary = true,
+}: { title?: string; body?: string; location?: string; ctaLabel?: string; secondary?: boolean }) {
   return (
     <section className="on-dark bg-ink-950 text-ink-50" aria-labelledby={`cta-${location}`}>
       <div className="frame section grid gap-10 md:grid-cols-12 md:items-end">
@@ -14,9 +16,9 @@ export function CtaBand({
           <p className="max-w-[42ch] text-ink-300">{body}</p>
           <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
             <Link href="/book" data-track="book_call_click" data-track-location={location} className="btn btn-gold">
-              Book a free 30-minute GHL call <Icon name="arrow" className="size-4" />
+              {ctaLabel} <Icon name="arrow" className="size-4" />
             </Link>
-            <Link href="/book#describe" className="btn btn-outline-dark">Describe your project</Link>
+            {secondary && <Link href="/book#describe" className="btn btn-outline-dark">Describe your project</Link>}
           </div>
         </div>
       </div>

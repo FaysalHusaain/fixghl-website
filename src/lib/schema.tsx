@@ -35,11 +35,31 @@ export const breadcrumbs = (items: { name: string; path: string }[]) => ({
   itemListElement: items.map((it, i) => ({ "@type": "ListItem", position: i + 1, name: it.name, item: absoluteUrl(it.path) })),
 });
 
+// Answers may hold [label](/path) links for the page; schema gets the plain text.
+const plain = (s: string) => s.replace(/\s*\[\[VERIFY[^\]]*\]\]/g, "").replace(/\[([^\]]+)\]\([^)\s]+\)/g, "$1");
+
 export const faqPage = (faqs: QA[]) => ({
   "@type": "FAQPage",
-  mainEntity: faqs
-    .map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a.replace(/\s*\[\[VERIFY[^\]]*\]\]/g, "") } })),
+  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: plain(f.a) } })),
 });
+
+// A priced service on /pricing. Starting prices use minPrice; a monthly plan uses a unit price per month.
+export const pricedService = (p: { id: string; name: string; description: string; minPrice?: number; monthly?: number }) => {
+  const url = absoluteUrl("/pricing");
+  const priceSpecification = p.monthly
+    ? { "@type": "UnitPriceSpecification", price: p.monthly, priceCurrency: "USD", billingDuration: 1, unitCode: "MON" }
+    : { "@type": "PriceSpecification", minPrice: p.minPrice, priceCurrency: "USD" };
+  return {
+    "@type": "Service",
+    "@id": `${url}#${p.id}`,
+    name: p.name,
+    description: p.description,
+    url,
+    provider: { "@id": orgId },
+    areaServed: site.areaServed.map((name) => ({ "@type": "Place", name })),
+    offers: { "@type": "Offer", url, priceCurrency: "USD", ...(p.monthly ? { price: p.monthly } : {}), priceSpecification },
+  };
+};
 
 export const service = (s: { name: string; description: string; path: string; serviceType: string }) => ({
   "@type": "Service",

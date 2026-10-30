@@ -12,6 +12,7 @@ import { Txt } from "@/components/ui/Txt";
 import { JsonLd, service as serviceSchema } from "@/lib/schema";
 import { testimonialFor } from "@/content/testimonials";
 import { QuoteCard } from "@/components/ui/Testimonials";
+import { servicePriceLine } from "@/content/pricing";
 
 const lower = (s: string) => (s.startsWith("GHL") || s.startsWith("SaaS") ? s : s.charAt(0).toLowerCase() + s.slice(1));
 
@@ -38,6 +39,11 @@ export function ServicePage({ s }: { s: Service }) {
             <Breadcrumbs items={crumbs} />
             <h1 id="svc-title" className="h-title mt-8 max-w-[18ch] md:mt-12">{s.h1}</h1>
             <p className="t-lead mt-6 max-w-[54ch] text-ink-800"><Txt>{s.answer}</Txt></p>
+            {servicePriceLine[s.slug] && (
+              <p className="mt-3">
+                <Link href="/pricing" className="link inline-flex min-h-11 items-center text-small font-semibold text-ink-950">{servicePriceLine[s.slug]}</Link>
+              </p>
+            )}
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link href="/book" data-track="book_call_click" data-track-location={`service_${s.slug}`} className="btn btn-ink">
                 Book a free 30-minute GHL call <Icon name="arrow" className="size-4" />

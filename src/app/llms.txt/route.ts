@@ -33,7 +33,8 @@ ${comparisons.map((c) => `- [${c.title}](${absoluteUrl(`/compare/${c.slug}`)}): 
 ## Key pages
 
 - [How we work](${absoluteUrl("/how-it-works")}): A free 30-minute call, a written scoped quote, the build or fix, and a handover with notes.
-- [Pricing](${absoluteUrl("/pricing")}): Custom quote after a 30-minute call, fixed for the agreed scope.
+- [Pricing](${absoluteUrl("/pricing")}): Fixes from $99, GHL setup from $697, migrations from $997, SaaS and white-label builds from $1,497, GHL Care Plan $297/month. Fixed price agreed before work starts.
+- [Pricing in Markdown](${absoluteUrl("/pricing.md")}): The same prices and inclusions as plain text for machines.
 - [FAQ](${absoluteUrl("/faq")}): Answers about working with FixGHL and about GoHighLevel.
 - [Book a call](${absoluteUrl("/book")}): Book a free 30-minute GHL call or send details in writing.
 

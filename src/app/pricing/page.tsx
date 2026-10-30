@@ -4,84 +4,154 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { CtaBand } from "@/components/ui/CtaBand";
 import { Faq } from "@/components/ui/Faq";
 import { Icon } from "@/components/ui/Icon";
+import { ProofStrip } from "@/components/ui/ProofStrip";
+import { OpenOnHash } from "@/components/ui/OpenOnHash";
 import { pageMetadata } from "@/lib/seo";
+import { JsonLd, pricedService } from "@/lib/schema";
+import { plans, saasBuild, carePlan } from "@/content/pricing";
+import type { QA } from "@/content/services";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Pricing: GoHighLevel Fixes, Setups, Migrations | FixGHL",
-  description: "How FixGHL prices GoHighLevel work: a free 30-minute call, then a written quote fixed for the agreed scope. What affects the price and what is included.",
+  title: "GoHighLevel Expert Pricing: Fixes from $99 | FixGHL",
+  description: "Fixed prices for GoHighLevel fixes, setup and migrations. Fixes from $99, setup from $697, migrations from $997. Price agreed before we start.",
   path: "/pricing",
 });
 
-// Offer cards are ready for real prices: set `price` when offers are confirmed.
-const offers = [
-  { name: "GHL fix", href: "/services/ghl-fixes", for: "One problem, found and fixed at the cause", price: null as string | null },
-  { name: "Account setup", href: "/services/ghl-setup", for: "A new GHL account built properly from day one", price: null },
-  { name: "Migration", href: "/services/migrations", for: "Moving from ClickFunnels, Wix, Kajabi or HubSpot", price: null },
-  { name: "Automation build", href: "/services/automation", for: "Workflows for follow-up, reminders and pipelines", price: null },
-  { name: "SaaS mode setup", href: "/services/saas-white-label", for: "Plans, rebilling, snapshots and white-label", price: null },
-  { name: "Integrations", href: "/services/integrations", for: "Stripe, Zapier, Make, n8n, ManyChat, APIs", price: null },
+const payment = [
+  "You get a fixed price in writing before we start. We don't bill by the hour.",
+  "Quick Fix is paid up front. If we can't fix it, we refund it in full.",
+  "Setups and migrations are paid 50% to start and 50% once the work is live and you've approved it.",
 ];
 
-const drivers = [
-  "How many workflows, funnels, sub-accounts or records are involved",
-  "Whether the fix is a correction or needs a rebuild",
-  "How many outside tools are connected",
-  "How quickly you need it done",
+const faqs: (QA & { id?: string })[] = [
+  { q: "How much does it cost to hire a GoHighLevel expert?", a: "At FixGHL, single fixes start at $99, full account setups at $697 and migrations to GHL at $997. SaaS and white-label builds start at $1,497. Many GHL agencies charge $1,000 to $5,000 for a full build. We quote every job at a fixed price before work starts." },
+  { q: "Why do the prices say \"from\"?", a: "The starting price covers a standard job. If your account needs more, such as extra pipelines, many workflows or a large contact list, we give you the full fixed price on the call before you pay anything." },
+  { q: "What if you can't fix my issue?", a: "On a Quick Fix, you get a full refund. On setups and migrations, you pay the second half only after the work is live and you've approved it." },
+  { q: "Is the GoHighLevel subscription included?", a: "No. HighLevel bills your subscription directly, with plans from $97/month. You can start with a [30-day free trial](/try-ghl) through our link." },
+  { q: "How do you get into my account?", a: "You add us as a user in your GHL account. There's no password sharing, and you can remove us as soon as the job is done." },
+  { id: "care-plan", q: "What's included in the GHL Care Plan?", a: "For $297 a month you get up to 5 requests, such as fixing a workflow, editing a form or email, or connecting a calendar. Each request is a task we can finish in under an hour. You also get replies within 1 business day and a monthly check of your workflows, email deliverability and integrations. New builds are quoted separately. Unused requests don't roll over, and you can cancel anytime." },
+  { q: "What happens after the 14 days of free fixes?", a: "You can move straight onto the GHL Care Plan at $297/month, or book a Quick Fix whenever something new comes up." },
 ];
 
-const faqs = [
-  { q: "Why don't you publish fixed prices?", a: "Because two problems that look the same from outside can be a small filter change or a full rebuild. We would rather see the account and quote the real job than publish a price that is wrong for most people." },
-  { q: "Is the 30-minute call really free?", a: "Yes. There is no charge for the call and no obligation to hire us afterwards." },
-  { q: "Can the price change after I approve the quote?", a: "Not for the agreed scope. If you ask for something outside it, we quote that separately before doing it." },
-  { q: "How do I pay?", a: "Payment terms are set out in your written quote, before any work starts." },
+const proof = [
+  { figure: "7+", label: "years with GoHighLevel" },
+  { figure: "100+", label: "GHL projects" },
+  { figure: "4", label: "Clients in the US, UK, EU and Middle East" },
 ];
 
 export default function Page() {
   return (
     <>
+      <JsonLd
+        data={[
+          ...plans.map((p) => pricedService({ id: p.id, name: p.name, description: `${p.for} ${p.timeline}.`, minPrice: p.minPrice })),
+          pricedService({ id: "saas-white-label", name: saasBuild.name, description: "A SaaS or white-label GoHighLevel offer, quoted on a free call.", minPrice: saasBuild.minPrice }),
+          pricedService({ id: "care-plan", name: carePlan.name, description: carePlan.text, monthly: carePlan.amount }),
+        ]}
+      />
+      <OpenOnHash />
+
       <PageHeader
         crumbs={[{ name: "Pricing", path: "/pricing" }]}
-        title="How we price GoHighLevel work"
-        lead="We quote every project after a free 30-minute call. The quote is written, lists exactly what we will do, and is fixed for that scope. You approve it before any work starts."
+        title="GoHighLevel help at a fixed price"
+        lead="Every job gets a fixed quote before we touch your account. Pick the closest match below, or book a free 30-minute call and we'll scope it with you."
       />
-      <section aria-labelledby="offers-title" className="pb-[var(--section)]">
+
+      <section aria-labelledby="plans-title" className="pb-[var(--section)]">
         <div className="frame">
-          <h2 id="offers-title" className="sr-only">Services and how they are priced</h2>
-          <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-            {offers.map((o, i) => (
-              <li key={o.name} data-reveal style={{ ["--i" as string]: i % 3 }} className="flex flex-col justify-between gap-10 rounded-2xl bg-ink-100 p-6 md:p-8">
-                <div>
-                  <h3 className="font-display text-[1.75rem] font-semibold leading-tight tracking-[-0.03em]">{o.name}</h3>
-                  <p className="mt-2 text-ink-700">{o.for}</p>
+          <h2 id="plans-title" className="sr-only">Prices</h2>
+          <ul className="grid gap-3 lg:grid-cols-3 lg:items-stretch">
+            {plans.map((p) => (
+              <li
+                key={p.id}
+                className={`relative flex flex-col rounded-[1.75rem] p-6 md:p-8 ${
+                  p.recommended ? "bg-white shadow-[inset_0_0_0_2px_var(--color-gold-500)]" : "bg-ink-100"
+                }`}
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <h3 className="h-sub">{p.name}</h3>
+                  {p.recommended && (
+                    <span className="rounded-full bg-gold-500 px-3 py-1 text-[0.8125rem] font-semibold leading-none text-ink-950">Recommended</span>
+                  )}
                 </div>
-                <div>
-                  <p className="font-display text-[1.25rem] font-semibold tracking-[-0.02em]">{o.price ?? "Custom quote after a 30-minute call"}</p>
-                  <Link href={o.href} className="mt-4 inline-flex min-h-11 items-center gap-2 font-medium">
-                    What is included <Icon name="arrow" className="size-4" />
+                <p className="mt-6 font-display font-semibold tracking-[-0.04em] text-ink-950">
+                  <span className="text-[1.25rem] tracking-[-0.02em]">{p.price.split(" ")[0]}</span>{" "}
+                  <span className="text-[clamp(3rem,2.4rem+2vw,4rem)] leading-none">{p.price.split(" ")[1]}</span>
+                </p>
+                <p className="mt-3 text-small font-semibold text-ink-800">{p.timeline}</p>
+                <p className="mt-4 text-ink-700">{p.for}</p>
+                <ul className="mt-6 flex flex-col gap-3 border-t border-ink-200 pt-6">
+                  {p.includes.map((it) => (
+                    <li key={it} className="flex gap-3 text-[0.9375rem] leading-snug text-ink-800">
+                      <Icon name="check" className="mt-0.5 size-4 shrink-0 text-ink-950" />
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-6 text-small text-ink-600">{p.note}</p>
+                <div className="mt-auto pt-8">
+                  <Link href="/book" data-track="book_call_click" data-track-location={`pricing_${p.id}`} className="btn btn-ink w-full">
+                    Book a free 30-minute call <Icon name="arrow" className="size-4" />
                   </Link>
                 </div>
               </li>
             ))}
           </ul>
+
+          <p className="mx-auto mt-8 max-w-[60ch] text-center text-small text-ink-600">{saasBuild.line}</p>
+
+          <div className="on-dark mt-8 flex flex-col gap-4 rounded-[1.5rem] bg-ink-950 p-6 text-ink-50 md:flex-row md:items-center md:gap-10 md:p-8">
+            <div className="flex shrink-0 items-baseline gap-3 md:flex-col md:gap-1">
+              <h3 className="font-semibold">{carePlan.name}</h3>
+              <p className="font-display text-[1.5rem] font-semibold tracking-[-0.02em] text-gold-500">{carePlan.price}</p>
+            </div>
+            <p className="max-w-[62ch] text-ink-300">{carePlan.text}</p>
+            <a href="#care-plan" className="inline-flex min-h-11 shrink-0 items-center gap-2 font-medium text-ink-50 md:ml-auto">
+              What&apos;s included <Icon name="arrow" className="size-4" />
+            </a>
+          </div>
         </div>
       </section>
-      <section aria-labelledby="drivers-title" className="on-dark bg-ink-950 text-ink-50">
+
+      <section aria-labelledby="payment-title" className="bg-ink-100">
         <div className="frame section grid gap-10 lg:grid-cols-12">
-          <h2 id="drivers-title" className="h-title lg:col-span-5">What affects the price?</h2>
-          <ul className="flex flex-col gap-1 lg:col-span-7">
-            {drivers.map((d) => (
-              <li key={d} className="rounded-2xl bg-ink-900 p-5 text-[1.125rem] md:p-6">{d}</li>
+          <h2 id="payment-title" className="h-title lg:col-span-4">How payment works</h2>
+          <ul className="flex flex-col gap-2 lg:col-span-8">
+            {payment.map((t) => (
+              <li key={t} className="flex gap-4 rounded-2xl bg-ink-50 p-5 text-[1.0625rem] leading-snug md:p-6">
+                <Icon name="check" className="mt-1 size-4 shrink-0" />
+                <span>{t}</span>
+              </li>
             ))}
+            <li className="flex gap-4 rounded-2xl bg-ink-50 p-5 text-[1.0625rem] leading-snug md:p-6">
+              <Icon name="check" className="mt-1 size-4 shrink-0" />
+              <span>
+                Your GHL subscription is billed by HighLevel, separate from our fee.{" "}
+                <a href="/try-ghl" rel="sponsored nofollow" data-track="affiliate_click" data-track-location="pricing_payment" className="link font-medium">
+                  Start a free 30-day trial
+                </a>
+              </span>
+            </li>
           </ul>
         </div>
       </section>
+
+      <ProofStrip stats={proof} />
+
       <section aria-labelledby="pricing-faq" className="section">
         <div className="frame grid gap-10 lg:grid-cols-12">
           <h2 id="pricing-faq" className="h-title lg:col-span-4">Pricing questions</h2>
           <div className="lg:col-span-8"><Faq items={faqs} /></div>
         </div>
       </section>
-      <CtaBand title="Get a real number for your account." body="Book a free 30-minute call. You get a written quote afterwards, fixed for the agreed scope." location="pricing" />
+
+      <CtaBand
+        title="Not sure which one fits?"
+        body="Book a free 30-minute call. We'll look at your account with you and give you a fixed price."
+        ctaLabel="Book a free 30-minute call"
+        secondary={false}
+        location="pricing"
+      />
     </>
   );
 }

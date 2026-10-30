@@ -71,7 +71,7 @@ export const services: Service[] = [
       { q: "Can you fix a GoHighLevel workflow that is not triggering?", a: "Yes. Most cases come down to the workflow being in draft, a trigger filter that no contact can meet, re-entry settings, or the wrong trigger type. We check each one in your account and fix the cause." },
       { q: "Do you fix GHL email deliverability?", a: "Yes. We check the sending domain, SPF, DKIM and DMARC records, list hygiene and sending patterns, then fix what is wrong and set up a sensible warm-up." },
       { q: "How quickly can you start?", a: "Tell us how urgent it is when you book. We confirm on the call when we can start, and the start date goes into your written quote." },
-      { q: "What does a fix cost?", a: "Fixes are quoted after a free 30-minute call, once we have seen the account. The quote is fixed for the agreed scope." },
+      { q: "What does a fix cost?", a: "Fixes start at $99 and are fixed in 1–3 business days. You get a fixed price before we start, and if we can't fix it, you get a full refund. [See full pricing](/pricing)" },
     ],
     relatedGuides: ["ghl-workflow-not-triggering", "ghl-emails-going-to-spam"],
     related: ["automation", "integrations", "ghl-setup"],

@@ -13,6 +13,7 @@ import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { migrationServices } from "@/content/services";
 import { homeFaqs } from "@/content/faqs";
+import { servicePriceLine } from "@/content/pricing";
 
 export const metadata: Metadata = pageMetadata({
   title: "FixGHL | GoHighLevel Setup, Automation & Migrations",
@@ -55,7 +56,7 @@ const pains = [
 ];
 
 // Done-for-you work first, fixes after.
-const serviceItems: ServiceItem[] = [
+const serviceItems: ServiceItem[] = ([
   { href: "/services/ghl-setup", name: "GHL setup", symptom: "A new account built properly: domains, email, calendars, pipelines" },
   { href: "/services/automation", name: "Workflows & automation", symptom: "Follow-up, reminders and pipeline moves that run without you" },
   { href: "/services/funnels-websites", name: "Funnels & websites", symptom: "Pages that work on phones and feed your CRM" },
@@ -68,7 +69,7 @@ const serviceItems: ServiceItem[] = [
   { href: "/services/ghl-fixes", name: "GHL fixes", symptom: "Workflows not firing, emails in spam, missed bookings, failed syncs" },
   { href: "/services/saas-white-label", name: "SaaS mode & white-label", symptom: "Resell GHL under your brand with plans and rebilling" },
   { href: "/services/integrations", name: "Integrations", symptom: "Stripe, Zapier, Make, n8n, ManyChat, webhooks and APIs" },
-];
+] as ServiceItem[]).map((it) => ({ ...it, price: servicePriceLine[it.href.split("/").pop()!] }));
 
 const reasons = [
   { title: "GoHighLevel is all we do", body: "Every project we have taken on since 2019 has been a GHL project. After more than 100 of them, we have usually seen your problem before." },

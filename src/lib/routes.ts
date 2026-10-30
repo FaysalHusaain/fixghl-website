@@ -10,7 +10,7 @@ export const staticPages: RouteEntry[] = [
   { path: "/", section: "Home", title: "GoHighLevel, fixed and built right.", description: "Specialist GoHighLevel studio for fixes, setups, migrations and automations." },
   { path: "/services", section: "Services", title: "GoHighLevel services", description: "Every GHL service we offer, from fixes to SaaS mode." },
   { path: "/how-it-works", section: "Studio", title: "How we work", description: "From a 30-minute call to a documented handover." },
-  { path: "/pricing", section: "Studio", title: "Pricing", description: "How we price GoHighLevel work." },
+  { path: "/pricing", section: "Studio", title: "Pricing", description: "Fixed prices for GoHighLevel fixes, setup and migrations." },
   { path: "/about", section: "Studio", title: "About FixGHL", description: "A specialist studio that works only on GoHighLevel." },
   { path: "/faq", section: "Studio", title: "Frequently asked questions", description: "Answers about working with FixGHL." },
   { path: "/guides", section: "Guides", title: "GoHighLevel guides", description: "Fixes and how-tos for GHL." },

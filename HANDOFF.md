@@ -1,6 +1,6 @@
 # FixGHL website: project handoff
 
-Last updated: 30 October 2026. Read this first in any new session, then `README.md`, `CONTENT.md` and `TODO.md`.
+Last updated: 30 October 2026 (pricing added). Read this first in any new session, then `README.md`, `CONTENT.md` and `TODO.md`.
 
 ## 1. What this project is
 
@@ -179,6 +179,25 @@ Our affiliate link lands on HighLevel's bootcamp page, which offers a **30-day f
 
 ### Schema
 Added the Crunchbase URL to the Organization `sameAs`.
+
+### Published pricing (30 Oct 2026)
+- `/pricing` rebuilt with the owner's exact copy:
+  - Quick Fix from $99 (1–3 business days, full refund if not fixed).
+  - GHL Setup from $697 (7–14 days, "Recommended" card with a gold border).
+  - Move to GHL from $997 (2–3 weeks).
+  - SaaS and white-label from $1,497, quoted on a call.
+  - GHL Care Plan $297/month (anchor `#care-plan` opens its FAQ item).
+- The page also has "How payment works", the proof strip, 7 pricing FAQs and a closing banner.
+- JSON-LD: one Service plus Offer per price, the Care Plan as a UnitPriceSpecification (MON), and FAQPage.
+- Prices live in `src/content/pricing.ts` (plans, Care Plan, and the `servicePriceLine` map). `public/pricing.md` mirrors them; update both together.
+- A "From $X · timeline" line, linked to /pricing, shows on the homepage service rows and under each service page's intro:
+  - $99: fixes, automation, integrations.
+  - $697: setup.
+  - $997: migrations and all 4 platform pages.
+  - $1,497: SaaS.
+  - "Quoted on a free call": funnels and websites.
+- FAQ answers accept `[label](/path)` links. `/try-ghl` links get the affiliate attributes, and the schema gets plain text.
+- The old "quoted after a call" answers were rewritten to match the prices: homepage cost FAQ, studio pricing, timeline and support FAQs, the GHL fixes cost FAQ, and llms.txt.
 
 ## 6. Current scores (live, mobile, Lighthouse with PageSpeed's settings)
 
