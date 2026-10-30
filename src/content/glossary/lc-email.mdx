@@ -8,12 +8,7 @@
 - Sending from a subdomain such as mail.yourdomain.com to keep it separate from your inbox provider.
 - Tracking opens, clicks, bounces and unsubscribes inside GHL.
 
-## What usually goes wrong?
+## Common problems
 
-- Emails going to spam because the dedicated domain was never set up or verified.
-- Two SPF records on the same host, which breaks SPF entirely.
-- No DMARC record, which some inbox providers now expect from bulk senders.
+Emails land in spam when the dedicated sending domain was never set up or verified. Publishing a second SPF record on the same host breaks SPF for that domain, because a domain can only have one. A missing DMARC record is another common gap, since Google and Yahoo now expect one from bulk senders.
 
-## Related terms and services
-
-See [GHL emails going to spam](/guides/ghl-emails-going-to-spam), [GHL setup](/services/ghl-setup), [GHL fixes](/services/ghl-fixes). If something in your account is not working as described here, [book a free 30-minute call](/book).

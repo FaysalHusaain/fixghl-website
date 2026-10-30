@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { HubIntro } from "@/components/content/HubIntro";
+import { hubIntros } from "@/content/hubs";
 import { HubList } from "@/components/content/HubList";
 import { CtaBand } from "@/components/ui/CtaBand";
 import { guides } from "@/content/guides";
@@ -14,7 +16,9 @@ export const metadata: Metadata = pageMetadata({
 export default function Page() {
   return (
     <>
-      <PageHeader crumbs={[{ name: "Guides", path: "/guides" }]} title="GoHighLevel guides" lead="Step-by-step fixes for the GHL problems we see most, checked against HighLevel's help center and dated so you know they are current." />
+      <PageHeader crumbs={[{ name: "Guides", path: "/guides" }]} title="GoHighLevel guides" lead="Step-by-step fixes for the GHL problems we see most, checked against HighLevel's help center and dated so you know they are current.">
+        <HubIntro paragraphs={hubIntros.guides} />
+      </PageHeader>
       <HubList items={guides.map((g) => ({ href: `/guides/${g.slug}`, title: g.title, summary: g.summary, updated: g.updated }))} />
       <CtaBand location="guides_hub" />
     </>

@@ -199,6 +199,12 @@ Added the Crunchbase URL to the Organization `sameAs`.
 - FAQ answers accept `[label](/path)` links. `/try-ghl` links get the affiliate attributes, and the schema gets plain text.
 - The old "quoted after a call" answers were rewritten to match the prices: homepage cost FAQ, studio pricing, timeline and support FAQs, the GHL fixes cost FAQ, and llms.txt.
 
+### Final batch (30 Oct 2026, site frozen after this)
+- Homepage title is "GoHighLevel Expert for Fixes, Setup & Migrations | FixGHL", with the eyebrow "GoHighLevel expert studio" above the unchanged H1.
+- Intros of 120–180 words sit under the H1 on /compare, /services and /guides (`src/content/hubs.ts`, `HubIntro.tsx`). They link to /pricing and the two top guides. The /compare meta description was rewritten.
+- Every glossary term has a "Common problems" paragraph in its MDX. The bottom Related block lists the guide, the service and related terms (`related` in `src/content/glossary/index.ts`).
+- IndexNow: `.github/workflows/indexnow.yml` runs `scripts/indexnow.mjs` after each successful Vercel production deploy. The key is read from `public/<key>.txt`; run it by hand with `npm run indexnow`.
+
 ## 6. Current scores (live, mobile, Lighthouse with PageSpeed's settings)
 
 | Page | Performance | Accessibility | Best Practices | SEO | Speed Index |

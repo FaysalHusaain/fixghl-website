@@ -16,7 +16,7 @@ import { homeFaqs } from "@/content/faqs";
 import { servicePriceLine } from "@/content/pricing";
 
 export const metadata: Metadata = pageMetadata({
-  title: "FixGHL | GoHighLevel Setup, Automation & Migrations",
+  title: "GoHighLevel Expert for Fixes, Setup & Migrations | FixGHL",
   description:
     "Specialist GoHighLevel studio. We set up GHL accounts, build automations and funnels, migrate you from ClickFunnels, Wix, Kajabi or HubSpot, and fix what broke.",
   path: "/",

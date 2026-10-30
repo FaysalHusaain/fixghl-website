@@ -8,6 +8,7 @@ export function Hero() {
     <section data-hero className="on-dark relative overflow-hidden bg-ink-950 text-ink-50" aria-labelledby="hero-title">
       <div className="frame pb-[clamp(3rem,8vh,6.5rem)] pt-[clamp(2.5rem,8vh,6.5rem)]">
         <div>
+          <p className="mb-5 text-small font-semibold text-gold-500 md:mb-7">GoHighLevel expert studio</p>
           <h1 id="hero-title" className="h-display">
             <span className="block">GoHighLevel, fixed</span> <span className="block">and built right.</span>
           </h1>

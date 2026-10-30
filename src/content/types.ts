@@ -21,5 +21,5 @@ export type TermMeta = {
   description: string;
   definition: string; // 1-2 sentences, shown on cards and in DefinedTerm schema
   updated: string;
-  related: { href: string; label: string }[];
+  related: { href: string; label: string; note?: string }[]; // shown in the Related block: the guide, the service, then terms
 };

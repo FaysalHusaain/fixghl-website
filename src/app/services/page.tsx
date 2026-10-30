@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { topServices, migrationServices } from "@/content/services";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { HubIntro } from "@/components/content/HubIntro";
+import { hubIntros } from "@/content/hubs";
 import { CtaBand } from "@/components/ui/CtaBand";
 import { Icon } from "@/components/ui/Icon";
 import { pageMetadata } from "@/lib/seo";
@@ -21,7 +23,9 @@ export default function Page() {
         crumbs={[{ name: "Services", path: "/services" }]}
         title="GoHighLevel services"
         lead="We work only in GoHighLevel. Pick the service that matches what you need, or book a call and we will point you to the right one."
-      />
+      >
+        <HubIntro paragraphs={hubIntros.services} />
+      </PageHeader>
       <section aria-label="All services" className="pb-[var(--section)]">
         <ul className="frame grid gap-2 md:grid-cols-2">
           {topServices.map((s, i) => (

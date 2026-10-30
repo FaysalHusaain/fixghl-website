@@ -10,7 +10,7 @@ export const terms: TermMeta[] = [
     description: "A GoHighLevel sub-account is the workspace for one business: its contacts, calendars, workflows, funnels and settings. Definition and examples.",
     definition: "A sub-account is the GoHighLevel workspace for a single business. It holds that business's contacts, conversations, calendars, pipelines, workflows, funnels and settings. Agencies create one sub-account per client.",
     updated: u,
-    related: [{ href: "/glossary/agency-vs-location", label: "Agency vs location" }, { href: "/glossary/snapshot", label: "Snapshot" }, { href: "/services/ghl-setup", label: "GHL account setup" }],
+    related: [{ href: "/guides/what-is-gohighlevel", label: "What is GoHighLevel? A plain-English guide", note: "Guide" }, { href: "/services/ghl-setup", label: "GHL account setup", note: "Service" }, { href: "/glossary/agency-vs-location", label: "Agency vs location", note: "Term" }, { href: "/glossary/snapshot", label: "Snapshot", note: "Term" }],
   },
   {
     slug: "snapshot",
@@ -19,7 +19,7 @@ export const terms: TermMeta[] = [
     description: "A GoHighLevel snapshot copies a sub-account's build (workflows, funnels, calendars, custom values) so it can be loaded into other sub-accounts.",
     definition: "A snapshot is a saved copy of a sub-account's build that can be loaded into other sub-accounts. It carries assets such as workflows, funnels, calendars, forms, custom fields and custom values, but not contacts, conversations or appointments.",
     updated: u,
-    related: [{ href: "/glossary/custom-values", label: "Custom values" }, { href: "/glossary/saas-mode", label: "SaaS mode" }, { href: "/services/saas-white-label", label: "SaaS and white-label setup" }],
+    related: [{ href: "/guides/what-is-gohighlevel", label: "What is GoHighLevel? A plain-English guide", note: "Guide" }, { href: "/services/saas-white-label", label: "SaaS mode and white-label setup", note: "Service" }, { href: "/glossary/custom-values", label: "Custom values", note: "Term" }, { href: "/glossary/saas-mode", label: "SaaS mode", note: "Term" }],
   },
   {
     slug: "workflow",
@@ -28,7 +28,7 @@ export const terms: TermMeta[] = [
     description: "A GoHighLevel workflow is an automation: a trigger starts it, then actions such as emails, SMS, waits and pipeline moves run in order.",
     definition: "A workflow is GoHighLevel's automation builder. One or more triggers start it, and a sequence of actions runs for each contact who enters: sending email or SMS, waiting, branching with If/Else, updating fields or moving an opportunity.",
     updated: u,
-    related: [{ href: "/glossary/trigger", label: "Trigger" }, { href: "/guides/ghl-workflow-not-triggering", label: "Workflow not triggering" }, { href: "/services/automation", label: "Workflow automation" }],
+    related: [{ href: "/guides/ghl-workflow-not-triggering", label: "GoHighLevel workflow not triggering: how to fix it", note: "Guide" }, { href: "/services/automation", label: "Workflows and automation", note: "Service" }, { href: "/glossary/trigger", label: "Trigger", note: "Term" }],
   },
   {
     slug: "trigger",
@@ -37,7 +37,7 @@ export const terms: TermMeta[] = [
     description: "A trigger is the event that enrolls a contact into a GoHighLevel workflow, such as a form submission, a booking or a tag being added. Filters narrow it.",
     definition: "A trigger is the event that enrolls a contact into a GoHighLevel workflow, for example a form submitted, an appointment booked, a tag added or an opportunity changing stage. Trigger filters narrow which events count.",
     updated: u,
-    related: [{ href: "/glossary/workflow", label: "Workflow" }, { href: "/guides/ghl-workflow-not-triggering", label: "Workflow not triggering" }, { href: "/services/ghl-fixes", label: "GHL fixes" }],
+    related: [{ href: "/guides/ghl-workflow-not-triggering", label: "GoHighLevel workflow not triggering: how to fix it", note: "Guide" }, { href: "/services/ghl-fixes", label: "GHL fixes and troubleshooting", note: "Service" }, { href: "/glossary/workflow", label: "Workflow", note: "Term" }],
   },
   {
     slug: "saas-mode",
@@ -46,7 +46,7 @@ export const terms: TermMeta[] = [
     description: "GoHighLevel SaaS mode lets an agency sell sub-accounts as its own software, with plans, Stripe billing and usage rebilling. What it does and who it suits.",
     definition: "SaaS mode is a GoHighLevel agency feature that lets an agency sell sub-accounts as its own branded software, with plans, Stripe subscriptions and usage rebilling handled inside GHL. It is part of the Agency Pro plan as of October 2026.",
     updated: u,
-    related: [{ href: "/glossary/snapshot", label: "Snapshot" }, { href: "/services/saas-white-label", label: "SaaS and white-label setup" }, { href: "/glossary/agency-vs-location", label: "Agency vs location" }],
+    related: [{ href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost per month?", note: "Guide" }, { href: "/services/saas-white-label", label: "SaaS mode and white-label setup", note: "Service" }, { href: "/glossary/snapshot", label: "Snapshot", note: "Term" }, { href: "/glossary/agency-vs-location", label: "Agency vs location", note: "Term" }],
   },
   {
     slug: "lc-email",
@@ -55,7 +55,7 @@ export const terms: TermMeta[] = [
     description: "LC Email (LeadConnector Email) is GoHighLevel's built-in email sending service. How it works with dedicated sending domains, SPF and DKIM.",
     definition: "LC Email is LeadConnector Email, the built-in email sending service in GoHighLevel. Accounts can send from a shared domain or set up a dedicated sending domain with their own SPF and DKIM records for better deliverability.",
     updated: u,
-    related: [{ href: "/guides/ghl-emails-going-to-spam", label: "GHL emails going to spam" }, { href: "/services/ghl-setup", label: "GHL account setup" }, { href: "/glossary/sub-account", label: "Sub-account" }],
+    related: [{ href: "/guides/ghl-emails-going-to-spam", label: "GHL emails going to spam: domain, DNS and warm-up fixes", note: "Guide" }, { href: "/services/ghl-fixes", label: "GHL fixes and troubleshooting", note: "Service" }, { href: "/glossary/sub-account", label: "Sub-account", note: "Term" }],
   },
   {
     slug: "opportunity-pipeline",
@@ -64,7 +64,7 @@ export const terms: TermMeta[] = [
     description: "In GoHighLevel, an opportunity is a potential sale for a contact and a pipeline is the set of stages it moves through. Definitions and how to use them.",
     definition: "An opportunity is a potential sale linked to a contact, with a value and a status. A pipeline is the ordered set of stages an opportunity moves through, such as New lead, Booked, Won. Workflows can create and move opportunities automatically.",
     updated: u,
-    related: [{ href: "/glossary/workflow", label: "Workflow" }, { href: "/services/automation", label: "Workflow automation" }, { href: "/services/migrations/hubspot-to-ghl", label: "HubSpot to GHL" }],
+    related: [{ href: "/guides/ghl-workflow-not-triggering", label: "GoHighLevel workflow not triggering: how to fix it", note: "Guide" }, { href: "/services/automation", label: "Workflows and automation", note: "Service" }, { href: "/glossary/workflow", label: "Workflow", note: "Term" }],
   },
   {
     slug: "custom-values",
@@ -73,7 +73,7 @@ export const terms: TermMeta[] = [
     description: "Custom values are account-level variables in GoHighLevel, like business name or booking link, reused in emails, pages and workflows via merge fields.",
     definition: "Custom values are account-level variables in a GoHighLevel sub-account, such as the business name, phone number or booking link. They are inserted into emails, SMS, pages and workflows with merge fields, so one change updates every place they appear.",
     updated: u,
-    related: [{ href: "/glossary/snapshot", label: "Snapshot" }, { href: "/glossary/sub-account", label: "Sub-account" }, { href: "/services/saas-white-label", label: "SaaS and white-label setup" }],
+    related: [{ href: "/guides/what-is-gohighlevel", label: "What is GoHighLevel? A plain-English guide", note: "Guide" }, { href: "/services/ghl-setup", label: "GHL account setup", note: "Service" }, { href: "/glossary/snapshot", label: "Snapshot", note: "Term" }, { href: "/glossary/sub-account", label: "Sub-account", note: "Term" }],
   },
   {
     slug: "conversation-ai",
@@ -82,7 +82,7 @@ export const terms: TermMeta[] = [
     description: "Conversation AI is GoHighLevel's AI agent that replies to messages on SMS, chat and social channels, and can book appointments or hand off.",
     definition: "Conversation AI is GoHighLevel's AI agent for replying to inbound messages on channels such as SMS, web chat and social DMs. It can answer questions from a knowledge base, qualify leads and book appointments, and can hand the conversation to a person.",
     updated: u,
-    related: [{ href: "/services/automation", label: "Workflow automation" }, { href: "/glossary/workflow", label: "Workflow" }, { href: "/glossary/snapshot", label: "Snapshot" }],
+    related: [{ href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost per month?", note: "Guide" }, { href: "/services/automation", label: "Workflows and automation", note: "Service" }, { href: "/glossary/workflow", label: "Workflow", note: "Term" }, { href: "/glossary/snapshot", label: "Snapshot", note: "Term" }],
   },
   {
     slug: "agency-vs-location",
@@ -91,7 +91,7 @@ export const terms: TermMeta[] = [
     description: "In GoHighLevel, the agency account manages billing, snapshots and sub-accounts; a location is an older name for a sub-account. The difference explained.",
     definition: "The agency account is the top level of GoHighLevel, where billing, snapshots, SaaS settings and sub-accounts are managed. A location is the older name for a sub-account and still appears in the API and some settings.",
     updated: u,
-    related: [{ href: "/glossary/sub-account", label: "Sub-account" }, { href: "/glossary/saas-mode", label: "SaaS mode" }, { href: "/services/saas-white-label", label: "SaaS and white-label setup" }],
+    related: [{ href: "/guides/what-is-gohighlevel", label: "What is GoHighLevel? A plain-English guide", note: "Guide" }, { href: "/services/integrations", label: "GHL integrations", note: "Service" }, { href: "/glossary/sub-account", label: "Sub-account", note: "Term" }, { href: "/glossary/saas-mode", label: "SaaS mode", note: "Term" }],
   },
 ];
 
