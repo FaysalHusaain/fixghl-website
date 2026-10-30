@@ -36,7 +36,7 @@ const faqs: (QA & { id?: string })[] = [
 const proof = [
   { figure: "7+", label: "years with GoHighLevel" },
   { figure: "100+", label: "GHL projects" },
-  { figure: "4", label: "Clients in the US, UK, EU and Middle East" },
+  { figure: "4", label: "regions served: US, UK, EU and Middle East" },
 ];
 
 export default function Page() {
@@ -130,6 +130,7 @@ export default function Page() {
                 <a href="/try-ghl" rel="sponsored nofollow" data-track="affiliate_click" data-track-location="pricing_payment" className="link font-medium">
                   Start a free 30-day trial
                 </a>
+                .
               </span>
             </li>
           </ul>

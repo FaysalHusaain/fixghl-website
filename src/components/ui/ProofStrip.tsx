@@ -5,7 +5,7 @@ import { Icon } from "./Icon";
 const defaultStats = [
   { figure: "7+", label: "years working in GoHighLevel, since 2019" },
   { figure: "100+", label: "GHL projects delivered" },
-  { figure: "4", label: "regions: the US, the UK, the EU and the Middle East" },
+  { figure: "4", label: "regions served: US, UK, EU and Middle East" },
 ];
 
 export function ProofStrip({ cta = false, stats = defaultStats }: { cta?: boolean; stats?: { figure: string; label: string }[] }) {
