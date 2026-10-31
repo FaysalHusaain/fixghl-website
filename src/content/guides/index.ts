@@ -130,6 +130,69 @@ export const guides: ArticleMeta[] = [
       { href: "/guides/ghl-emails-going-to-spam", label: "GHL emails going to spam" },
     ],
   },
+  {
+    slug: "is-gohighlevel-worth-it",
+    title: "Is GoHighLevel worth it? An honest review",
+    metaTitle: "Is GoHighLevel Worth It? An Honest Review (2026)",
+    description:
+      "Is GoHighLevel worth it, legit or a scam? An honest review of its pros and cons, the real costs, who it suits and who should skip it.",
+    summary: "An honest GoHighLevel review: whether it is legit, its strengths and downsides, real costs, and who it suits or does not.",
+    published: "2026-10-31",
+    updated: "2026-10-31",
+    ctaLine: "Not sure GoHighLevel fits your business? Tell us what you run today and we'll give you a straight answer on a free 30-minute call.",
+    faqs: [
+      { q: "Is GoHighLevel legit?", a: "Yes. GoHighLevel is made by HighLevel LLC, a subsidiary of GoHighLevel Inc., with its head office in Dallas, Texas. Prices are published, plans are month to month, and you can cancel from your dashboard at any time." },
+      { q: "Is GoHighLevel good for small businesses?", a: "It suits small businesses that sell through calls, appointments or quotes and would use several of its tools together. It is a poor fit for a business that only needs one tool or has no one to run the account." },
+      { q: "Can I cancel GoHighLevel at any time?", a: "Yes. HighLevel says plans are month to month with no long-term contract, and you can upgrade, downgrade or cancel from your dashboard. Billing starts automatically when the free trial ends unless you cancel." },
+    ],
+    related: [
+      { href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost per month?" },
+      { href: "/guides/what-is-gohighlevel-used-for", label: "What is GoHighLevel used for? 12 real examples" },
+      { href: "/services/ghl-setup", label: "GHL account setup" },
+    ],
+  },
+  {
+    slug: "what-is-gohighlevel-used-for",
+    title: "What is GoHighLevel used for? 12 real examples",
+    metaTitle: "What Is GoHighLevel Used For? 12 Real Examples",
+    description:
+      "What GoHighLevel is used for: 12 real examples for coaches, agencies and local businesses, from call booking and funnels to missed-call text-back.",
+    summary: "Twelve real GoHighLevel use cases for coaches, agencies and local businesses, each with the features it relies on.",
+    published: "2026-10-31",
+    updated: "2026-10-31",
+    ctaLine: "Know which of these you want running? We'll scope it with you on a free 30-minute call.",
+    faqs: [
+      { q: "What is GoHighLevel mainly used for?", a: "Capturing leads, following up with them automatically and turning them into booked calls, sales and reviews. It combines a CRM, funnels, email and SMS, calendars, workflows, reviews and payments in one account." },
+      { q: "Who uses GoHighLevel?", a: "Mostly coaches and consultants, marketing agencies and local businesses such as clinics and home services. Agencies use it to run many clients from one login, each in a separate sub-account." },
+      { q: "Can GoHighLevel replace my website?", a: "Yes, for most service businesses. GoHighLevel includes a website and funnel builder with domain management, so your site, forms and booking pages can all run in the same account as your CRM." },
+    ],
+    related: [
+      { href: "/guides/what-is-gohighlevel", label: "What is GoHighLevel?" },
+      { href: "/guides/is-gohighlevel-worth-it", label: "Is GoHighLevel worth it? An honest review" },
+      { href: "/services/automation", label: "Workflows and automation" },
+    ],
+  },
+  {
+    slug: "gohighlevel-snapshots",
+    title: "GoHighLevel snapshots: what they are and how to import one",
+    metaTitle: "GoHighLevel Snapshots: What They Are and How to Import",
+    description:
+      "What a snapshot is in GHL, what it copies and what it leaves out, and step-by-step how to import a snapshot and load it into a sub-account.",
+    summary: "What a GHL snapshot copies and leaves out, and the exact steps to import one and load it into a sub-account.",
+    published: "2026-10-31",
+    updated: "2026-10-31",
+    ctaLine: "Rather not load and reconnect a snapshot yourself? We'll set it up in your account. The first 30-minute call is free.",
+    faqs: [
+      { q: "Does a GoHighLevel snapshot copy contacts?", a: "No. Snapshots copy configuration such as workflows, funnels, calendars, forms and custom values. Contacts, appointments, conversations and integrations do not transfer." },
+      { q: "Will loading a snapshot delete my existing data?", a: "No. Loading a snapshot adds the assets you select. Existing items only change if you choose Override for a conflict during the load." },
+      { q: "Why can't I see Load Snapshot in GoHighLevel?", a: "Your user may not have snapshot access. An agency admin can switch it on under roles and permissions in the agency dashboard." },
+    ],
+    related: [
+      { href: "/glossary/snapshot", label: "What is a snapshot in GHL?" },
+      { href: "/services/ghl-setup", label: "GHL account setup" },
+      { href: "/services/saas-white-label", label: "SaaS mode and white-label setup" },
+    ],
+  },
 ];
 
 export const getGuide = (slug: string) => guides.find((g) => g.slug === slug);

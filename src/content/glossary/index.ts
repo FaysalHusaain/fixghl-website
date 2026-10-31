@@ -19,7 +19,7 @@ export const terms: TermMeta[] = [
     description: "A GoHighLevel snapshot copies a sub-account's build (workflows, funnels, calendars, custom values) so it can be loaded into other sub-accounts.",
     definition: "A snapshot is a saved copy of a sub-account's build that can be loaded into other sub-accounts. It carries assets such as workflows, funnels, calendars, forms, custom fields and custom values, but not contacts, conversations or appointments.",
     updated: u,
-    related: [{ href: "/guides/what-is-gohighlevel", label: "What is GoHighLevel? A plain-English guide", note: "Guide" }, { href: "/services/saas-white-label", label: "SaaS mode and white-label setup", note: "Service" }, { href: "/glossary/custom-values", label: "Custom values", note: "Term" }, { href: "/glossary/saas-mode", label: "SaaS mode", note: "Term" }],
+    related: [{ href: "/guides/gohighlevel-snapshots", label: "GoHighLevel snapshots: what they are and how to import one", note: "Guide" }, { href: "/services/saas-white-label", label: "SaaS mode and white-label setup", note: "Service" }, { href: "/glossary/custom-values", label: "Custom values", note: "Term" }, { href: "/glossary/saas-mode", label: "SaaS mode", note: "Term" }],
   },
   {
     slug: "workflow",

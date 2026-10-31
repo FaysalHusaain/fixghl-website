@@ -1,0 +1,108 @@
+<p className="answer">A snapshot in GoHighLevel is a reusable template that copies selected assets from one sub-account, such as workflows, funnels, calendars, forms and custom values, into other sub-accounts. To use one, you import the shared snapshot into your agency library, then load it into a sub-account. Contacts and conversations never transfer.</p>
+
+This guide explains what a snapshot carries, what it leaves behind, and the exact steps to import and load one. Every step is taken from HighLevel's help center, checked on 31 October 2026. Menu names change from time to time, so the sources at the end link to the current articles.
+
+## What is a snapshot in GHL?
+
+A snapshot is a saved copy of a sub-account's build that you can apply to other sub-accounts. HighLevel describes snapshots as reusable templates that capture selected configuration assets, so agencies do not rebuild the same workflows, funnels and calendars for every client. You create one from a sub-account that is already set up.
+
+Snapshots live at the agency level, in **Agency View > Account Snapshots**. One snapshot can be reused across as many sub-accounts as you like, and it does not update by itself when the source account changes. You refresh it to capture changes, then push updates to linked accounts.
+
+## What does a snapshot include?
+
+A snapshot can include most of the configuration in a sub-account. HighLevel's snapshot overview lists the categories below. You choose which assets to include when you create the snapshot, and again when you load it, so a snapshot can carry everything or just a few items.
+
+| Category | Examples of assets that can be copied |
+| --- | --- |
+| Automation and AI | Workflows, triggers, Conversation AI, Voice AI agents, Agent Studio |
+| CRM structure | Pipelines, tags, custom fields, custom values, custom objects, smart lists, trigger links |
+| Marketing | Funnels and websites, forms, surveys, quizzes, email and text templates, campaigns, blogs, social planner |
+| Calendars | Calendars, calendar groups and calendar services |
+| Reporting | Dashboards, custom reports and custom metrics |
+| Memberships | Membership offers and products, certificates, webinars |
+| Other | Documents and contracts, knowledge bases, review settings, WhatsApp templates, ad campaigns, WordPress site |
+
+Smart lists copy their settings only. They fill with whatever contacts exist in the account the snapshot is loaded into.
+
+## What does not transfer with a snapshot?
+
+Snapshots move configuration, not customer data or live connections. HighLevel lists contacts, appointments, conversations and messages, reputation data, Stripe connections and other integrations among the items that do not transfer. Anything that depends on a login or an account connection has to be set up again in the destination sub-account.
+
+The full list in HighLevel's overview also includes:
+
+- Assigned phone numbers for Voice AI agents
+- Lead gen forms for LinkedIn ad campaigns
+- Private dashboards
+- WordPress plugin or theme licenses that need re-authentication
+- Contact-to-contact associations
+- Assets protected by another creator's protection settings
+
+WhatsApp templates also need the WhatsApp integration and Meta's approval before they can be used.
+
+## How do you import a snapshot into GoHighLevel?
+
+To import a snapshot, sign in to the agency account where you want it, open the share link you were sent, and click Import Now. The snapshot is added to your agency's snapshot library. Importing does not change any sub-account. You load it into a sub-account as a separate step afterwards.
+
+HighLevel's steps for importing from a share link:
+
+1. Sign in to the HighLevel agency where you want the snapshot stored.
+2. Open the snapshot share link from the sender. You can paste it into a new browser tab.
+3. Review the import pop-up, and give the snapshot a new name if you want.
+4. Click **Import Now**.
+5. Find the snapshot in your imported snapshots list. It shows grayed out while it processes.
+6. Wait until it becomes active before you load it anywhere.
+
+If you were sent an email invitation instead, open the email, click the import link and follow the same pop-up. If the import fails, the help center lists the usual causes: the link expired, a one-time link was already used, the link is restricted to another agency or sub-account, or the snapshot is no longer available. The sender can fix each of these by creating a new link.
+
+## How do you load a snapshot into a sub-account?
+
+To load a snapshot, open the sub-account from the agency view, choose Manage Client, then Actions and Load Snapshot. Pick the snapshot, select the assets you want, decide what happens to anything that already exists, and type "confirm". HighLevel emails you once the assets have been transferred.
+
+1. In the agency view, go to **Sub-Accounts** and find the account.
+2. Click the three-dot menu next to it and select **Manage Client**.
+3. Click **Actions** in the top right and select **Load Snapshot**.
+4. Open **Pick a Snapshot**, choose the snapshot and click **Proceed**.
+5. Tick the assets to import, or **Select All**, and click **Proceed**. If you include dashboards, mark one as the default.
+6. Review conflicts. **Override** replaces the existing item with the snapshot version. **Skip** keeps the current item.
+7. Type **confirm** and click **Proceed**.
+
+If **Load Snapshot** does not appear, ask an agency admin to check that snapshot access is switched on for your user under roles and permissions. Loading a snapshot does not delete contacts or other data. Existing items only change when you choose Override.
+
+## Can you create a new sub-account from a snapshot?
+
+Yes. For a brand-new client, you can create the sub-account and apply the snapshot in one step. In **Account Snapshots**, find the snapshot and click the **Create New Account (+)** button beside it, then fill in the new sub-account's details. You need agency admin access, and the snapshot must already be in your library.
+
+This is the quickest route when an agency onboards clients from a standard build. For an account that already exists, use **Load Snapshot** as described above.
+
+## What should you check after loading a snapshot?
+
+After loading a snapshot, reconnect everything the snapshot could not bring across, then test the account end to end before it goes live. Most problems we see after a snapshot load come from integrations that were never reconnected, or from text and links that still point to the original business.
+
+- **Custom values:** update the business name, phone number, address and booking links so emails and pages show the right details.
+- **Integrations:** reconnect Stripe, Google, Facebook and any other connected tools.
+- **Phone numbers:** buy or assign numbers, including for Voice AI agents, and complete A2P registration for US texting.
+- **Email:** set up the sending domain so emails reach the inbox.
+- **Domains:** connect the domain for funnels and websites.
+- **Workflows:** check triggers and filters point to the right forms and calendars, then test with a new contact.
+
+If you would rather have this done for you, our [GHL setup service](/services/ghl-setup) loads and configures snapshots, and our [SaaS mode and white-label service](/services/saas-white-label) builds snapshots for agencies that sell them.
+
+## What is the difference between importing, loading and pushing?
+
+These are three separate actions, and mixing them up is a common source of confusion. Importing adds a shared snapshot to your agency library. Loading applies its assets to a sub-account. Pushing sends updates from a refreshed snapshot to sub-accounts that already received it.
+
+| Action | What it does | When to use it |
+| --- | --- | --- |
+| Import | Adds a shared snapshot to your agency library | Someone sent you a snapshot share link |
+| Load | Applies selected assets to one sub-account | Setting up a client from a snapshot |
+| Refresh | Updates the snapshot from its source sub-account | You changed the source build |
+| Push update | Sends refreshed assets to linked sub-accounts | Rolling a change out to existing clients |
+
+## Sources
+
+All checked on 31 October 2026.
+
+- [Snapshots Overview](https://help.gohighlevel.com/support/solutions/articles/48000982511-snapshots-overview), HighLevel help center, last modified 9 October 2026: what a snapshot is, what can and cannot be copied, smart lists, refresh and share link types.
+- [How to Import Snapshots in HighLevel](https://help.gohighlevel.com/support/solutions/articles/155000007995-how-to-import-snapshots-in-highlevel), help center, last modified 12 September 2026: import from a share link or email, processing status and import errors.
+- [Load Snapshots Into Existing Sub-Accounts](https://help.gohighlevel.com/support/solutions/articles/48000982582-load-snapshots-into-existing-sub-account), help center, last modified 27 September 2026: load steps, conflicts and permissions.
+- [Create a New Sub-Account Using a Snapshot](https://help.gohighlevel.com/support/solutions/articles/155000005762-create-a-new-sub-account-using-snapshot), help center, last modified 19 November 2025: creating a sub-account from a snapshot.
