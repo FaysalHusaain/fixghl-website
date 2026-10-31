@@ -157,15 +157,18 @@
 /* GHL embeds. While a widget boots, the skeleton holds the space at the widget's real size (by box width) and the
    iframe loads invisibly in a stage on top, out of flow, so its interim heights (and GHL's own reveal styles) never
    move the page. Once its height settles they swap: no blank gap, no layout jump. */
-[data-ghl] { position: relative; container-type: inline-size; }
+/* Skeleton and live widget share one grid cell, so the box is never shorter than the skeleton: GHL resizes its iframe
+   for a moment while it settles, and that must not move anything below. Before it is ready the widget sits out of flow. */
+[data-ghl] { position: relative; container-type: inline-size; display: grid; }
+[data-ghl] > .ghl-stage, [data-ghl] > .ghl-skeleton { grid-area: 1 / 1; min-width: 0; }
 .ghl-stage { transition: opacity 360ms ease; }
 [data-ghl]:not([data-ready="true"]) > .ghl-stage { position: absolute; inset: 0 0 auto 0; opacity: 0; pointer-events: none; }
 .ghl-skeleton { transition: opacity 360ms ease; } /* opacity only, so the fade stays on the compositor */
-[data-ghl][data-ready="true"] > .ghl-skeleton { position: absolute; inset: 0 0 auto 0; opacity: 0; pointer-events: none; }
-.ghl-skeleton--calendar { min-height: 530px; }
+[data-ghl][data-ready="true"] > .ghl-skeleton { opacity: 0; pointer-events: none; }
+.ghl-skeleton--calendar { min-height: 582px; } /* the live GHL calendar settles at 582px wide, 524px under 450px */
 .ghl-skeleton--form { min-height: 632px; }
 @container (max-width: 450px) {
-  .ghl-skeleton--calendar { min-height: 480px; }
+  .ghl-skeleton--calendar { min-height: 524px; }
   .ghl-skeleton--form { min-height: 620px; }
 }
 .ghl-skeleton > * { min-height: inherit; }

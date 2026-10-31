@@ -107,7 +107,7 @@ export default function Page() {
             </div>
             <p className="max-w-[62ch] text-ink-300">{carePlan.text}</p>
             <a href="#care-plan" className="inline-flex min-h-11 shrink-0 items-center gap-2 font-medium text-ink-50 md:ml-auto">
-              What&apos;s included <Icon name="arrow" className="size-4" />
+              What&apos;s in the Care Plan <Icon name="arrow" className="size-4" />
             </a>
           </div>
         </div>

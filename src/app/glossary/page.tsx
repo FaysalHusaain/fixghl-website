@@ -28,7 +28,7 @@ export default function Page() {
                 </dt>
                 <dd className="mt-3 text-ink-700"><Txt>{t.definition}</Txt></dd>
               </div>
-              <Link href={`/glossary/${t.slug}`} className="link inline-flex min-h-11 items-center self-start text-small font-medium" aria-label={`Read more about ${t.term}`}>Read more</Link>
+              <Link href={`/glossary/${t.slug}`} className="link inline-flex min-h-11 items-center self-start text-small font-medium">{t.term} explained</Link>
             </div>
           ))}
         </dl>

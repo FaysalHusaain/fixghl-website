@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-// Opens a <details> FAQ item when the URL hash points at it (e.g. a "What's included" link).
+// Opens a <details> FAQ item when the URL hash points at it (e.g. the Care Plan link on /pricing).
 export function OpenOnHash() {
   useEffect(() => {
     const open = () => {

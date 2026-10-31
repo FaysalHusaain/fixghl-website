@@ -30,7 +30,7 @@ const pains = [
     cause: "It's in draft, a filter no contact meets, or re-entry is off.",
     fix: "We find the setting at fault, fix it and test with a fresh contact.",
     href: "/guides/ghl-workflow-not-triggering",
-    cta: "Read the step-by-step guide",
+    cta: "Read the workflow not triggering guide",
   },
   {
     quote: "We bought GoHighLevel months ago and still haven't set it up.",
@@ -185,7 +185,7 @@ export default function Home() {
         <div className="frame section">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <h2 id="how-title" className="h-title max-w-[16ch]" data-reveal>How does working with us go?</h2>
-            <Link href="/how-it-works" className="link inline-flex min-h-11 items-center font-medium" data-reveal>Read the full process</Link>
+            <Link href="/how-it-works" className="link inline-flex min-h-11 items-center font-medium" data-reveal>Read how a FixGHL project runs</Link>
           </div>
           <ol data-ui className="mt-8 grid gap-1.5 md:mt-12 md:grid-cols-4">
             {stages.map((s, i) => (

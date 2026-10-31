@@ -20,7 +20,7 @@ export const guides: ArticleMeta[] = [
       { href: "/services/ghl-fixes", label: "GHL fixes and troubleshooting" },
       { href: "/services/automation", label: "Workflows and automation" },
       { href: "/glossary/trigger", label: "What is a trigger in GHL?" },
-      { href: "/glossary/workflow", label: "What is a workflow in GHL?" },
+      { href: "/guides/is-gohighlevel-down", label: "Is GoHighLevel down? How to check" },
     ],
   },
   {

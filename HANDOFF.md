@@ -99,7 +99,7 @@ Our affiliate link lands on HighLevel's bootcamp page, which offers a **30-day f
 - Full production QA:
   - Zero layout shift; 44px tap targets.
   - Deferred GA4: loads on first interaction or 4s after load.
-  - Skeleton placeholders the exact size of the GHL widgets: calendar 530px (480px at ≤450px width), form 632px (620px).
+  - Skeleton placeholders the exact size of the GHL widgets: calendar 582px (524px at ≤450px width, re-measured 31 Oct 2026), form 632px (620px).
 
 ### Booking speed
 - Preconnect to `link.codenovahq.com`. **Now exactly one preconnect**, at the owner's request.

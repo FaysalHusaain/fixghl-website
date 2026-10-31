@@ -17,7 +17,13 @@ export default function Page() {
   return (
     <>
       <PageHeader crumbs={[{ name: "Compare", path: "/compare" }]} title="GoHighLevel comparisons" lead="GoHighLevel compared with the platforms people move from. Every price and limit is dated, and we say when the other tool is the better fit.">
-        <HubIntro paragraphs={hubIntros.compare} />
+        <HubIntro
+          heading="How do we compare GoHighLevel with other platforms?"
+          paragraphs={[
+            ...hubIntros.compare,
+            `Comparisons on this page: ${comparisons.map((c) => `[${c.title.split(":")[0]}](/compare/${c.slug})`).join(", ")}.`,
+          ]}
+        />
       </PageHeader>
       <HubList items={comparisons.map((c) => ({ href: `/compare/${c.slug}`, title: c.title, summary: c.summary, updated: c.updated }))} />
       <CtaBand location="compare_hub" />
