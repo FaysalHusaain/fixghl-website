@@ -24,7 +24,11 @@ const nextConfig: NextConfig = {
   },
   // GoHighLevel affiliate link. permanent: false answers with a 307.
   async redirects() {
-    return [{ source: "/try-ghl", destination: "https://www.gohighlevel.com/highlevel-bootcamp?fp_ref=faisal13&fp_sid=fixghl", permanent: false }];
+    return [
+      { source: "/try-ghl", destination: "https://www.gohighlevel.com/highlevel-bootcamp?fp_ref=faisal13&fp_sid=fixghl", permanent: false },
+      // Short Instagram bio link; the UTM tags let GA4 count Instagram visits.
+      { source: "/ig", destination: "/book?utm_source=instagram&utm_medium=social&utm_campaign=bio", permanent: false },
+    ];
   },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
