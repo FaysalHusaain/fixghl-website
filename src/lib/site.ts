@@ -15,7 +15,11 @@ export const site = {
   },
   callLength: "30-minute",
   email: "hello@fixghl.com",
-  sameAs: ["https://www.crunchbase.com/organization/fixghl"] as string[], // Profiles that represent FixGHL elsewhere
+  sameAs: [
+    "https://www.crunchbase.com/organization/fixghl",
+    "https://www.instagram.com/fixghlstudio/",
+    "https://www.pinterest.com/fixghl/",
+  ] as string[], // Profiles that represent FixGHL elsewhere
   legalEntity: "FixGHL",
   calendarUrl: process.env.NEXT_PUBLIC_GHL_CALENDAR_URL || "",
   gaId: "G-7MHF0P2H0Z",
