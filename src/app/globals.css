@@ -161,6 +161,8 @@
    for a moment while it settles, and that must not move anything below. Before it is ready the widget sits out of flow. */
 /* Booking tabs: the inactive panel stays laid out (so its GHL iframe keeps its size and state) but is out of flow and
    invisible. opacity, not visibility: GHL's script sets visibility on its own iframes, which would show through. */
+/* The GHL calendar card is rounded (20px) but its page is white: clip the iframe so no square white corners show. */
+[data-ghl="calendar"] iframe { border-radius: 20px; }
 .ghl-panels { position: relative; overflow: clip; isolation: isolate; }
 .ghl-panel[data-active="false"] { position: absolute; inset: 0 0 auto 0; opacity: 0; pointer-events: none; z-index: -1; }
 [data-ghl] { position: relative; container-type: inline-size; display: grid; }
@@ -169,10 +171,10 @@
 [data-ghl]:not([data-ready="true"]) > .ghl-stage { position: absolute; inset: 0 0 auto 0; opacity: 0; pointer-events: none; }
 .ghl-skeleton { transition: opacity 360ms ease; } /* opacity only, so the fade stays on the compositor */
 [data-ghl][data-ready="true"] > .ghl-skeleton { opacity: 0; pointer-events: none; }
-.ghl-skeleton--calendar { min-height: 582px; } /* the live GHL calendar settles at 582px wide, 524px under 450px */
+.ghl-skeleton--calendar { min-height: 500px; } /* live GHL calendar (empty week rows hidden): 500px wide, 450px under 450px; months with 6 weeks grow 54px */
 .ghl-skeleton--form { min-height: 632px; }
 @container (max-width: 450px) {
-  .ghl-skeleton--calendar { min-height: 524px; }
+  .ghl-skeleton--calendar { min-height: 450px; }
   .ghl-skeleton--form { min-height: 620px; }
 }
 .ghl-skeleton > * { min-height: inherit; }
