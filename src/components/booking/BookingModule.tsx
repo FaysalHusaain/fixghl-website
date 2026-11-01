@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Script from "next/script";
-import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+import { useEffect, useEffectEvent, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { track } from "@/lib/analytics";
 
 // Live GHL embeds. GHL's embed script (form_embed.js) talks to each widget's built-in resizer, so both iframes
@@ -36,6 +36,12 @@ export function BookingModule({
   const calendarOn = nearOn || (calendar === "immediate" && hydrated);
   const [formOn, setFormOn] = useState(false); // the form loads as the visitor reaches for "Send details"
   const loadForm = () => setFormOn(true);
+  // Once the calendar has settled, load the form quietly in the background so "Send details" opens instantly.
+  const preloadForm = () => {
+    const go = () => setFormOn(true);
+    if ("requestIdleCallback" in window) window.requestIdleCallback(go, { timeout: 2500 });
+    else setTimeout(go, 1200);
+  };
   const openTab = (t: Tab) => {
     setTab(t);
     if (t === "write") loadForm();
@@ -108,10 +114,14 @@ export function BookingModule({
         ))}
       </div>
 
-      <div id={`${id}-panel-call`} role="tabpanel" aria-labelledby={`${id}-tab-call`} hidden={tab !== "call"} className="p-3 pt-6 md:p-6">
+      {/* Both panels stay rendered and laid out. Hiding a panel with display:none starves the GHL iframe inside it of a
+          size, and on mobile the calendar could come back blank or stuck after switching tabs. The inactive panel is
+          taken out of flow, made invisible and inert instead. */}
+      <div className="ghl-panels">
+      <div id={`${id}-panel-call`} role="tabpanel" aria-labelledby={`${id}-tab-call`} data-active={tab === "call"} inert={tab !== "call"} aria-hidden={tab !== "call"} className="ghl-panel p-3 pt-6 md:p-6">
         <H className="h-sub">Pick a time for a free 30-minute call</H>
         <p className="mt-2 max-w-[60ch] text-ink-700">After you pick a time, we ask your name, email, what you need and a line about your account.</p>
-        <GhlFrame kind="calendar" className="mt-6" show={calendarOn} lazy={calendar === "near"} onNear={() => setNearOn(true)}>
+        <GhlFrame kind="calendar" className="mt-6" show={calendarOn} lazy={calendar === "near"} onNear={() => setNearOn(true)} onSettled={preloadForm}>
           {(onReady) => (
             <iframe
               src={`${GHL_HOST}/widget/booking/${CALENDAR_ID}`}
@@ -126,7 +136,7 @@ export function BookingModule({
         </GhlFrame>
       </div>
 
-      <div id={`${id}-panel-write`} role="tabpanel" aria-labelledby={`${id}-tab-write`} hidden={tab !== "write"} className="p-3 pt-6 md:p-6">
+      <div id={`${id}-panel-write`} role="tabpanel" aria-labelledby={`${id}-tab-write`} data-active={tab === "write"} inert={tab !== "write"} aria-hidden={tab !== "write"} className="ghl-panel p-3 pt-6 md:p-6">
         <H className="h-sub">Send us the details</H>
         <p className="mt-2 max-w-[60ch] text-ink-700">Tell us what is happening. We reply by email with next steps or a time to talk.</p>
         <GhlFrame kind="form" className="mt-4" show={formOn}>
@@ -154,6 +164,7 @@ export function BookingModule({
           )}
         </GhlFrame>
       </div>
+      </div>
       {/* GHL's resizer script, once, as soon as the first GHL iframe is on the page. */}
       {(calendarOn || formOn) && <Script src={`${GHL_HOST}/js/form_embed.js`} strategy="afterInteractive" />}
     </div>
@@ -168,6 +179,7 @@ function GhlFrame({
   show,
   lazy = false,
   onNear,
+  onSettled,
   className = "",
   children,
 }: {
@@ -175,6 +187,7 @@ function GhlFrame({
   show: boolean;
   lazy?: boolean;
   onNear?: () => void;
+  onSettled?: () => void;
   className?: string;
   children: (onReady: () => void) => ReactNode;
 }) {
@@ -241,6 +254,11 @@ function GhlFrame({
     }, 120);
     return () => window.clearInterval(t);
   }, [drawn, ready]);
+
+  const fireSettled = useEffectEvent(() => onSettled?.());
+  useEffect(() => {
+    if (ready) fireSettled();
+  }, [ready]);
 
   const onLoad = () => setDrawn(true);
 

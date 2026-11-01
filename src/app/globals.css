@@ -159,6 +159,10 @@
    move the page. Once its height settles they swap: no blank gap, no layout jump. */
 /* Skeleton and live widget share one grid cell, so the box is never shorter than the skeleton: GHL resizes its iframe
    for a moment while it settles, and that must not move anything below. Before it is ready the widget sits out of flow. */
+/* Booking tabs: the inactive panel stays laid out (so its GHL iframe keeps its size and state) but is out of flow and
+   invisible. opacity, not visibility: GHL's script sets visibility on its own iframes, which would show through. */
+.ghl-panels { position: relative; overflow: clip; isolation: isolate; }
+.ghl-panel[data-active="false"] { position: absolute; inset: 0 0 auto 0; opacity: 0; pointer-events: none; z-index: -1; }
 [data-ghl] { position: relative; container-type: inline-size; display: grid; }
 [data-ghl] > .ghl-stage, [data-ghl] > .ghl-skeleton { grid-area: 1 / 1; min-width: 0; }
 .ghl-stage { transition: opacity 360ms ease; }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { topServices, migrationServices } from "@/content/services";
 import { site } from "@/lib/site";
 import { Logo } from "@/components/brand/Logo";
+import { ScrollTopLink } from "@/components/layout/ScrollTopLink";
 
 const copyrightYear = new Date().getFullYear();
 
@@ -35,9 +36,9 @@ export function Footer() {
       <div className="frame pt-16 md:pt-20">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-4">
-            <Link href="/" aria-label="FixGHL home" className="inline-flex min-h-11 items-center text-ink-50">
+            <ScrollTopLink always label="FixGHL home" className="inline-flex min-h-11 items-center text-ink-50">
               <Logo className="w-[10.25rem]" title={null} />
-            </Link>
+            </ScrollTopLink>
             <p className="mt-8 max-w-[30ch] text-lead leading-snug text-ink-100">{site.oneLine}</p>
             <p className="mt-6">
               <a href={`mailto:${site.email}`} className="font-display text-[1.375rem] font-semibold tracking-[-0.02em] text-ink-50 transition-colors hover:text-gold-500">
@@ -81,11 +82,14 @@ export function Footer() {
             <li><Link href="/privacy" className="inline-flex min-h-11 min-w-11 items-center hover:text-ink-50">Privacy</Link></li>
             <li><Link href="/terms" className="inline-flex min-h-11 min-w-11 items-center hover:text-ink-50">Terms</Link></li>
             <li><Link href="/affiliate-disclosure" className="inline-flex min-h-11 min-w-11 items-center hover:text-ink-50">Affiliate disclosure</Link></li>
+            <li><ScrollTopLink always label="Back to top" className="inline-flex min-h-11 min-w-11 items-center hover:text-ink-50">Back to top</ScrollTopLink></li>
           </ul>
         </div>
       </div>
-      <div aria-hidden className="frame mt-10 select-none md:mt-14">
-        <Logo className="w-full text-ink-900" title={null} quiet />
+      <div className="frame mt-10 select-none md:mt-14">
+        <ScrollTopLink always label="Back to top" className="group block text-ink-900 transition-colors duration-300 hover:text-ink-800">
+          <Logo className="w-full" title={null} quiet />
+        </ScrollTopLink>
       </div>
     </footer>
   );

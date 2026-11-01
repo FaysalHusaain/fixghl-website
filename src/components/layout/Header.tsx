@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ScrollTopLink } from "@/components/layout/ScrollTopLink";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/brand/Logo";
@@ -42,9 +43,9 @@ export function Header({ services, migrations }: { services: NavLink[]; migratio
         <div
           className={`frame flex items-center justify-between transition-[height] duration-200 ${compact ? "h-15" : "h-[var(--header-h)]"}`}
         >
-          <Link href="/" aria-label="FixGHL home" className="inline-flex min-h-11 items-center">
+          <ScrollTopLink label="FixGHL home" className="inline-flex min-h-11 items-center">
             <Logo className="w-[9.25rem] md:w-[10.25rem]" title={null} />
-          </Link>
+          </ScrollTopLink>
 
           <nav aria-label="Main" className="hidden items-center gap-8 lg:flex">
             <ul className="flex items-center gap-7 text-small">
