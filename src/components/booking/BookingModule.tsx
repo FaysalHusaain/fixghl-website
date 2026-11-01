@@ -121,7 +121,7 @@ export function BookingModule({
       <div id={`${id}-panel-call`} role="tabpanel" aria-labelledby={`${id}-tab-call`} data-active={tab === "call"} inert={tab !== "call"} aria-hidden={tab !== "call"} className="ghl-panel p-3 pt-6 md:p-6">
         <H className="h-sub">Pick a time for a free 30-minute call</H>
         <p className="mt-2 max-w-[60ch] text-ink-700">After you pick a time, we ask your name, email, what you need and a line about your account.</p>
-        <GhlFrame kind="calendar" className="mt-6" show={calendarOn} lazy={calendar === "near"} onNear={() => setNearOn(true)} onSettled={preloadForm}>
+        <GhlFrame kind="calendar" className="-mx-3 mt-6 md:mx-0" show={calendarOn} lazy={calendar === "near"} onNear={() => setNearOn(true)} onSettled={preloadForm}>
           {(onReady) => (
             <iframe
               src={`${GHL_HOST}/widget/booking/${CALENDAR_ID}`}
