@@ -193,6 +193,30 @@ export const guides: ArticleMeta[] = [
       { href: "/services/saas-white-label", label: "SaaS mode and white-label setup" },
     ],
   },
+  {
+    slug: "how-to-set-up-gohighlevel",
+    title: "How to set up GoHighLevel: a beginner's checklist",
+    metaTitle: "How to Set Up GoHighLevel: A Beginner's Checklist",
+    description:
+      "Set up GoHighLevel step by step: sub-account, business profile, users, phone and A2P 10DLC, sending domain, website domain, calendars and workflows.",
+    summary: "The order to set up a new GHL account, from business profile and A2P registration to calendars, pipelines, integrations and a tested first workflow.",
+    published: "2026-11-02",
+    updated: "2026-11-02",
+    ctaLine: "Rather not work through the checklist yourself? We'll set up your account with you. The first 30-minute call is free.",
+    faqs: [
+      { q: "What is the first thing to set up in GoHighLevel?", a: "Fill in the business profile under Settings > Business Profile: business name, address, time zone and authorized representative. Phone compliance, calendars and scheduled messages all rely on these details." },
+      { q: "Do I need A2P 10DLC registration in GoHighLevel?", a: "Yes, if you text US recipients from a standard 10-digit local number. HighLevel states registration is required to send SMS or MMS to US numbers. Register your brand, then a campaign, in Settings > Phone System > Trust Center." },
+      { q: "Should I set up GoHighLevel in the agency account or a sub-account?", a: "Set up the business in a sub-account. The agency account handles billing, branding and the list of sub-accounts, while contacts, calendars, phone, email, funnels and workflows all live in the sub-account." },
+      { q: "Does GoHighLevel have a setup checklist?", a: "Some accounts show a LaunchPad item in the sub-account menu with guided setup tasks. HighLevel describes it as a limited rollout, so it does not appear in every account." },
+    ],
+    related: [
+      { href: "/services/ghl-setup", label: "GHL account setup" },
+      { href: "/guides/gohighlevel-snapshots", label: "GoHighLevel snapshots: what they are and how to import one" },
+      { href: "/guides/ghl-emails-going-to-spam", label: "GHL emails going to spam" },
+      { href: "/guides/ghl-workflow-not-triggering", label: "GoHighLevel workflow not triggering" },
+      { href: "/glossary/sub-account", label: "What is a sub-account?" },
+    ],
+  },
 ];
 
 export const getGuide = (slug: string) => guides.find((g) => g.slug === slug);

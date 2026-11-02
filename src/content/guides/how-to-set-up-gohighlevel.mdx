@@ -1,0 +1,170 @@
+<p className="answer">To set up GoHighLevel, start the 14-day trial, create a sub-account for the business, fill in the business profile, and add your users. Then connect a phone number with A2P registration, a dedicated email sending domain, your website domain, a calendar, a pipeline and Stripe. Build one workflow last and test it with a real contact.</p>
+
+This checklist follows the order we use when we set up a new account. Each step links to HighLevel's own help article, and every menu path was checked against the help center on November 2, 2026. HighLevel moves menus from time to time, so if a label looks different, the linked article will show the current one.
+
+## What do you need before you set up GoHighLevel?
+
+Before you start, have your business details, logo, business address and time zone ready, plus login access to your domain registrar, your Google or Microsoft calendar, your Stripe account and your Facebook and Google Business pages. Setup stalls fastest when you have to wait for someone else's password or DNS login.
+
+- Legal business name, address, phone and the name of an authorized representative (used for phone compliance)
+- Your logo and brand colors
+- Login for your domain registrar or DNS host (GoDaddy, Cloudflare and so on)
+- Admin access to your Google or Outlook calendar
+- A Stripe account if you plan to take payments
+- Admin access to your Facebook Page and Business Manager, and Owner or Manager access to your Google Business Profile
+
+## How do you start a GoHighLevel account?
+
+You start by signing up for the free trial on HighLevel's pricing page. Every plan includes a 14-day trial. Plans were listed at $97, $297 and $497 a month on November 2, 2026. Billing starts when the trial ends unless you cancel, so plan to finish the core setup inside those two weeks.
+
+If you are not sure which plan you need, our guide to [GoHighLevel pricing](/guides/how-much-does-gohighlevel-cost) explains what each one includes. A single business can usually start on the $97 plan. Agencies that want to resell the software need the $497 plan for SaaS mode.
+
+## Should you set up the agency account or a sub-account?
+
+Do almost all of the setup inside a sub-account. The agency account is where you manage billing, branding and your list of sub-accounts. The sub-account is where the business actually runs: contacts, calendars, phone, email, funnels and workflows. Even a single business works from one sub-account.
+
+When you create a sub-account from agency view, HighLevel asks whether it is your client's account or your own. If you already have a [snapshot](/guides/gohighlevel-snapshots), you can create the sub-account from it instead: open **Account Snapshots**, click **Create New Account (+)** next to the snapshot, enter the details and click **Add Sub-Account**. Our glossary explains [what a sub-account is](/glossary/sub-account) if the structure is new to you.
+
+## What is the GoHighLevel setup checklist?
+
+The checklist below covers everything a new sub-account needs before it handles real leads. Work through it in order, because later steps depend on earlier ones. A workflow cannot text a lead until the phone number is registered, and a booking page looks wrong until the business profile and domain are in place.
+
+| Step | Where in GHL | Why it comes here |
+| --- | --- | --- |
+| 1. Business profile | Settings > Business Profile | Name, address, time zone and representative feed everything else |
+| 2. Users | Settings > Users | Each person needs a login before connecting calendars and inboxes |
+| 3. Phone number | Settings > Phone System | Calls and texts need a number |
+| 4. A2P 10DLC | Settings > Phone System > Trust Center | Required to text US numbers, and approval takes time |
+| 5. Email sending domain | Settings > Email Services | Keeps your emails out of spam |
+| 6. Website domain | Sites > Settings > Domains | Funnels, sites and forms run on your own domain |
+| 7. Calendar | Calendars > Calendar Settings | Booking pages and calendar sync |
+| 8. Pipeline | Opportunities > Pipelines | Tracks where every lead is |
+| 9. Custom fields and values | Settings > Custom Fields / Custom Values | Stores the details you collect and reuse |
+| 10. Integrations | Settings > Integrations, Payments > Integrations | Stripe, Facebook and Google Business Profile |
+| 11. First workflow | Automation > Workflows | Ties it all together |
+
+Some accounts also show a **LaunchPad** item in the left menu with guided setup tasks. HighLevel says it is a limited rollout, so it may not appear in yours.
+
+## How do you fill in the business profile and add users?
+
+Open **Settings > Business Profile**, the first page in a sub-account's settings. Add your logo, business name, email, phone, website and physical address, then set the business time zone and platform language. Fill in the business information and authorized representative sections too, because they are used for phone compliance checks later.
+
+Check the time zone twice. If it is wrong, appointment times and scheduled messages will be off for everyone.
+
+To add your team:
+
+1. Go to **Settings > Users** and click **+ Add User**.
+2. Enter their details.
+3. Under **Roles & Permissions**, choose **Admin** or **User** and set which modules they can open.
+4. Turn on **Only Assigned Data** if they should only see their own contacts and conversations.
+5. Click **Save**.
+
+## How do you set up phone numbers and A2P 10DLC?
+
+Buy a number under **Settings > Phone System**, then register for A2P 10DLC in the Trust Center before you text anyone in the US. HighLevel states that A2P 10DLC registration is required to send SMS or MMS to US recipients from a standard 10-digit local number. A number that can text is not ready to text until registration is approved.
+
+1. Go to **Settings > Phone System**, open the **Phone numbers** tab and click **+ Add Number**.
+2. Pick a country, filter the results and choose a number, then click **Proceed to Buy**.
+3. Complete any identity or address checks. US, Canadian and Puerto Rican +1 numbers need a one-time identity verification per sub-account.
+4. Open **Settings > Phone System > Trust Center** and register your **brand** first.
+5. Then create a **campaign** under **A2P Messaging (SMS) > Brand & Campaigns**. It shows as Pending until it is vetted.
+
+Start registration on day one. HighLevel notes that even after approval, carriers can take several business days to receive the update. Toll-free numbers use Toll-Free Verification instead of A2P 10DLC.
+
+## How do you set up email so it reaches the inbox?
+
+Set up a dedicated sending domain under **Settings > Email Services**, on the **Dedicated Domain and IP** tab. Use a subdomain that nothing else uses, such as mg.yourbusiness.com, so it does not clash with the mail you send from Google Workspace or Microsoft 365. Then verify the DNS records and set your From name.
+
+1. Click **Add Domain** and enter the subdomain.
+2. Let HighLevel configure DNS automatically, or add the records by hand at your DNS host.
+3. Click **Verify Records**. HighLevel says propagation can take up to 24 hours.
+4. Use the three-dot menu and **Set Headers** to enter your From Name and From Email.
+5. Warm the domain up with small sends before you email a large list.
+
+Each user can also connect their own Gmail or Outlook inbox under **Settings > My Profile**, in the email two-way sync section, so replies show up in GHL Conversations. Our guide on [GHL emails going to spam](/guides/ghl-emails-going-to-spam) covers SPF, DKIM, DMARC and warm-up in more detail.
+
+## How do you connect your domain for funnels and websites?
+
+Go to **Sites > Settings > Domains** and click **Connect a Domain**. Choose whether it is for a funnel or a website, enter the domain or subdomain, then either authorize the automatic setup or add the DNS records HighLevel shows you. Automatic setup works with GoDaddy, Cloudflare and Google Domains.
+
+- If you add records by hand, copy the exact A, CNAME and TXT values shown in your account.
+- On Cloudflare, set the records to **DNS Only**.
+- Allow anywhere from a few minutes up to 24 hours for the domain to go live.
+
+## How do you set up a calendar and sync it?
+
+Create a calendar under **Calendars > Calendar Settings** with **+ New Calendar**, then connect each user's Google or Outlook calendar under **Connections** so bookings land in their own calendar and busy times block new bookings. Each person connects their own calendar. One calendar receives bookings and the others are checked for conflicts.
+
+1. Click **+ New Calendar** and choose **Personal Booking** for one-to-one calls.
+2. Set the name, host, URL, duration and availability, then click **Confirm**.
+3. Open **Connections**, click **+ Add New** and connect Google Calendar or Outlook. Outlook sync works with Microsoft 365 and Exchange Online accounts.
+4. Pick the **Linked Calendar** where bookings should go.
+5. Book a test appointment from the calendar link and check that it appears in your own calendar.
+
+## How do you set up pipelines, custom fields and custom values?
+
+Create a pipeline under **Opportunities > Pipelines** with one stage for each step a lead goes through, such as New Lead, Booked, Showed and Proposal Sent. Then add custom fields for the details you need to collect, and custom values for business details you reuse in emails and pages, such as your booking link.
+
+- **Pipeline:** click **Create new pipeline**, name it, add stages and click **Save**. HighLevel adds Won and Lost stages automatically.
+- **Custom fields:** go to **Settings > Custom Fields**, choose Contact or Opportunity, click **Create field**, pick a type and name it. Create these before you import contacts, so every column has a field to map to.
+- **Custom values:** go to **Settings > Custom Values** and click **New Custom Value**. Change the value once and it updates everywhere it is used. Our glossary explains [custom values](/glossary/custom-values) further.
+
+## Which integrations should you connect first?
+
+Connect Stripe if you take payments, Facebook and Instagram if you run lead ads, and Google Business Profile if you rely on reviews or local search. All three live under **Settings > Integrations**, and Stripe is also under **Payments > Integrations**. Each one needs admin access on the other platform, so line up those logins first.
+
+| Integration | Where | What you need |
+| --- | --- | --- |
+| Stripe | Payments > Integrations > Connect | A Stripe account you can log in to |
+| Facebook and Instagram | Settings > Integrations > Facebook–Instagram | Admin on the Page and its Business Manager; Instagram linked to the Page for IG leads |
+| Google Business Profile | Settings > Integrations | Owner or Manager access, and a business already verified on Google |
+
+Install the HighLevel mobile app (still listed as LeadConnector in some places) so you can answer messages and calls away from your desk.
+
+## How do you build and test your first workflow?
+
+Build one simple workflow that matches your main lead flow, such as a form submission that creates an opportunity, sends a confirmation text and email, and notifies you. Go to **Automation > Workflows**, click **+ Create Workflow**, add a trigger and actions, save it, test it, then switch it from Draft to Publish.
+
+1. Click **+ Create Workflow** and choose **Start from scratch** or a recipe.
+2. Add the trigger, such as Form Submitted, and set its filters.
+3. Add actions: create or update opportunity, send SMS, send email, internal notification.
+4. Click **Save**, then **Test Workflow**, pick a contact and click **Run Test**.
+5. Switch the toggle at the top right from **Draft** to **Publish**. HighLevel is clear that draft workflows do not run for real.
+6. Submit your own form as a new contact and follow the lead all the way through.
+
+If a published workflow still does nothing, our guide to a [GoHighLevel workflow not triggering](/guides/ghl-workflow-not-triggering) walks through the usual causes. Our [workflow glossary entry](/glossary/workflow) covers the basics.
+
+## What we see in real accounts
+
+<mark className="todo">[[EXPERIENCE: When a client sets up GHL on their own, which setup step do they most often skip or get wrong, and what goes wrong because of it?]]</mark>
+
+## How long does it take to set up GoHighLevel?
+
+Most of this checklist is in your control and fits inside the 14-day trial if you start early. A2P 10DLC approval and DNS changes are not, and they can take longer. That is why we start phone registration and domain records first, then build calendars, pipelines and workflows while they process.
+
+If you would rather skip the setup work, our [GHL setup service](/services/ghl-setup) handles this checklist in your account, from the business profile and A2P registration through to a tested first workflow.
+
+## Sources
+
+All checked on November 2, 2026.
+
+- [HighLevel pricing](https://www.gohighlevel.com/pricing): 14-day free trial and plan prices.
+- [What Is an Agency Sub-Account in HighLevel?](https://help.gohighlevel.com/support/solutions/articles/155000007979-what-is-an-agency-sub-account-in-highlevel-), HighLevel help center, modified October 27, 2026.
+- [Create a New Sub-Account Using a Snapshot](https://help.gohighlevel.com/support/solutions/articles/155000005762-create-a-new-sub-account-using-snapshot), modified November 19, 2025.
+- [Business Profile Settings](https://help.gohighlevel.com/support/solutions/articles/155000006223), modified September 2, 2025.
+- [Sub-account: User Roles, Permissions and Assigned Data](https://help.gohighlevel.com/support/solutions/articles/155000002544-user-roles-permissions-and-assigned-data-subaccount), modified October 6, 2026.
+- [How to Purchase and Set Up a Phone Number in HighLevel](https://help.gohighlevel.com/support/solutions/articles/155000003226-how-to-purchase-a-phone-number), modified September 18, 2026.
+- [What is A2P 10DLC: Brand and Campaign Registration](https://help.gohighlevel.com/support/solutions/articles/155000002380-what-is-a2p-10-dlc-brand-and-campaign-registration), modified September 4, 2026.
+- [A2P Campaign Registration: Step by Step Guide and FAQs](https://help.gohighlevel.com/support/solutions/articles/155000004539-a2p-campaign-registration-step-by-step-guide-and-faqs), modified September 11, 2026.
+- [Dedicated Email Sending Domains Overview and Setup](https://help.gohighlevel.com/support/solutions/articles/48001226115-dedicated-email-sending-domains-overview-setup), modified April 17, 2026.
+- [Getting Started: Setup Email, Phone, and SMS](https://help.gohighlevel.com/support/solutions/articles/155000005058-getting-started-setup-email-phone-and-sms), modified March 23, 2026.
+- [Getting Started: Connect Personal Inbox](https://help.gohighlevel.com/support/solutions/articles/155000005066-getting-started-connect-personal-inbox), modified August 12, 2026.
+- [Connecting Your Domain on GHL](https://help.gohighlevel.com/support/solutions/articles/155000005132-connecting-your-domain-on-ghl-a-guide), modified March 25, 2026.
+- [Getting Started: Setup a Booking Calendar](https://help.gohighlevel.com/support/solutions/articles/155000005061-getting-started-setup-a-booking-calendar), modified May 12, 2026.
+- [Integrating Google with HighLevel Calendars](https://help.gohighlevel.com/support/solutions/articles/155000002369-integrating-google-with-highlevel-calendars), modified May 8, 2026, and [Integrating Outlook with HighLevel Calendars](https://help.gohighlevel.com/support/solutions/articles/155000002371-integrating-outlook-with-highlevel-calendars), modified August 27, 2026.
+- [Step-by-Step Guide: Creating Pipelines](https://help.gohighlevel.com/support/solutions/articles/155000001985-step-by-step-guide-creating-pipelines), modified March 27, 2026.
+- [How to Use Custom Fields](https://help.gohighlevel.com/support/solutions/articles/155000008031-how-to-use-custom-fields), modified September 1, 2026, and [Custom Values Settings](https://help.gohighlevel.com/support/solutions/articles/155000004705-custom-values-settings), modified July 25, 2025.
+- [How to Connect Stripe to Your Sub-Account](https://help.gohighlevel.com/support/solutions/articles/48000981400-how-to-connect-stripe-to-your-sub-account), modified July 3, 2025.
+- [Facebook Integration in HighLevel](https://help.gohighlevel.com/support/solutions/articles/48001157632-step-by-step-guide-to-facebook-integration-in-highlevel) and [Google Business Profile Integration](https://help.gohighlevel.com/support/solutions/articles/48001222899-how-to-integrate-google-business-profile-gbp-with-highlevel), both modified May 25, 2026.
+- [Workflow Builder Walkthrough](https://help.gohighlevel.com/support/solutions/articles/155000001254-workflow-builder-walkthrough), modified September 7, 2026.
+- [Sub-Account LaunchPad](https://help.gohighlevel.com/support/solutions/articles/155000005436-sub-account-launchpad), modified September 11, 2026.
