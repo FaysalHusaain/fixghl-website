@@ -205,6 +205,17 @@ Added the Crunchbase URL to the Organization `sameAs`.
 - Every glossary term has a "Common problems" paragraph in its MDX. The bottom Related block lists the guide, the service and related terms (`related` in `src/content/glossary/index.ts`).
 - IndexNow: `.github/workflows/indexnow.yml` runs `scripts/indexnow.mjs` on every push to main, after waiting 4 minutes for Vercel to deploy. The key is read from `public/<key>.txt`; run it by hand with `npm run indexnow`.
 
+### Booking calendar fix (3 Nov 2026)
+- **Symptom:** after moving from the homepage to /book inside the site, the /book calendar iframe stayed at 150px and showed after 8s cut off.
+- **Cause:**
+  - GHL's `form_embed.js` registers only the iframes that exist when it runs, and tracks them by id.
+  - Next keeps the previous page mounted (hidden) during client navigation, so the homepage iframe, with the same fixed id, was still in the document.
+- **Fix (in `BookingModule.tsx`):**
+  - Every GHL iframe gets an id unique to its mount (a counter).
+  - `form_embed.js` is injected again each time a GHL iframe mounts. It skips iframes it already knows, and the browser serves it from cache. Do not go back to a single `next/script` tag.
+- **Safety net:** the calendar iframe has `min-height: 505px` (455px under 450px wide), so it is fully usable even if the resizer never reports. GHL still grows it for the time slots and details step.
+- **Swap timing:** the swap waits for GHL's first content height report and a steady height, with a 5s fallback.
+
 ## 6. Current scores (live, mobile, Lighthouse with PageSpeed's settings)
 
 | Page | Performance | Accessibility | Best Practices | SEO | Speed Index |
