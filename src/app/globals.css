@@ -171,10 +171,14 @@
 [data-ghl]:not([data-ready="true"]) > .ghl-stage { position: absolute; inset: 0 0 auto 0; opacity: 0; pointer-events: none; }
 .ghl-skeleton { transition: opacity 360ms ease; } /* opacity only, so the fade stays on the compositor */
 [data-ghl][data-ready="true"] > .ghl-skeleton { opacity: 0; pointer-events: none; }
-.ghl-skeleton--calendar { min-height: 500px; } /* live GHL calendar (empty week rows hidden): 500px wide, 450px under 450px; months with 6 weeks grow 54px */
+.ghl-skeleton--calendar { min-height: 505px; } /* live GHL calendar: 505px wide, 455px under 450px; months with 6 weeks grow 54px */
+/* Safety net: the calendar iframe is never shorter than the widget itself, even if GHL's resizer does not report.
+   It still grows when GHL reports more (time slots, the details step). */
+[data-ghl="calendar"] iframe { min-height: 505px; }
 .ghl-skeleton--form { min-height: 632px; }
 @container (max-width: 450px) {
-  .ghl-skeleton--calendar { min-height: 450px; }
+  .ghl-skeleton--calendar { min-height: 455px; }
+  [data-ghl="calendar"] iframe { min-height: 455px; }
   .ghl-skeleton--form { min-height: 620px; }
 }
 .ghl-skeleton > * { min-height: inherit; }

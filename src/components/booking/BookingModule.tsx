@@ -1,12 +1,16 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Script from "next/script";
 import { useEffect, useEffectEvent, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { track } from "@/lib/analytics";
 
 // Live GHL embeds. GHL's embed script (form_embed.js) talks to each widget's built-in resizer, so both iframes
-// always match their content: no fixed heights and no inner scrolling. Styling lives in GHL's "Custom code" boxes.
+// always match their content. Styling lives in GHL's "Custom code" boxes.
+//
+// form_embed.js only registers the iframes that exist when it runs, and it tracks them by iframe id. Next keeps the
+// previous page mounted (hidden) during client navigation, so the homepage's calendar can still be in the document when
+// /book mounts its own. So every iframe gets an id unique to this mount, and the script runs again each time a GHL
+// iframe mounts (it skips iframes it already knows; the browser serves it from cache).
 const GHL_HOST = "https://link.codenovahq.com";
 const CALENDAR_ID = "EJK8Z8tRUS73r8KUbzFV";
 const FORM_ID = "82ZHqKAiWU0WMYKDwZOr";
@@ -15,6 +19,20 @@ const GHL_ORIGIN = /(codenovahq\.com|leadconnectorhq\.com|msgsndr\.com|gohighlev
 
 type Tab = "call" | "write";
 const noop = () => () => {};
+
+const EMBED_SRC = `${GHL_HOST}/js/form_embed.js`;
+function runGhlEmbed() {
+  const s = document.createElement("script");
+  s.src = EMBED_SRC;
+  s.async = true;
+  s.dataset.ghlEmbed = "";
+  s.onload = s.onerror = () => s.remove();
+  document.body.appendChild(s);
+}
+
+// Digits only, like the ids in GHL's own embed code. The counter lives for the whole visit, so each mount gets a new id.
+let mounts = 0;
+const newStamp = () => String(1793230740499 + ++mounts);
 
 // calendar="immediate": the calendar is the page's main job (/book), so its iframe is injected as soon as the page
 // hydrates. Keeping it out of the server HTML lets the page paint first instead of racing GHL's ~100 files. calendar="near": it loads when the module is within 1200px of the viewport
@@ -29,6 +47,7 @@ export function BookingModule({
   calendar?: "immediate" | "near";
 }) {
   const [tab, setTab] = useState<Tab>("call");
+  const [stamp] = useState(newStamp); // unique iframe ids for this mount
   const router = useRouter();
   const H = headingLevel === 2 ? "h2" : "h3";
   const hydrated = useSyncExternalStore(noop, () => true, () => false);
@@ -125,7 +144,7 @@ export function BookingModule({
           {(onReady) => (
             <iframe
               src={`${GHL_HOST}/widget/booking/${CALENDAR_ID}`}
-              id={`${CALENDAR_ID}_1793230740499`}
+              id={`${CALENDAR_ID}_${stamp}`}
               title="Book a free 30-minute GHL call with FixGHL"
               allow="payment"
               scrolling="no"
@@ -143,7 +162,7 @@ export function BookingModule({
           {(onReady) => (
             <iframe
               src={`${GHL_HOST}/widget/form/${FORM_ID}`}
-              id={`inline-${FORM_ID}`}
+              id={`inline-${FORM_ID}-${stamp}`}
               title="fixGHL"
               onLoad={onReady}
               style={{ width: "100%", height: "100%", border: "none", borderRadius: 8 }}
@@ -156,7 +175,7 @@ export function BookingModule({
               data-deactivation-value=""
               data-form-name="fixGHL"
               data-height="532"
-              data-layout-iframe-id={`inline-${FORM_ID}`}
+              data-layout-iframe-id={`inline-${FORM_ID}-${stamp}`}
               data-form-id={FORM_ID}
               data-cookie-consent="true"
               data-cookie-consent-provider="auto"
@@ -165,15 +184,14 @@ export function BookingModule({
         </GhlFrame>
       </div>
       </div>
-      {/* GHL's resizer script, once, as soon as the first GHL iframe is on the page. */}
-      {(calendarOn || formOn) && <Script src={`${GHL_HOST}/js/form_embed.js`} strategy="afterInteractive" />}
     </div>
   );
 }
 
 // Holds a GHL iframe behind a skeleton the size of the real widget, so there is no blank gap and no jump.
-// The swap starts at iframe onload (or GHL's "iframeLoaded" message) and completes once GHL has revealed the widget and
-// its height has settled, so the visitor never sees a blank box or a jump.
+// The swap happens as soon as the widget has drawn real content (GHL reports a content height) and its height has held
+// for two checks. The iframe has a CSS minimum height matching the widget, so even if GHL's resizer never reports, the
+// fallback swap after 5s still shows the whole calendar, never a cut-off frame.
 function GhlFrame({
   kind,
   show,
@@ -218,24 +236,39 @@ function GhlFrame({
     };
   }, [lazy, show, onNear]);
   const [drawn, setDrawn] = useState(false);
+  const [content, setContent] = useState(false); // GHL has reported a real content height for this iframe
   const [ready, setReady] = useState(false);
 
+  // Register the new iframe with GHL's resizer.
   useEffect(() => {
-    if (!show || drawn) return;
-    // Backstop in case onload and GHL's message are both missed; GHL's own reveal check still gates the swap.
+    if (!show) return;
+    const raf = requestAnimationFrame(runGhlEmbed);
+    return () => cancelAnimationFrame(raf);
+  }, [show]);
+
+  useEffect(() => {
+    if (!show || (drawn && content)) return;
+    // Backstop in case onload and GHL's message are both missed.
     const backstop = window.setTimeout(() => setDrawn(true), 3000);
     const onMessage = (e: MessageEvent) => {
       const frame = box.current?.querySelector("iframe");
-      if (frame && e.source === frame.contentWindow && Array.isArray(e.data) && e.data[0] === "iframeLoaded") setDrawn(true);
+      if (!frame || e.source !== frame.contentWindow) return;
+      if (Array.isArray(e.data) && e.data[0] === "iframeLoaded") setDrawn(true);
+      const raw = typeof e.data === "string" ? e.data : JSON.stringify(e.data ?? "");
+      // A content height from GHL: its own setHeight message, or a resizer report other than the first "init".
+      if (/highlevel\.setHeight/.test(raw) || /^\[iFrameSizer\][^:]+:\d+:\d+:(?!init)/.test(raw)) {
+        setDrawn(true);
+        setContent(true);
+      }
     };
     window.addEventListener("message", onMessage);
     return () => {
       window.clearTimeout(backstop);
       window.removeEventListener("message", onMessage);
     };
-  }, [show, drawn]);
+  }, [show, drawn, content]);
 
-  // Swap once GHL has revealed the iframe and its height has held steady for two checks (or after 8s at most).
+  // Swap once there is real content and the height has held for two checks, or 5s after the frame loaded at most.
   useEffect(() => {
     if (!drawn || ready) return;
     let last = -1;
@@ -245,15 +278,15 @@ function GhlFrame({
       const frame = box.current?.querySelector("iframe");
       const h = frame?.getBoundingClientRect().height ?? 0;
       const revealed = !!frame && frame.style.visibility !== "hidden"; // GHL's form_embed.js has finished its own reveal
-      steady = revealed && h > 200 && h === last ? steady + 1 : 0;
+      steady = content && revealed && h >= 400 && h === last ? steady + 1 : 0;
       last = h;
-      if (steady >= 2 || Date.now() - started > 8000) {
+      if (steady >= 2 || Date.now() - started > 5000) {
         window.clearInterval(t);
         setReady(true);
       }
-    }, 120);
+    }, 100);
     return () => window.clearInterval(t);
-  }, [drawn, ready]);
+  }, [drawn, content, ready]);
 
   const fireSettled = useEffectEvent(() => onSettled?.());
   useEffect(() => {
