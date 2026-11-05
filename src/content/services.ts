@@ -112,7 +112,7 @@ export const services: Service[] = [
       { q: "Can you set up GHL for an agency client?", a: "Yes. We can build inside a client sub-account under your agency, following your naming and snapshot conventions." },
       { q: "Do I need to buy GoHighLevel first?", a: "You need an active GHL account. If you do not have one yet, our trial page explains the options." },
     ],
-    relatedGuides: ["ghl-emails-going-to-spam", "ghl-workflow-not-triggering"],
+    relatedGuides: ["how-to-set-up-gohighlevel", "ghl-emails-going-to-spam", "ghl-workflow-not-triggering"],
     related: ["automation", "funnels-websites", "migrations"],
   },
   {

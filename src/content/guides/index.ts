@@ -154,7 +154,7 @@ export const guides: ArticleMeta[] = [
   {
     slug: "what-is-gohighlevel-used-for",
     title: "What is GoHighLevel used for? 12 real examples",
-    metaTitle: "What Is GoHighLevel Used For? 12 Real Examples",
+    metaTitle: "What GoHighLevel Is Used For: 12 Examples | FixGHL",
     description:
       "What GoHighLevel is used for: 12 real examples for coaches, agencies and local businesses, from call booking and funnels to missed-call text-back.",
     summary: "Twelve real GoHighLevel use cases for coaches, agencies and local businesses, each with the features it relies on.",
@@ -196,7 +196,7 @@ export const guides: ArticleMeta[] = [
   {
     slug: "how-to-set-up-gohighlevel",
     title: "How to set up GoHighLevel: a beginner's checklist",
-    metaTitle: "How to Set Up GoHighLevel: A Beginner's Checklist",
+    metaTitle: "How to Set Up GoHighLevel: Step-by-Step Checklist | FixGHL",
     description:
       "Set up GoHighLevel step by step: sub-account, business profile, users, phone and A2P 10DLC, sending domain, website domain, calendars and workflows.",
     summary: "The order to set up a new GHL account, from business profile and A2P registration to calendars, pipelines, integrations and a tested first workflow.",
