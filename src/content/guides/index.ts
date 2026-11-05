@@ -217,6 +217,30 @@ export const guides: ArticleMeta[] = [
       { href: "/glossary/sub-account", label: "What is a sub-account?" },
     ],
   },
+  {
+    slug: "is-gohighlevel-a-good-crm",
+    title: "Is GoHighLevel a good CRM? An honest look",
+    metaTitle: "Is GoHighLevel a Good CRM? Strengths, Limits and Setup",
+    description:
+      "Is GoHighLevel a good CRM? What its contacts, pipelines and custom objects do well, where it falls short, who it suits, and how to set it up properly.",
+    summary: "What the GoHighLevel CRM does well, where it falls short, who it suits compared with a dedicated sales CRM, and how to set it up and import data.",
+    published: "2026-11-05",
+    updated: "2026-11-05",
+    ctaLine: "Want your CRM set up right the first time? We'll map your fields, pipelines and imports with you on a free 30-minute call.",
+    faqs: [
+      { q: "Is GoHighLevel a CRM?", a: "Yes. GoHighLevel includes a full CRM with contacts, companies, opportunities in pipelines, custom fields and custom objects. The same contact record also drives its inbox, calendars, forms and workflows." },
+      { q: "Can I import my HubSpot data into GoHighLevel?", a: "Yes. HighLevel has a direct HubSpot importer for contacts, companies, deals, custom properties, pipelines, stages, notes, tasks and emails. Emails arrive read-only, and deals without a contact cannot be imported." },
+      { q: "Does GoHighLevel have custom objects?", a: "Yes. HighLevel says every plan, Starter, Unlimited and Pro, can create up to 10 custom objects per sub-account, with up to 300,000 records per object." },
+      { q: "How do I stop duplicate contacts in GoHighLevel?", a: "Set Contact Deduplication Preferences in Settings > Business Profile to match on email, phone or both. To clean up existing duplicates, use Manage Duplicates in Contacts, which merges up to 10 records at a time. Merges cannot be undone." },
+    ],
+    related: [
+      { href: "/services/ghl-setup", label: "GHL account setup" },
+      { href: "/services/migrations/hubspot-to-ghl", label: "HubSpot to GHL migration" },
+      { href: "/guides/is-gohighlevel-worth-it", label: "Is GoHighLevel worth it? An honest review" },
+      { href: "/guides/how-to-set-up-gohighlevel", label: "How to set up GoHighLevel: a beginner's checklist" },
+      { href: "/glossary/opportunity-pipeline", label: "Opportunities and pipelines in GHL" },
+    ],
+  },
 ];
 
 export const getGuide = (slug: string) => guides.find((g) => g.slug === slug);
