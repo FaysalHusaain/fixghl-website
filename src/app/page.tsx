@@ -14,6 +14,7 @@ import { site } from "@/lib/site";
 import { migrationServices } from "@/content/services";
 import { homeFaqs } from "@/content/faqs";
 import { servicePriceLine } from "@/content/pricing";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "GoHighLevel Expert for Fixes, Setup & Migrations | FixGHL",
@@ -87,6 +88,9 @@ const stages = [
 export default function Home() {
   return (
     <>
+      {/* React moves these into <head>. See pageMetadata for why the homepage sets them here. */}
+      <link rel="canonical" href={absoluteUrl("/")} />
+      <meta property="og:url" content={absoluteUrl("/")} />
       <Hero />
 
       {/* Problem recognition */}

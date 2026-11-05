@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { site } from "./site";
+import { site, absoluteUrl } from "./site";
 
 type Args = { title: string; description: string; path: string; noindex?: boolean; type?: "website" | "article"; published?: string; updated?: string };
 
@@ -10,11 +10,13 @@ export function pageMetadata({ title, description, path, noindex, type = "websit
   return {
     title: { absolute: title },
     description,
-    alternates: { canonical: path },
+    // Next's metadata always drops the slash from a bare-domain URL, so the homepage writes its canonical and og:url
+    // itself (HomeCanonical) as https://fixghl.com/, matching the sitemap and internal links.
+    alternates: path === "/" ? undefined : { canonical: absoluteUrl(path) },
     robots: noindex ? { index: false, follow: true } : undefined,
     openGraph: {
       type,
-      url: path,
+      ...(path === "/" ? {} : { url: absoluteUrl(path) }),
       siteName: site.name,
       title,
       description,

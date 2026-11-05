@@ -25,7 +25,8 @@ export const site = {
   gaId: "G-7MHF0P2H0Z",
 } as const;
 
-export const absoluteUrl = (path = "/") => `${site.url}${path === "/" ? "" : path}`;
+// The homepage is https://fixghl.com/ (with the slash), matching internal links, the sitemap and the canonical.
+export const absoluteUrl = (path = "/") => `${site.url}${path === "/" ? "/" : path}`;
 
 export const mainNav = [
   { href: "/services", label: "Services" },
