@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { terms, getTerm } from "@/content/glossary";
+import { getGuide } from "@/content/guides";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { CtaBand } from "@/components/ui/CtaBand";
@@ -48,7 +49,8 @@ export default async function Page({ params }: PageProps<"/glossary/[term]">) {
           </nav>
         </div>
       </section>
-      <RelatedLinks links={t.related} />
+      {/* A guide link can be wired in before the guide is published; it shows once the guide exists. */}
+      <RelatedLinks links={t.related.filter((l) => !l.href.startsWith("/guides/") || getGuide(l.href.slice("/guides/".length)))} />
       <CtaBand location={`glossary_${t.slug}`} />
     </>
   );

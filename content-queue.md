@@ -2,7 +2,7 @@
 
 The scheduled guide writer takes the first unchecked topic, writes it, and checks it off in the same pull request. Add new topics to the end. Volumes are Semrush US monthly searches (Oct 30, 2026), summed across spellings.
 
-- [ ] GoHighLevel SaaS mode explained (saas mode ghl ~140) -> link /services/saas-white-label
+- [ ] GoHighLevel SaaS mode explained (saas mode ghl ~140) -> use slug `gohighlevel-saas-mode` exactly: /glossary/saas-mode and /services/saas-white-label already link to that slug and show the link once the guide is published. In the guide, link to /services/saas-white-label and /glossary/saas-mode.
 - [ ] Where to find your GoHighLevel API key (ghl api key ~90) -> link /services/integrations
 - [ ] How to connect Twilio or LC Phone to GoHighLevel (~80) -> link /services/integrations
 - [ ] How to connect a custom domain or subdomain to GoHighLevel (~60) -> link /services/ghl-fixes

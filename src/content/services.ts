@@ -438,7 +438,7 @@ export const services: Service[] = [
       { q: "What is GoHighLevel SaaS mode?", a: "SaaS mode lets an agency sell GHL sub-accounts as its own software, with plans, Stripe billing and usage rebilling managed inside GHL." },
       { q: "Can my clients see that it is GoHighLevel?", a: "With white-labeling, clients log in on your domain with your branding. Some system emails and links may still need configuring." },
     ],
-    relatedGuides: ["ghl-emails-going-to-spam"],
+    relatedGuides: ["gohighlevel-saas-mode", "ghl-emails-going-to-spam"], // the SaaS mode guide shows once it is published
     related: ["ghl-setup", "automation", "integrations"],
   },
   {

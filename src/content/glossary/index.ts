@@ -46,7 +46,7 @@ export const terms: TermMeta[] = [
     description: "GoHighLevel SaaS mode lets an agency sell sub-accounts as its own software, with plans, Stripe billing and usage rebilling. What it does and who it suits.",
     definition: "SaaS mode is a GoHighLevel agency feature that lets an agency sell sub-accounts as its own branded software, with plans, Stripe subscriptions and usage rebilling handled inside GHL. It is part of the Agency Pro plan as of October 2026.",
     updated: u,
-    related: [{ href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost per month?", note: "Guide" }, { href: "/services/saas-white-label", label: "SaaS mode and white-label setup", note: "Service" }, { href: "/glossary/snapshot", label: "Snapshot", note: "Term" }, { href: "/glossary/agency-vs-location", label: "Agency vs location", note: "Term" }],
+    related: [{ href: "/guides/gohighlevel-saas-mode", label: "GoHighLevel SaaS mode explained", note: "Guide" }, { href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost per month?", note: "Guide" }, { href: "/services/saas-white-label", label: "SaaS mode and white-label setup", note: "Service" }, { href: "/glossary/snapshot", label: "Snapshot", note: "Term" }, { href: "/glossary/agency-vs-location", label: "Agency vs location", note: "Term" }],
   },
   {
     slug: "lc-email",

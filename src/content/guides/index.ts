@@ -91,7 +91,7 @@ export const guides: ArticleMeta[] = [
   {
     slug: "how-much-does-gohighlevel-cost",
     title: "How much does GoHighLevel cost per month?",
-    metaTitle: "GoHighLevel Pricing: How Much Does GHL Cost per Month?",
+    metaTitle: "GoHighLevel Pricing: Plans & Costs per Month | FixGHL",
     description:
       "GoHighLevel pricing: every plan ($97, $297, $497), what each includes, phone, SMS, email and AI usage rates, add-ons, and which plan fits which business.",
     summary: "Every GoHighLevel plan and price, the usage rates for phone, SMS, email and AI, add-on costs and which plan to choose.",
@@ -133,7 +133,7 @@ export const guides: ArticleMeta[] = [
   {
     slug: "is-gohighlevel-worth-it",
     title: "Is GoHighLevel worth it? An honest review",
-    metaTitle: "Is GoHighLevel Worth It? An Honest Review (2026)",
+    metaTitle: "Is GoHighLevel Worth It? Honest Review | FixGHL",
     description:
       "Is GoHighLevel worth it, legit or a scam? An honest review of its pros and cons, the real costs, who it suits and who should skip it.",
     summary: "An honest GoHighLevel review: whether it is legit, its strengths and downsides, real costs, and who it suits or does not.",
