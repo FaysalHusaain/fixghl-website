@@ -300,6 +300,7 @@ Added the Crunchbase URL to the Organization `sameAs`.
 - Every testimonial now shows the client's photo as a small circle where the gold-on-black initials disc used to be: 56px in the homepage stories, 48px in quote cards (service pages, migration pages, and the Kerry Moore card in the homepage booking section, desktop only).
 - Each entry in `src/content/testimonials.ts` has a `photo` path. Alt text is the client's name. Quote text is unchanged.
 - No `photo` means an initials avatar: neutral grey disc (`ink-700`), light text, Inter medium. All 6 current clients have photos.
+- Kerry Moore's photo was replaced on 8 Nov: face-detected crop (YuNet), 320px for retina, brightness +4% and contrast +6%. Settings are in the script.
 - To add one: put `<first>-<last>.jpg` in `public/testimonials/`, add its crop to `scripts/testimonial-photos.py`, run it, and set `photo` on the entry.
 
 ### Other sessions' work, for awareness
