@@ -4,6 +4,7 @@ import type { QA } from "@/content/services";
 
 const orgId = `${site.url}/#organization`;
 const webId = `${site.url}/#website`;
+const personId = `${site.url}/#founder`;
 
 export const organization = () => ({
   "@type": "Organization",
@@ -18,6 +19,31 @@ export const organization = () => ({
   areaServed: site.areaServed.map((name) => ({ "@type": "Place", name })),
   knowsAbout: ["GoHighLevel", "HighLevel CRM", "Marketing automation", "Email deliverability", "Sales funnels", "CRM migration"],
   ...(site.sameAs.length ? { sameAs: site.sameAs } : {}),
+  founder: { "@id": personId },
+});
+
+export const founder = () => ({
+  "@type": "Person",
+  "@id": personId,
+  name: site.founder.name,
+  jobTitle: site.founder.jobTitle,
+  worksFor: { "@id": orgId },
+  url: absoluteUrl(site.founder.path),
+  image: absoluteUrl(site.founder.image),
+  sameAs: [site.founder.linkedin],
+});
+
+// The page a guide lives on, reviewed by the founder.
+export const reviewedPage = (p: { title: string; description: string; path: string; updated: string }) => ({
+  "@type": "WebPage",
+  "@id": `${absoluteUrl(p.path)}#webpage`,
+  url: absoluteUrl(p.path),
+  name: p.title,
+  description: p.description,
+  isPartOf: { "@id": webId },
+  dateModified: p.updated,
+  reviewedBy: { "@id": personId },
+  lastReviewed: p.updated,
 });
 
 export const website = () => ({

@@ -216,6 +216,15 @@ Added the Crunchbase URL to the Organization `sameAs`.
 - **Safety net:** the calendar iframe has `min-height: 505px` (455px under 450px wide), so it is fully usable even if the resizer never reports. GHL still grows it for the time slots and details step.
 - **Swap timing:** the swap waits for GHL's first content height report and a steady height, with a 5s fallback.
 
+### Founder visibility (7 Nov 2026)
+- **Where he's named:** the founder, Faysal Husaain, appears in two places only. The rest of the site still speaks as "we":
+  - /about#founder: a "Who you'll work with" section with his photo, two paragraphs and LinkedIn (`rel="me noopener"`).
+  - Guide bylines: "Written by FixGHL · Reviewed by Faysal Husaain, founder", with a small photo. Comparisons keep "By FixGHL".
+- **Details:** in `site.founder` in `src/lib/site.ts`. Photos are `public/brand/founder.jpg` (original), `founder.webp` (800px) and `founder-128.webp` (byline).
+- **Schema:**
+  - A Person `https://fixghl.com/#founder` sits in the sitewide graph, and the Organization has `founder` pointing to it.
+  - Each guide adds a WebPage node with `reviewedBy` pointing to the Person.
+
 ## 6. Current scores (live, mobile, Lighthouse with PageSpeed's settings)
 
 | Page | Performance | Accessibility | Best Practices | SEO | Speed Index |

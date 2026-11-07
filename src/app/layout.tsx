@@ -11,7 +11,7 @@ import { Analytics } from "@/components/analytics/Analytics";
 import { consentDefaults } from "@/lib/analytics";
 import { Reveal } from "@/components/analytics/Reveal";
 import { ScrollTop } from "@/components/analytics/ScrollTop";
-import { JsonLd, organization, website } from "@/lib/schema";
+import { JsonLd, organization, website, founder } from "@/lib/schema";
 import { site } from "@/lib/site";
 import { topServices, migrationServices } from "@/content/services";
 
@@ -73,7 +73,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <SpeedInsights />
           </>
         )}
-        <JsonLd data={[organization(), website()]} />
+        <JsonLd data={[organization(), website(), founder()]} />
       </body>
     </html>
   );

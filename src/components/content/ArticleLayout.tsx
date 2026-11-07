@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Breadcrumbs, type Crumb } from "@/components/ui/Breadcrumbs";
@@ -7,7 +8,8 @@ import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { Icon } from "@/components/ui/Icon";
 import type { ArticleMeta } from "@/content/types";
 import { formatDate } from "@/lib/content";
-import { JsonLd, article } from "@/lib/schema";
+import { JsonLd, article, reviewedPage } from "@/lib/schema";
+import { site } from "@/lib/site";
 
 // One wording per article kind, shared by the sidebar box and the closing banner.
 const OFFER = {
@@ -30,16 +32,32 @@ export function ArticleLayout({
   children: ReactNode;
 }) {
   const offer = OFFER[meta.kind ?? "setup"];
+  const isGuide = path.startsWith("/guides/"); // guides carry the founder's review; comparisons keep the studio byline
   return (
     <>
-      <JsonLd data={article({ title: meta.title, description: meta.description, path, published: meta.published, updated: meta.updated, type: "TechArticle" })} />
+      <JsonLd
+        data={[
+          article({ title: meta.title, description: meta.description, path, published: meta.published, updated: meta.updated, type: "TechArticle" }),
+          ...(isGuide ? [reviewedPage({ title: meta.title, description: meta.description, path, updated: meta.updated })] : []),
+        ]}
+      />
       <article>
         <header className="pt-10 md:pt-16">
           <div className="frame pb-12 md:pb-16">
             <Breadcrumbs items={crumbs} />
             <h1 className="h-title mt-8 max-w-[22ch] md:mt-12">{meta.title}</h1>
-            <p className="mt-6 flex flex-wrap gap-x-4 gap-y-1 text-small text-ink-600">
-              <span>By FixGHL</span>
+            <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-small text-ink-600">
+              {isGuide ? (
+                <span className="inline-flex items-center gap-2.5">
+                  <Image src={site.founder.photoSmall} alt={site.founder.alt} width={28} height={28} className="size-7 shrink-0 rounded-full bg-ink-100 object-cover" />
+                  <span>
+                    Written by FixGHL · Reviewed by{" "}
+                    <Link href={site.founder.path} className="link font-medium text-ink-800">{site.founder.name}</Link>, founder
+                  </span>
+                </span>
+              ) : (
+                <span>By FixGHL</span>
+              )}
               <span>
                 Last updated <time dateTime={meta.updated}>{formatDate(meta.updated)}</time>
               </span>
