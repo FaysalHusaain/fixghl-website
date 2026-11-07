@@ -26,14 +26,12 @@ export const founder = () => ({
   "@type": "Person",
   "@id": personId,
   name: site.founder.name,
-  jobTitle: site.founder.jobTitle,
   worksFor: { "@id": orgId },
   url: absoluteUrl(site.founder.path),
   image: absoluteUrl(site.founder.image),
-  sameAs: [site.founder.linkedin],
 });
 
-// The page a guide lives on, reviewed by the founder.
+// The page a guide or comparison lives on, reviewed by the founder.
 export const reviewedPage = (p: { title: string; description: string; path: string; updated: string }) => ({
   "@type": "WebPage",
   "@id": `${absoluteUrl(p.path)}#webpage`,

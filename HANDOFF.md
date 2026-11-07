@@ -17,7 +17,7 @@ Last updated: 30 October 2026 (pricing added). Read this first in any new sessio
 
 ## 2. Brand and writing rules (always apply)
 
-- **Voice:** "We", never "I". Never name studio members or other individuals in site copy.
+- **Voice:** "We", never "I". Never name studio members or other individuals in site copy. The one exception is Faysal Husaain, named only on /about#founder and in guide and comparison bylines, with no job title (see Founder visibility).
 - **No fabricated proof.** Approved claims only: **7+ years in GHL (since 2019), 100+ GHL projects, 4 regions (US, UK, EU, Middle East)**, and clients are coaches, agencies and local businesses.
 - **Client reviews:** only from `src/content/testimonials.ts`, verbatim. Never edit review text.
 - **Banned:** hype words (revolutionize, unlock, seamless, supercharge, game-changer and so on), emoji, em dashes, and any mention of Fiverr on the site.
@@ -216,14 +216,17 @@ Added the Crunchbase URL to the Organization `sameAs`.
 - **Safety net:** the calendar iframe has `min-height: 505px` (455px under 450px wide), so it is fully usable even if the resizer never reports. GHL still grows it for the time slots and details step.
 - **Swap timing:** the swap waits for GHL's first content height report and a steady height, with a 5s fallback.
 
-### Founder visibility (7 Nov 2026)
-- **Where he's named:** the founder, Faysal Husaain, appears in two places only. The rest of the site still speaks as "we":
-  - /about#founder: a "Who you'll work with" section with his photo, two paragraphs and LinkedIn (`rel="me noopener"`).
-  - Guide bylines: "Written by FixGHL · Reviewed by Faysal Husaain, founder", with a small photo. Comparisons keep "By FixGHL".
+### Founder visibility (7 Nov 2026, revised 8 Nov)
+- **Where he's named:** Faysal Husaain appears in two places only. The rest of the site still speaks as "we":
+  - /about#founder: a "Who you'll work with" section with his photo, his name, "Runs FixGHL" and two paragraphs. No LinkedIn link and no job title.
+  - Bylines on guides and comparisons: "Written by FixGHL · Reviewed by Faysal Husaain", with a small photo, linking to /about#founder.
+- **Photo alt text:** "Faysal Husaain of FixGHL".
 - **Details:** in `site.founder` in `src/lib/site.ts`. Photos are `public/brand/founder.jpg` (original), `founder.webp` (800px) and `founder-128.webp` (byline).
 - **Schema:**
-  - A Person `https://fixghl.com/#founder` sits in the sitewide graph, and the Organization has `founder` pointing to it.
-  - Each guide adds a WebPage node with `reviewedBy` pointing to the Person.
+  - A Person `https://fixghl.com/#founder` sits in the sitewide graph, with name, url, image and worksFor. It has no jobTitle and no sameAs.
+  - The Organization has `founder` pointing to it.
+  - Each guide and comparison adds a WebPage node with `reviewedBy` pointing to the Person. `lastReviewed` is the page's own `updated` date.
+- **Organization sameAs** includes the LinkedIn company page `https://www.linkedin.com/company/fixghl/`. Never add a personal profile.
 
 ## 6. Current scores (live, mobile, Lighthouse with PageSpeed's settings)
 

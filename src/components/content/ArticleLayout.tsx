@@ -32,13 +32,13 @@ export function ArticleLayout({
   children: ReactNode;
 }) {
   const offer = OFFER[meta.kind ?? "setup"];
-  const isGuide = path.startsWith("/guides/"); // guides carry the founder's review; comparisons keep the studio byline
+
   return (
     <>
       <JsonLd
         data={[
           article({ title: meta.title, description: meta.description, path, published: meta.published, updated: meta.updated, type: "TechArticle" }),
-          ...(isGuide ? [reviewedPage({ title: meta.title, description: meta.description, path, updated: meta.updated })] : []),
+          reviewedPage({ title: meta.title, description: meta.description, path, updated: meta.updated }),
         ]}
       />
       <article>
@@ -47,17 +47,13 @@ export function ArticleLayout({
             <Breadcrumbs items={crumbs} />
             <h1 className="h-title mt-8 max-w-[22ch] md:mt-12">{meta.title}</h1>
             <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-small text-ink-600">
-              {isGuide ? (
-                <span className="inline-flex items-center gap-2.5">
-                  <Image src={site.founder.photoSmall} alt={site.founder.alt} width={28} height={28} className="size-7 shrink-0 rounded-full bg-ink-100 object-cover" />
-                  <span>
-                    Written by FixGHL · Reviewed by{" "}
-                    <Link href={site.founder.path} className="link font-medium text-ink-800">{site.founder.name}</Link>, founder
-                  </span>
+              <span className="inline-flex items-center gap-2.5">
+                <Image src={site.founder.photoSmall} alt={site.founder.alt} width={28} height={28} className="size-7 shrink-0 rounded-full bg-ink-100 object-cover" />
+                <span>
+                  Written by FixGHL · Reviewed by{" "}
+                  <Link href={site.founder.path} className="link font-medium text-ink-800">{site.founder.name}</Link>
                 </span>
-              ) : (
-                <span>By FixGHL</span>
-              )}
+              </span>
               <span>
                 Last updated <time dateTime={meta.updated}>{formatDate(meta.updated)}</time>
               </span>

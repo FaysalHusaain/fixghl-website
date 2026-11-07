@@ -21,16 +21,14 @@ export const site = {
     "https://www.pinterest.com/fixghl/",
     "https://www.linkedin.com/company/fixghl/",
   ] as string[], // Profiles that represent FixGHL elsewhere
-  // The founder is named on /about and on guide bylines only; the rest of the site speaks as "we".
+  // The founder is named on /about and in guide and comparison bylines only; the rest of the site speaks as "we".
   founder: {
     name: "Faysal Husaain",
-    jobTitle: "Founder",
     path: "/about#founder",
     image: "/brand/founder.jpg",
     photo: "/brand/founder.webp", // 800px, used on /about
-    photoSmall: "/brand/founder-128.webp", // guide bylines
-    alt: "Faysal Husaain, founder of FixGHL",
-    linkedin: "https://www.linkedin.com/in/faysalhusaain",
+    photoSmall: "/brand/founder-128.webp", // guide and comparison bylines
+    alt: "Faysal Husaain of FixGHL",
   },
   legalEntity: "FixGHL",
   calendarUrl: process.env.NEXT_PUBLIC_GHL_CALENDAR_URL || "",

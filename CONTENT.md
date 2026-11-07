@@ -14,7 +14,7 @@ Comparisons work the same way in `src/content/compare/`. Glossary terms go in `s
 
 ## Writing rules
 
-- Write as "we". Never "I". The only person named on the site is the founder, Faysal Husaain, and only on /about (#founder) and in guide bylines (added automatically by the layout). Never name anyone else, and never name him in guide or page copy.
+- Write as "we". Never "I". The only person named on the site is Faysal Husaain, who runs FixGHL, and only on /about (#founder) and in guide and comparison bylines ("Written by FixGHL · Reviewed by Faysal Husaain", added automatically by the layout). Never give him a job title, never name anyone else, and never name him in guide or page copy.
 - Make only verifiable claims. Approved proof: 7+ years in GHL (since 2019), 100+ GHL projects, clients are coaches, agencies and local businesses, clients are in the US, UK, EU and Middle East. Client quotes come only from src/content/testimonials.ts.
 - Don't use hype words (revolutionize, unlock, seamless, supercharge, game-changer), emoji or em dashes.
 - Date every price and platform limit ("as listed in October 2026") and update `updated` when you change a page.

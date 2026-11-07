@@ -39,7 +39,7 @@ export default function Page() {
             <div>
               <h2 id="founder-title" className="h-sub">Who you&apos;ll work with</h2>
               <p className="mt-6 font-display text-[1.375rem] font-semibold leading-tight tracking-[-0.02em]">{site.founder.name}</p>
-              <p className="mt-1 text-small text-ink-600">Founder, FixGHL</p>
+              <p className="mt-1 text-small text-ink-600">Runs FixGHL</p>
               <div className="mt-6 flex max-w-[62ch] flex-col gap-4 text-ink-800">
                 <p>
                   FixGHL is run by Faysal Husaain. He has been building inside GoHighLevel since 2019 and has delivered more than 100 GHL
@@ -48,9 +48,6 @@ export default function Page() {
                 </p>
                 <p>Every job runs through him. He scopes it with you on the free call and checks the work before it comes back to you.</p>
               </div>
-              <a href={site.founder.linkedin} target="_blank" rel="me noopener" className="link mt-6 inline-flex min-h-11 items-center font-medium">
-                Faysal Husaain on LinkedIn
-              </a>
             </div>
           </div>
         </div>
