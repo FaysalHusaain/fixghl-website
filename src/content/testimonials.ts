@@ -12,6 +12,7 @@ export type Testimonial = {
   project: string;
   duration: string; // delivery time shown on the review
   services: string[]; // service slugs where this quote is most relevant
+  photo?: string; // 160px square WebP in public/testimonials/ (scripts/testimonial-photos.py); without one, the avatar shows initials
 };
 
 export const testimonials: Testimonial[] = [
@@ -25,6 +26,7 @@ export const testimonials: Testimonial[] = [
     project: "GoHighLevel funnel",
     duration: "7 days",
     services: ["funnels-websites"],
+    photo: "/testimonials/colt-blumenthal.webp",
   },
   {
     id: "kerry-wix-migration",
@@ -36,6 +38,7 @@ export const testimonials: Testimonial[] = [
     project: "Wix to GHL migration",
     duration: "2 weeks",
     services: ["wix-to-ghl", "ghl-setup", "kajabi-to-ghl"],
+    photo: "/testimonials/kerry-moore.webp",
   },
   {
     id: "eric-cf-migration",
@@ -47,6 +50,7 @@ export const testimonials: Testimonial[] = [
     project: "GHL migration and AI bot",
     duration: "10 days",
     services: ["migrations", "clickfunnels-to-ghl", "hubspot-to-ghl"],
+    photo: "/testimonials/eric-thompson.webp",
   },
   {
     id: "chris-team",
@@ -58,6 +62,7 @@ export const testimonials: Testimonial[] = [
     project: "Funnels and automation",
     duration: "2 weeks",
     services: ["automation", "ghl-fixes"],
+    photo: "/testimonials/chris-simon.webp",
   },
   {
     id: "matthew-website",
@@ -69,6 +74,7 @@ export const testimonials: Testimonial[] = [
     project: "Website development",
     duration: "11 days",
     services: [],
+    photo: "/testimonials/matthew-white.webp",
   },
   {
     id: "landpro-funnel",
@@ -80,6 +86,7 @@ export const testimonials: Testimonial[] = [
     project: "Funnel build",
     duration: "1 day",
     services: [],
+    photo: "/testimonials/tanner-tinsley.webp",
   },
   {
     id: "colt-advanced-funnel",
@@ -91,6 +98,7 @@ export const testimonials: Testimonial[] = [
     project: "Advanced funnel",
     duration: "12 days",
     services: [],
+    photo: "/testimonials/colt-blumenthal.webp",
   },
 ];
 

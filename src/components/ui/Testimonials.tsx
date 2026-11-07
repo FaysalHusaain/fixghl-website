@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { testimonials, type Testimonial } from "@/content/testimonials";
 
 const initials = (name: string) =>
@@ -12,10 +13,14 @@ const initials = (name: string) =>
     .map((w) => w[0])
     .join("");
 
-function Avatar({ name, size = "size-12" }: { name: string; size?: string }) {
+// Client photo as a small circle; clients without a photo get their initials on a neutral grey disc.
+function Avatar({ t, size = 48 }: { t: Testimonial; size?: 48 | 56 }) {
+  const box = size === 56 ? "size-14" : "size-12";
+  if (t.photo)
+    return <Image src={t.photo} alt={t.name} width={size} height={size} unoptimized className={`${box} shrink-0 rounded-full bg-ink-200 object-cover`} />;
   return (
-    <span aria-hidden className={`grid ${size} shrink-0 place-items-center rounded-full bg-ink-950 font-display text-[1rem] font-semibold text-gold-500`}>
-      {initials(name)}
+    <span aria-hidden className={`grid ${box} shrink-0 place-items-center rounded-full bg-ink-700 font-sans text-[1rem] font-medium text-ink-50`}>
+      {initials(t.name)}
     </span>
   );
 }
@@ -65,7 +70,7 @@ export function Testimonials() {
                   <span className="text-ink-300" aria-hidden>”</span>
                 </blockquote>
                 <figcaption className="flex items-center gap-4">
-                  <Avatar name={t.name} size="size-14" />
+                  <Avatar t={t} size={56} />
                   <span>
                     <span className="block text-[1.125rem] font-semibold">{t.name}</span>
                     <span className="mt-0.5 block text-ink-600">
@@ -112,7 +117,7 @@ export function QuoteCard({ t, dark = false }: { t: Testimonial; dark?: boolean 
     <figure className={`flex flex-col gap-6 rounded-[1.75rem] p-6 md:p-8 ${dark ? "on-dark bg-ink-900 text-ink-50" : "bg-ink-100 text-ink-950"}`}>
       <blockquote className="font-display text-[1.375rem] font-semibold leading-[1.25] tracking-[-0.02em]">“{t.quote}”</blockquote>
       <figcaption className="flex items-center gap-3.5">
-        <Avatar name={t.name} />
+        <Avatar t={t} />
         <span>
           <span className="block font-semibold">{t.name}</span>
           <span className={`block text-small ${dark ? "text-ink-400" : "text-ink-600"}`}>

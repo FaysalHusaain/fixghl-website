@@ -72,6 +72,7 @@ Our affiliate link lands on HighLevel's bootcamp page, which offers a **30-day f
 - `src/content/hubs.ts` with `src/components/content/HubIntro.tsx`: intros on /compare, /services and /guides.
 - `src/components/ui/OpenOnHash.tsx`: opens a FAQ item when the URL hash points to it (`/pricing#care-plan`).
 - `content-queue.md`: the topic list for the scheduled guide writer (see section 5, Content pipeline).
+- `public/testimonials/`: client photos (`<name>.jpg` originals) and the 160px square WebP avatars the site uses. Regenerate with `python3 scripts/testimonial-photos.py` (per-photo face crops are set in the script).
 - `public/social/ig/`: Instagram carousel images (6 posts), hosted for GHL Social Planner CSV upload. Made in another session.
 - `CONTENT.md`: how to add a guide, plus the writing rules. `HANDOFF.md`: this file.
 
@@ -294,6 +295,12 @@ Added the Crunchbase URL to the Organization `sameAs`.
 - The whole public copy was reviewed with the humanizer skill. Only 4 lines changed, in the "What we see in real accounts" sections of the setup checklist and CRM guides.
 - Kept unchanged on purpose: answer-first openings, the owner's /pricing copy, number ranges like "1–3", and "No cost and no obligation" on /book.
 - Dates are not changed for wording-only fixes.
+
+### Testimonial photos (8 Nov 2026)
+- Every testimonial now shows the client's photo as a small circle where the gold-on-black initials disc used to be: 56px in the homepage stories, 48px in quote cards (service pages, migration pages, and the Kerry Moore card in the homepage booking section, desktop only).
+- Each entry in `src/content/testimonials.ts` has a `photo` path. Alt text is the client's name. Quote text is unchanged.
+- No `photo` means an initials avatar: neutral grey disc (`ink-700`), light text, Inter medium. All 6 current clients have photos.
+- To add one: put `<first>-<last>.jpg` in `public/testimonials/`, add its crop to `scripts/testimonial-photos.py`, run it, and set `photo` on the entry.
 
 ### Other sessions' work, for awareness
 - Booking (2 Nov):
