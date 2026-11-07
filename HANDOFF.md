@@ -1,6 +1,6 @@
 # FixGHL website: project handoff
 
-Last updated: 30 October 2026 (pricing added). Read this first in any new session, then `README.md`, `CONTENT.md` and `TODO.md`.
+Last updated: 8 November 2026 (full refresh: everything through the humanizer pass, plus plans and open decisions). Read this first in any new session, then `README.md`, `CONTENT.md` and `TODO.md`.
 
 ## 1. What this project is
 
@@ -38,7 +38,8 @@ Last updated: 30 October 2026 (pricing added). Read this first in any new sessio
 | GA4 | `G-7MHF0P2H0Z`, Consent Mode v2, analytics denied by default |
 | Affiliate | `/try-ghl` gives a 307 redirect to `https://www.gohighlevel.com/highlevel-bootcamp?fp_ref=faisal13&fp_sid=fixghl`. Links use `rel="sponsored nofollow"`, `data-track="affiliate_click"`, and the line "We may earn a commission if you sign up through our link." |
 | IndexNow key | `03ce8abe2fc275f9b08416cd125d578d` (file at `public/03ce8abe2fc275f9b08416cd125d578d.txt`) |
-| Organization `sameAs` | `https://www.crunchbase.com/organization/fixghl` (in `src/lib/site.ts`) |
+| Organization `sameAs` | Crunchbase `https://www.crunchbase.com/organization/fixghl`, Instagram `https://www.instagram.com/fixghlstudio/`, Pinterest `https://www.pinterest.com/fixghl/`, LinkedIn company `https://www.linkedin.com/company/fixghl/` (in `src/lib/site.ts`). Company profiles only, never a personal one |
+| Instagram bio link | `/ig` gives a 307 redirect to `/book?utm_source=instagram&utm_medium=social&utm_campaign=bio` (`next.config.ts`) |
 | Contact email | hello@fixghl.com |
 
 Our affiliate link lands on HighLevel's bootcamp page, which offers a **30-day free trial**. HighLevel's standard trial is 14 days.
@@ -66,13 +67,26 @@ Our affiliate link lands on HighLevel's bootcamp page, which offers a **30-day f
 - `src/app/globals.css`: plain CSS **must sit before the `@utility` blocks**. Rules after them were dropped.
 - `design/ghl-calendar-custom-code.html`: CSS the owner pastes into GHL's calendar "Custom code" box.
 - `public/brand/`: logo system, regenerated with `node design/brand.mjs`.
-- `scripts/indexnow.mjs`: pings IndexNow from the sitemap (see section 7 about the sandbox).
+- `scripts/indexnow.mjs`: pings IndexNow from the sitemap. It runs automatically on every push to main through `.github/workflows/indexnow.yml` (see section 8 about the sandbox).
+- `src/content/pricing.ts`: published prices and the "From $X · timeline" map. `public/pricing.md` mirrors it for machines.
+- `src/content/hubs.ts` with `src/components/content/HubIntro.tsx`: intros on /compare, /services and /guides.
+- `src/components/ui/OpenOnHash.tsx`: opens a FAQ item when the URL hash points to it (`/pricing#care-plan`).
+- `content-queue.md`: the topic list for the scheduled guide writer (see section 5, Content pipeline).
+- `public/social/ig/`: Instagram carousel images (6 posts), hosted for GHL Social Planner CSV upload. Made in another session.
+- `CONTENT.md`: how to add a guide, plus the writing rules. `HANDOFF.md`: this file.
 
 **Pages:**
 - `/`, `/book`, `/book/thanks` (noindex), `/how-it-works`, `/pricing`, `/about`, `/faq`.
 - `/services` plus 7 services: ghl-fixes, ghl-setup, migrations, automation, funnels-websites, saas-white-label, integrations.
 - `/services/migrations/[platform]`: clickfunnels, wix, kajabi, hubspot (each `-to-ghl`).
-- `/guides`, `/compare`, `/glossary`.
+- `/guides` (12 guides, see below), `/compare` (GoHighLevel vs ClickFunnels), `/glossary` (10 terms).
+- `/pricing.md`, `/llms.txt`, `/sitemap.xml` (44 URLs as of 8 Nov), `/robots.txt`.
+
+**Guides (slug: published / updated):**
+- ghl-workflow-not-triggering (26 Oct), ghl-emails-going-to-spam (26 Oct), migrate-clickfunnels-to-gohighlevel (26 Oct)
+- what-is-gohighlevel (29 Oct), how-much-does-gohighlevel-cost (29 Oct), is-gohighlevel-down (29 Oct)
+- is-gohighlevel-worth-it (31 Oct), what-is-gohighlevel-used-for (31 Oct), gohighlevel-snapshots (31 Oct)
+- how-to-set-up-gohighlevel (2 Nov, merged via PR #1), is-gohighlevel-a-good-crm (5 Nov, merged via PR #2)
 - `/privacy`, `/terms`, `/affiliate-disclosure`, `/try-ghl`.
 - `/case-studies`: noindexed, not in nav or sitemap.
 
@@ -199,7 +213,7 @@ Added the Crunchbase URL to the Organization `sameAs`.
 - FAQ answers accept `[label](/path)` links. `/try-ghl` links get the affiliate attributes, and the schema gets plain text.
 - The old "quoted after a call" answers were rewritten to match the prices: homepage cost FAQ, studio pricing, timeline and support FAQs, the GHL fixes cost FAQ, and llms.txt.
 
-### Final batch (30 Oct 2026, site frozen after this)
+### Final batch (30 Oct 2026; the owner called the site frozen then, but changes continued on request)
 - Homepage title is "GoHighLevel Expert for Fixes, Setup & Migrations | FixGHL", with the eyebrow "GoHighLevel expert studio" above the unchanged H1.
 - Intros of 120–180 words sit under the H1 on /compare, /services and /guides (`src/content/hubs.ts`, `HubIntro.tsx`). They link to /pricing and the two top guides. The /compare meta description was rewritten.
 - Every glossary term has a "Common problems" paragraph in its MDX. The bottom Related block lists the guide, the service and related terms (`related` in `src/content/glossary/index.ts`).
@@ -228,6 +242,67 @@ Added the Crunchbase URL to the Organization `sameAs`.
   - Each guide and comparison adds a WebPage node with `reviewedBy` pointing to the Person. `lastReviewed` is the page's own `updated` date.
 - **Organization sameAs** includes the LinkedIn company page `https://www.linkedin.com/company/fixghl/`. Never add a personal profile.
 
+### Audit fixes (31 Oct 2026)
+- Vague link text replaced with descriptive text ("Read more" became "{Term} explained", and so on).
+- /compare got a heading, "How do we compare GoHighLevel with other platforms?", with a 150-word answer that links to each comparison.
+- /affiliate-disclosure was expanded to about 200 words, covering the 30-day trial through our link versus HighLevel's standard 14.
+- Calendar placeholder: the skeleton and the live widget share one grid cell, so the box never shrinks while GHL settles. This gives zero layout shift.
+
+### Three more guides (31 Oct 2026)
+- is-gohighlevel-worth-it: an honest review, legit or scam, pros and cons, who it suits. Has the /try-ghl trial box.
+- what-is-gohighlevel-used-for: 12 use cases by business type, each linked to its service.
+- gohighlevel-snapshots: what a snapshot copies, and how to import and load one. Every step is cited from HighLevel help articles.
+- The Snapshot glossary entry's Guide link points to the snapshots guide.
+
+### Content pipeline (set up by another session)
+- **Scheduled writer:** a guide writer runs on Mondays. It takes the first unchecked topic in `content-queue.md`, writes the guide on a branch, and opens a PR. The owner merges it (PRs #1 and #2 so far).
+- **Next up:** "GoHighLevel SaaS mode explained", with slug `gohighlevel-saas-mode`, which must be used exactly.
+  - /services/saas-white-label (`relatedGuides`) and /glossary/saas-mode (`related`) already point to that slug.
+  - Both pages skip a guide link until the guide exists, so nothing breaks before it's published.
+- **Queue after that:** GHL API key, Twilio/LC Phone, custom domain, A2P 10DLC, Google Calendar/Calendly, creating a sub-account, building a website, custom fields vs custom values, trigger links, free plan/trial, who owns GoHighLevel. Then comparisons with HubSpot, Kajabi and Calendly.
+- **Requirements for every new guide:** follow `CONTENT.md`; facts checked on official HighLevel pages and cited with dates; 40–60 word answer under each question heading; 3 FAQs; 3 related links. Add contextual links to it from 2–3 related pages so it is never orphaned.
+
+### Semrush fixes (5 Nov 2026)
+- **Nofollow:** the only internal links with `nofollow` point to /try-ghl, which keeps `sponsored nofollow` by owner decision. So Semrush's "nofollow on internal links" warning, on 45 pages from the footer, stays.
+- **Orphan:** the setup checklist guide now has links from the what-is, used-for and worth-it guides and the GHL setup service page.
+- **Title equals H1:** two titles changed:
+  - Setup checklist: "How to Set Up GoHighLevel: Step-by-Step Checklist | FixGHL".
+  - Used-for guide: "What GoHighLevel Is Used For: 12 Examples | FixGHL".
+- **Lighthouse mobile (5 Nov):**
+
+  | Page | Performance | LCP | TBT |
+  | --- | --- | --- | --- |
+  | / | 92 | 2.4s | 249ms |
+  | /pricing | 88 | 2.0s | 440ms |
+  | /book | 86 | 2.4s | 428ms |
+  | Setup checklist guide | 86 | 2.3s | 485ms |
+  | Snapshots guide | 97 | 1.8s | 171ms |
+
+  CLS is 0 everywhere, and every LCP element is text. Blocking time comes from Next.js and React's own JavaScript. Image and font audits all pass.
+
+### Homepage canonical (5 Nov 2026)
+- The homepage URL is `https://fixghl.com/` (with the slash) in the sitemap, canonical and og:url.
+- Next's metadata always strips that slash, so `src/app/page.tsx` renders its own `<link rel="canonical">` and og:url, which React hoists into `<head>`. `pageMetadata` skips both for "/".
+- `absoluteUrl("/")` returns the slashed form.
+
+### Search Console tweaks (6 Nov 2026)
+- Cost guide title: "GoHighLevel Pricing: Plans & Costs per Month | FixGHL".
+- Worth-it guide title: "Is GoHighLevel Worth It? Honest Review | FixGHL".
+- The SaaS mode guide is pre-wired (see Content pipeline).
+
+### Humanizer pass (8 Nov 2026)
+- The whole public copy was reviewed with the humanizer skill. Only 4 lines changed, in the "What we see in real accounts" sections of the setup checklist and CRM guides.
+- Kept unchanged on purpose: answer-first openings, the owner's /pricing copy, number ranges like "1–3", and "No cost and no obligation" on /book.
+- Dates are not changed for wording-only fixes.
+
+### Other sessions' work, for awareness
+- Booking (2 Nov):
+  - The inactive booking tab stays laid out (out of flow, inert) instead of `display:none`.
+  - The form preloads after the calendar settles.
+  - Iframe corners are rounded.
+  - The calendar uses the full module width on phones.
+- The Instagram carousel images and the `/ig` link (see section 3).
+
 ## 6. Current scores (live, mobile, Lighthouse with PageSpeed's settings)
 
 | Page | Performance | Accessibility | Best Practices | SEO | Speed Index |
@@ -243,6 +318,7 @@ Added the Crunchbase URL to the Organization `sameAs`.
   - Ruled out: GHL embeds, the Vercel scripts, the hero, the reveal effects.
   - Root cause not found. It may be a quirk of headless Chrome in the sandbox.
   - The owner was asked to run real PageSpeed at pagespeed.web.dev, because the anonymous PSI API quota was exhausted. Waiting on their results.
+- Newer numbers (5 Nov, median of 3) are in Semrush fixes in section 5.
 
 ## 7. Remaining / open items
 
@@ -254,13 +330,25 @@ Added the Crunchbase URL to the Organization `sameAs`.
 3. Paste `design/ghl-calendar-custom-code.html` into the GHL calendar's Custom code box, if not done.
 4. Run PageSpeed mobile on `/` and `/book` and share the results, for the Speed Index investigation.
 5. Decide whether to restore activity-gated GHL loading for Best Practices 100.
+6. **Make one real booking** after the 3 Nov calendar fix. The automated test reaches the submitting state and is stopped by Turnstile. If a "QA Test (automated)" booking for Thu 5 Nov, 5:00 PM UTC appeared in GHL, delete it.
+7. **New service idea, "GHL account cleanup"** (owner's idea, 5 Nov): deduplicate contacts and custom fields, untangle workflows that clash, and clean up tags and unused assets without losing anything.
+   - Proposed build:
+     - Service page `/services/ghl-cleanup`.
+     - A price line, a /pricing mention and a `pricing.md` entry.
+     - A guide, "How to clean up a messy GoHighLevel account".
+     - Wiring into the homepage list, footer, sitemap and llms.txt, plus links from related guides and glossary.
+   - **Blocked on the owner:** starting price and timeline (one price or tiers by account size), and the service name ("GHL account cleanup", "CRM cleanup" or "Account audit & cleanup").
+
+**Planned / recurring:**
+- Monday guide-writer runs from `content-queue.md` (SaaS mode guide next). After each merge, check the new guide gets 2–3 contextual internal links, and that IndexNow ran (the GitHub Actions "IndexNow" workflow).
+- Re-check GHL prices and plan names quarterly: guides, /pricing FAQ "plans from $97/month", the comparison, `pricing.md`.
 
 **From `TODO.md`:**
 - GA4: mark `generate_lead` as a key event; register the `ai_source` and `method` custom dimensions.
 - Add the `GOOGLE_SITE_VERIFICATION` and `BING_SITE_VERIFICATION` env vars in Vercel; submit the sitemap in Search Console and Bing Webmaster Tools.
 - Confirm the GHL calendar booking `postMessage` matches the listener in `BookingModule.tsx`, so `calendar_booked` fires.
 - Lawyer review of `/terms` and `/privacy`.
-- More social profile URLs for `sameAs` (Crunchbase is done).
+- More company profile URLs for `sameAs` (Crunchbase, Instagram, Pinterest and LinkedIn company are done).
 - Re-check GHL and ClickFunnels prices every quarter and update the dates on the guides, the comparison and `/try-ghl`.
 - Case studies stay noindexed until real ones exist.
 
@@ -288,6 +376,9 @@ Added the Crunchbase URL to the Organization `sameAs`.
   - Use the iframe element's own `contentFrame()`, not a cached frame.
 - **IndexNow from the sandbox:** Node's `fetch` doesn't use the sandbox proxy, so `scripts/indexnow.mjs` fails there. Send the same JSON with `curl` to `https://api.indexnow.org/indexnow`. The script works normally elsewhere.
 - **Fetching HighLevel pages from the sandbox:** the web-fetch tool is blocked from gohighlevel.com. Fetch them with `curl` or a Playwright browser instead; both work through the proxy.
+- **Pulling first:** other sessions and the owner also push to `main` (PRs, uploads). Always `git pull origin main` before you start.
+- **Founder rule:** never add his name, job title or personal links anywhere except /about#founder and the automatic bylines.
+- **Testing gotcha:** don't inject CSS that targets a bare `header` selector in screenshot scripts; it also hits the article `<header>`. Use `body > header` instead.
 - **New guide:** follow `CONTENT.md`.
   - Add the entry to `src/content/guides/index.ts`. Set `kind` only for `"fix"` or `"migration"` guides; add `ctaLine` if needed.
   - The sitemap and llms.txt update automatically. Then ping IndexNow.
