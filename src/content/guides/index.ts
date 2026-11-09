@@ -241,6 +241,29 @@ export const guides: ArticleMeta[] = [
       { href: "/glossary/opportunity-pipeline", label: "Opportunities and pipelines in GHL" },
     ],
   },
+  {
+    slug: "gohighlevel-saas-mode",
+    title: "GoHighLevel SaaS mode explained: what it is and how to set it up",
+    metaTitle: "GoHighLevel SaaS Mode Explained: Plans, Setup, Rebilling",
+    description:
+      "What GoHighLevel SaaS mode is, which plan includes it, what to set up first, how to create plans in the SaaS Configurator and how rebilling works.",
+    summary: "What GHL SaaS mode does, the $497 plan it needs, the setup steps in the SaaS Configurator, what happens at sign-up and how rebilling works.",
+    published: "2026-11-09",
+    updated: "2026-11-09",
+    ctaLine: "Planning to sell GoHighLevel under your own brand? We'll set up SaaS mode with you. The first 30-minute call is free.",
+    faqs: [
+      { q: "Which GoHighLevel plan includes SaaS mode?", a: "The $497 plan. It is the only plan that can rebill phone, email and AI usage with a markup. The $297 Unlimited plan can rebill phone and email to clients at cost, without a markup." },
+      { q: "Does GoHighLevel SaaS mode work with PayPal?", a: "No, not for Stripe-based SaaS plans. HighLevel says only Stripe works for SaaS products, and a purchase made through PayPal does not create a sub-account. SaaS V2 plans use the payment providers connected to your agency sub-account." },
+      { q: "How many SaaS plans can I create in GoHighLevel?", a: "HighLevel's SaaS mode setup guide says you can create up to 20 SaaS plans per agency account. Plans can be grouped into categories that set the upgrade and downgrade paths." },
+      { q: "Can I put an existing client on a SaaS plan?", a: "Yes. In Agency View, go to Sub-Accounts, open Manage Client, then SaaS and Add a SaaS Subscription. You can set a special price for that client." },
+    ],
+    related: [
+      { href: "/services/saas-white-label", label: "SaaS mode and white-label setup" },
+      { href: "/glossary/saas-mode", label: "What is SaaS mode?" },
+      { href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost per month?" },
+      { href: "/guides/gohighlevel-snapshots", label: "GoHighLevel snapshots: what they are and how to import one" },
+    ],
+  },
 ];
 
 export const getGuide = (slug: string) => guides.find((g) => g.slug === slug);
