@@ -96,7 +96,7 @@ export const guides: ArticleMeta[] = [
       "GoHighLevel pricing: every plan ($97, $297, $497), what each includes, phone, SMS, email and AI usage rates, add-ons, and which plan fits which business.",
     summary: "Every GoHighLevel plan and price, the usage rates for phone, SMS, email and AI, add-on costs and which plan to choose.",
     published: "2026-10-29",
-    updated: "2026-10-29",
+    updated: "2026-11-09",
     ctaLine: "Not sure which plan or add-ons you need? We'll work it out with you on a free 30-minute call.",
     faqs: [
       { q: "Does GoHighLevel charge per contact or per user?", a: "No. Every plan includes unlimited contacts and unlimited users. The plan price changes with the number of sub-accounts and the rebilling options, not with list or team size." },
