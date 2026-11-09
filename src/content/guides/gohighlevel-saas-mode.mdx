@@ -1,0 +1,115 @@
+<p className="answer">SaaS mode is a GoHighLevel feature that lets an agency sell sub-accounts as its own branded software. You build plans in the SaaS Configurator, connect a payment provider such as Stripe, and every customer who pays gets a new sub-account with your snapshot loaded. It comes with the $497 Founder plan, the only plan that rebills usage with a markup.</p>
+
+This guide covers what SaaS mode does, which plan you need, what has to be in place first, and how to set it up. Platform facts come from HighLevel's pricing page and help center, checked on 9 November 2026. HighLevel updates the SaaS Configurator often, so the sources at the end link to the current articles.
+
+## What is SaaS mode in GoHighLevel?
+
+SaaS mode turns GoHighLevel into software you resell under your own brand. HighLevel describes it as a way for agencies to give clients "a platform that can be resold under their brand." Customers buy a plan from your sales page, receive their own sub-account, and pay you a monthly or annual subscription.
+
+Each plan decides what the customer gets: which features they can use, which snapshot is loaded into their account, whether there is a free trial, and how phone, email and AI usage is billed. Pair SaaS mode with white-labeling (your own login domain and logo) and the customer sees your brand instead of HighLevel's.
+
+## Which GoHighLevel plan includes SaaS mode?
+
+SaaS mode is part of the $497 plan, called Founder on HighLevel's pricing page. It is the only plan that lists "Rebilling with markup," and sub-accounts created through the SaaS Configurator on it get markup rebilling by default. The $297 Unlimited plan can pass phone and email usage to clients at cost but cannot add a markup.
+
+| Plan | Monthly price | Rebill usage to clients | Add a markup | SaaS plans and auto-created sub-accounts |
+| --- | --- | --- | --- | --- |
+| Starter | $97 | No | No | No |
+| Unlimited | $297 | Yes, at cost | No | No |
+| Founder | $497 | Yes | Yes | Yes |
+
+HighLevel's pricing FAQ describes Founder as "Everything You Need To Start Generating Recurring SaaS Revenue." It is also the only plan with the advanced API, which can create sub-accounts and load snapshots. Annual billing saves 20% on every plan. Our [GoHighLevel pricing guide](/guides/how-much-does-gohighlevel-cost) lists every plan, usage rate and add-on.
+
+<TryGhl location="guide_gohighlevel_saas_mode" />
+
+## What do you need before you turn on SaaS mode?
+
+You need an agency account with payments, phone and branding ready before you create plans. HighLevel's full setup guide lists six steps to finish first. Stripe has to be connected at the agency level, and only agency owners and admins can do that. The other steps give each new customer a working account with your branding.
+
+1. Create a sub-account for your own agency, to sell from.
+2. Activate the phone system (LC Phone).
+3. Set up a white-label login domain.
+4. Set up an API domain.
+5. Upload your logo and switch on the premium features you want to resell, such as Content AI, Workflow AI and LC Premium Triggers & Actions.
+6. Connect Stripe at the agency level.
+
+Build the snapshot you want new customers to receive before you create plans. A plan with no snapshot gives each customer an empty account. Our [snapshots guide](/guides/gohighlevel-snapshots) explains what a snapshot copies and what it leaves out.
+
+## How do you set up SaaS mode in GoHighLevel?
+
+You set up SaaS mode in the SaaS Configurator in Agency View. Connect Stripe, create each plan with its price, features, snapshot and trial, then sell it through an order form or a sale link. HighLevel's setup guide says you can create up to 20 SaaS plans per agency account.
+
+1. In Agency View, go to **Settings > Stripe** and click **Connect with Stripe**.
+2. Open **SaaS Configurator** in Agency View.
+3. In **Advanced Settings**, click **Add New Category** to group plans. Categories set the upgrade and downgrade paths, and plans in one category should share a currency.
+4. Click **Add Your Plan** and enter the plan name, category and monthly or annual price, or both.
+5. Choose the features the plan includes (at least one is required) and attach a snapshot.
+6. Set add-ons, marketplace apps, the free trial, starting credits and usage billing.
+7. Sell the plan. For a Stripe-based plan, go to **Payments > Products** in the sub-account you sell from and import the plan from Stripe, then add the product to a 1-step or 2-step order form in **Sites > Funnels**. You can also copy a direct link from **Plans & Pricing > Copy Sale Link**.
+8. Build a workflow with the **Order Form Submission** trigger to notify you of each new sign-up, then run a test purchase.
+
+Plans you create live in your agency's Stripe account. HighLevel's guide warns that they must not be deleted there.
+
+## What happens when a customer signs up?
+
+When a customer pays for a SaaS plan, GoHighLevel creates their sub-account automatically. It creates a user with a generated password, applies the plan's features, loads the attached snapshot and switches on rebilling. The customer gets an email with their login details, and the subscription shows as active or trialing.
+
+A sub-account is not created when:
+
+- The price is not a SaaS price
+- The purchase was made in Stripe test mode
+- The customer paid through PayPal
+- The email address already has an account
+
+HighLevel says "Only Stripe works for SaaS products" on Stripe-based plans, so a customer who pays through PayPal will not get an account. Because test-mode purchases also skip account creation, a test order in test mode will not show you the full sign-up flow.
+
+## How does rebilling work in SaaS mode?
+
+Rebilling charges each customer for their own phone, email, AI and other usage instead of your agency paying it. Usage comes out of a prepaid wallet in the customer's sub-account, which is topped up from their card through your agency Stripe. On the $497 plan, you set a markup so usage becomes profit as well as cost recovery.
+
+- Usage such as LC Phone, email, AI and WhatsApp conversations is deducted from the wallet.
+- Subscription items such as WordPress hosting or Yext are charged to the card directly.
+- Auto-recharge reloads the wallet when the balance drops below a set threshold.
+- If the wallet goes negative, HighLevel pauses those services until it is topped up.
+- Your agency wallet is still charged for all usage, so rebilling is how you get that money back.
+
+Customers see their balance and charges under **Settings > Company Billing** in their sub-account. Stripe processing fees apply to every charge made through your agency Stripe.
+
+## Can you move an existing client into SaaS mode?
+
+Yes. To put an existing client on a SaaS plan, go to **Agency View > Sub-Accounts**, open **Manage Client**, then **SaaS > Add a SaaS Subscription**. You can set a special price for that client. If you only want to rebill their usage, choose **Switch to SaaS** from the sub-account's three-dot menu instead.
+
+Rebilling stays "On Hold" until the client adds a payment method, and HighLevel notes the sub-account may have restricted access in the meantime. Ask the client to add a card before you switch them over.
+
+## What is the difference between SaaS V1 and SaaS V2?
+
+HighLevel now runs two billing models side by side in the SaaS Configurator. SaaS V1 is Stripe-based. SaaS V2 uses your agency's own sub-account as the billing system and works with the payment providers connected there. Both can run at the same time, so you can keep existing V1 plans while adding V2 plans.
+
+| | SaaS V1 | SaaS V2 |
+| --- | --- | --- |
+| Billing system | Your agency Stripe account | Your agency sub-account |
+| Payment providers | Stripe only | Providers connected under Payments > Integrations in the agency sub-account |
+| Selling | Import the plan from Stripe in Payments > Products | Create products directly in Payments > Products |
+
+To use V2, go to **SaaS Configurator > Configure** and select the agency sub-account you sell from. V2 does not prorate when a customer changes tier or billing interval.
+
+If you would rather not set this up yourself, our [SaaS mode and white-label service](/services/saas-white-label) sets up your plans, snapshots, Stripe, rebilling and sign-up flow, then tests a real purchase end to end. For a short definition, see our [SaaS mode glossary entry](/glossary/saas-mode).
+
+## What we see in real accounts
+
+The most common problem we see is a weak offer. Agencies set up their SaaS plans without a pricing and offer stack that makes customers feel they are getting enough value for what they pay.
+
+The next is access. New customers who sign up through the agency's white-label flow often get tools and options their package should not include, and that don't match what the landing page or funnel listed.
+
+Rebilling is where it gets expensive. If nobody sets a check on email and SMS usage, a customer can use far more than expected, and the agency owner ends up paying for it.
+
+Domains cause the last common problem. The agency needs a branded domain for itself and for each sub-account, with the right records set up, so the account activation email lands in the main inbox instead of spam or promotions. When it doesn't, the new customer is left confused.
+
+## Sources
+
+All checked on 9 November 2026.
+
+- [HighLevel pricing page](https://www.gohighlevel.com/pricing), checked on 9 November 2026: plan names and prices, rebilling with markup on Founder, advanced API and the 20% annual saving.
+- [SaaS Mode: Full Setup Guide + FAQ](https://help.gohighlevel.com/support/solutions/articles/48001184920), HighLevel help center, last modified 20 February 2026: definition, prerequisites, setup steps, the 20-plan limit, Stripe-only payments, what happens at sign-up and when no sub-account is created.
+- [Getting Started with the SaaS Configurator](https://help.gohighlevel.com/support/solutions/articles/155000008015-getting-started-with-the-saas-configurator), help center, last modified 12 September 2026: SaaS V1 and V2, plan categories, plan settings, sale links, onboarding and adding a SaaS subscription to an existing client.
+- [Rebilling, Reselling, and Wallets Explained](https://help.gohighlevel.com/support/solutions/articles/155000002095-rebilling-reselling-and-wallets-explained), help center, last modified 30 September 2026: which plans can rebill, markup on the $497 plan only, wallets, auto-recharge, negative balances and Switch to SaaS.
