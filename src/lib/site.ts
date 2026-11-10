@@ -21,6 +21,7 @@ export const site = {
     "https://www.pinterest.com/fixghl/",
     "https://www.linkedin.com/company/fixghl/",
     "https://www.trustpilot.com/review/fixghl.com",
+    "https://www.facebook.com/fixghl/",
   ] as string[], // Profiles that represent FixGHL elsewhere
   // The founder is named on /about and in guide and comparison bylines only; the rest of the site speaks as "we".
   founder: {
