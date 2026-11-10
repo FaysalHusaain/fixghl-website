@@ -67,7 +67,7 @@ Our affiliate link lands on HighLevel's bootcamp page, which offers a **30-day f
 - `src/app/globals.css`: plain CSS **must sit before the `@utility` blocks**. Rules after them were dropped.
 - `design/ghl-calendar-custom-code.html`: CSS the owner pastes into GHL's calendar "Custom code" box.
 - `public/brand/`: logo system, regenerated with `node design/brand.mjs`.
-- `scripts/indexnow.mjs`: pings IndexNow from the sitemap. It runs automatically on every push to main through `.github/workflows/indexnow.yml` (see section 8 about the sandbox).
+- `scripts/indexnow.mjs`: pings IndexNow with sitemap URLs that are new or whose lastmod changed since the last submission (IndexNow asks not to resubmit unchanged URLs). It runs automatically on every push to main through `.github/workflows/indexnow.yml`, which caches the last-submitted state (see section 8 about the sandbox).
 - `src/content/pricing.ts`: published prices and the "From $X · timeline" map. `public/pricing.md` mirrors it for machines.
 - `src/content/hubs.ts` with `src/components/content/HubIntro.tsx`: intros on /compare, /services and /guides.
 - `src/components/ui/OpenOnHash.tsx`: opens a FAQ item when the URL hash points to it (`/pricing#care-plan`).
@@ -218,7 +218,7 @@ Added the Crunchbase URL to the Organization `sameAs`.
 - Homepage title is "GoHighLevel Expert for Fixes, Setup & Migrations | FixGHL", with the eyebrow "GoHighLevel expert studio" above the unchanged H1.
 - Intros of 120–180 words sit under the H1 on /compare, /services and /guides (`src/content/hubs.ts`, `HubIntro.tsx`). They link to /pricing and the two top guides. The /compare meta description was rewritten.
 - Every glossary term has a "Common problems" paragraph in its MDX. The bottom Related block lists the guide, the service and related terms (`related` in `src/content/glossary/index.ts`).
-- IndexNow: `.github/workflows/indexnow.yml` runs `scripts/indexnow.mjs` on every push to main, after waiting 4 minutes for Vercel to deploy. The key is read from `public/<key>.txt`; run it by hand with `npm run indexnow`.
+- IndexNow: `.github/workflows/indexnow.yml` runs `scripts/indexnow.mjs` on every push to main, after waiting 4 minutes for Vercel to deploy, and submits only new or changed pages (lastmod moved). Manual run from the Actions tab accepts specific URLs or "all" (use "all" only after a site-wide content change). The key is read from `public/<key>.txt`; run it by hand with `npm run indexnow`.
 
 ### Booking calendar fix (3 Nov 2026)
 - **Symptom:** after moving from the homepage to /book inside the site, the /book calendar iframe stayed at 150px and showed after 8s cut off.

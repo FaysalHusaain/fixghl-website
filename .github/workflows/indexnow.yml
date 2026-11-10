@@ -1,16 +1,26 @@
-# After each production deploy, submit every sitemap URL to IndexNow.
+# After each production deploy, tell IndexNow about pages that are new or changed (sitemap lastmod moved).
+# Unchanged pages are not resubmitted: IndexNow asks for added/updated/deleted URLs only.
 # Vercel deploys main on every push and does not report deployments to GitHub here, so this waits for the
-# build to go live, then submits. It can also be run by hand from the Actions tab.
+# build to go live, then submits. It can also be run by hand from the Actions tab, with optional URLs.
 name: IndexNow
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      urls:
+        description: "Submit exactly these URLs (space or comma separated). Leave empty for changed pages only."
+        required: false
+        default: ""
+      all:
+        description: "Submit every sitemap URL (only after a site-wide content change)"
+        type: boolean
+        default: false
 
 concurrency:
   group: indexnow
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   submit:
@@ -20,9 +30,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Restore last submitted state
+        uses: actions/cache/restore@v4
+        with:
+          path: .indexnow-state.json
+          key: indexnow-state-${{ github.run_id }}
+          restore-keys: indexnow-state-
       - name: Wait for the Vercel production deploy
         if: github.event_name == 'push'
         run: sleep 240
       - run: node scripts/indexnow.mjs
         env:
           NEXT_PUBLIC_SITE_URL: https://fixghl.com
+          INDEXNOW_STATE: .indexnow-state.json
+          INDEXNOW_URLS: ${{ github.event.inputs.urls }}
+          INDEXNOW_ALL: ${{ github.event.inputs.all == 'true' && '1' || '' }}
+      - name: Save state
+        if: always() && hashFiles('.indexnow-state.json') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: .indexnow-state.json
+          key: indexnow-state-${{ github.run_id }}
