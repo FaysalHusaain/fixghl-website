@@ -6,6 +6,8 @@ import { Faq } from "@/components/ui/Faq";
 import { Icon } from "@/components/ui/Icon";
 import { ProofStrip } from "@/components/ui/ProofStrip";
 import { OpenOnHash } from "@/components/ui/OpenOnHash";
+import { Promises } from "@/components/ui/Promises";
+import { promises } from "@/content/promises";
 import { pageMetadata } from "@/lib/seo";
 import { JsonLd, pricedService } from "@/lib/schema";
 import { plans, saasBuild, carePlan } from "@/content/pricing";
@@ -17,20 +19,15 @@ export const metadata: Metadata = pageMetadata({
   path: "/pricing",
 });
 
-const payment = [
-  "You get a fixed price in writing before we start. We don't bill by the hour.",
-  "Quick Fix is paid up front. If we can't fix it, we refund it in full.",
-  "Setups and migrations are paid 50% to start and 50% once the work is live and you've approved it.",
-];
-
 const faqs: (QA & { id?: string })[] = [
   { q: "How much does it cost to hire a GoHighLevel expert?", a: "At FixGHL, single fixes start at $99, full account setups at $697 and migrations to GHL at $997. SaaS and white-label builds start at $1,497. Many GHL agencies charge $1,000 to $5,000 for a full build. We quote every job at a fixed price before work starts." },
   { q: "Why do the prices say \"from\"?", a: "The starting price covers a standard job. If your account needs more, such as extra pipelines, many workflows or a large contact list, we give you the full fixed price on the call before you pay anything." },
   { q: "What if you can't fix my issue?", a: "On a Quick Fix, you get a full refund. On setups and migrations, you pay the second half only after the work is live and you've approved it." },
+  { q: "What does the 90-day guarantee cover?", a: "If anything we built breaks within 90 days of launch, we repair it free. It covers our work as delivered. New requests, and changes made after handover by you, your team or HighLevel, are quoted separately or covered by the GHL Care Plan." },
   { q: "Is the GoHighLevel subscription included?", a: "No. HighLevel bills your subscription directly, with plans from $97/month. You can start with a [30-day free trial](/try-ghl) through our link." },
   { q: "How do you get into my account?", a: "You add us as a user in your GHL account. There's no password sharing, and you can remove us as soon as the job is done." },
   { id: "care-plan", q: "What's included in the GHL Care Plan?", a: "For $297 a month you get up to 5 requests, such as fixing a workflow, editing a form or email, or connecting a calendar. Each request is a task we can finish in under an hour. You also get replies within 1 business day and a monthly check of your workflows, email deliverability and integrations. New builds are quoted separately. Unused requests don't roll over, and you can cancel anytime." },
-  { q: "What happens after the 14 days of free fixes?", a: "You can move straight onto the GHL Care Plan at $297/month, or book a Quick Fix whenever something new comes up." },
+  { q: "What happens after the 14 days of free fixes?", a: "For 90 days from launch, anything we built that breaks is repaired free. For new requests and changes, you can move onto the GHL Care Plan at $297/month, or book a Quick Fix when something new comes up." },
 ];
 
 const proof = [
@@ -113,29 +110,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section aria-labelledby="payment-title" className="bg-ink-100">
-        <div className="frame section grid gap-10 lg:grid-cols-12">
-          <h2 id="payment-title" className="h-title lg:col-span-4">How payment works</h2>
-          <ul className="flex flex-col gap-2 lg:col-span-8">
-            {payment.map((t) => (
-              <li key={t} className="flex gap-4 rounded-2xl bg-ink-50 p-5 text-[1.0625rem] leading-snug md:p-6">
-                <Icon name="check" className="mt-1 size-4 shrink-0" />
-                <span>{t}</span>
-              </li>
-            ))}
-            <li className="flex gap-4 rounded-2xl bg-ink-50 p-5 text-[1.0625rem] leading-snug md:p-6">
-              <Icon name="check" className="mt-1 size-4 shrink-0" />
-              <span>
-                Your GHL subscription is billed by HighLevel, separate from our fee.{" "}
-                <a href="/try-ghl" rel="sponsored nofollow" data-track="affiliate_click" data-track-location="pricing_payment" className="link font-medium">
-                  Start a free 30-day trial
-                </a>
-                .
-              </span>
-            </li>
-          </ul>
-        </div>
-      </section>
+      <Promises tone="dark" items={[promises.fixedPrice, promises.fixedOrRefunded, promises.builtToLast, promises.approveFirst]} />
 
       <ProofStrip stats={proof} />
 

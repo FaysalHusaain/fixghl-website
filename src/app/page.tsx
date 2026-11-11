@@ -4,6 +4,8 @@ import { Hero } from "@/components/home/Hero";
 import { ServiceList, type ServiceItem } from "@/components/home/ServiceList";
 import { HandoverPanel } from "@/components/ui-fragments/Panels";
 import { ProofStrip } from "@/components/ui/ProofStrip";
+import { Promises } from "@/components/ui/Promises";
+import { promises } from "@/content/promises";
 import { Testimonials, QuoteCard } from "@/components/ui/Testimonials";
 import { testimonials } from "@/content/testimonials";
 import { Faq } from "@/components/ui/Faq";
@@ -23,7 +25,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/",
 });
 
-// Funnel order: hero, the problem in the visitor's words, services, why a specialist, process, reviews, booking, FAQ, stats.
+// Funnel order: hero, the problem in the visitor's words, services, promises, why a specialist, process, reviews, booking, FAQ, stats.
 
 const pains = [
   {
@@ -156,6 +158,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <Promises tone="soft" items={[promises.fixedPrice, promises.fixedOrRefunded, promises.builtToLast, promises.accountStaysYours]} />
 
       {/* Why a specialist */}
       <section aria-labelledby="why-title" className="section">
