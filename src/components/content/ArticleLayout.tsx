@@ -13,9 +13,10 @@ import { site } from "@/lib/site";
 
 // One wording per article kind, shared by the sidebar box and the closing banner.
 const OFFER = {
-  fix: { title: "Rather have it fixed for you?", line: "We fix this in your account. The first 30-minute call is free." },
-  migration: { title: "Rather have us move it for you?", line: "We move it into GHL for you. The first 30-minute call is free." },
-  setup: { title: "Rather have it set up for you?", line: "We set this up in your account. The first 30-minute call is free." },
+  // `price` links to /pricing; `line` follows it.
+  fix: { title: "Rather have it fixed for you?", price: "Quick Fix from $99", line: ", fixed in 1 to 3 business days or you get a full refund. The first 30-minute call is free." },
+  migration: { title: "Rather have us move it for you?", price: "Move to GHL from $997", line: ", live in 2 to 3 weeks. The first 30-minute call is free." },
+  setup: { title: "Rather have it set up for you?", price: "GHL Setup from $697", line: ", live in 7 to 14 days. The first 30-minute call is free." },
 };
 
 export function ArticleLayout({
@@ -80,7 +81,10 @@ export function ArticleLayout({
             </details>
             <div className="on-dark hidden rounded-2xl bg-ink-950 p-5 text-ink-50 lg:block">
               <p className="font-semibold">{offer.title}</p>
-              <p className="mt-2 text-small text-ink-300">{offer.line}</p>
+              <p className="mt-2 text-small text-ink-300">
+                <Link href="/pricing" className="link">{offer.price}</Link>
+                {offer.line}
+              </p>
               <Link href="/book" data-track="book_call_click" data-track-location={`article_${meta.slug}_sidebar`} className="btn btn-gold mt-4 min-h-11 w-full">
                 Book a free call
               </Link>

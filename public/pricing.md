@@ -13,16 +13,14 @@ FixGHL is a specialist GoHighLevel (GHL) studio. We fix, set up, migrate and aut
 
 - Price: from $697
 - Timeline: 7–14 days
-- Includes: pipelines, calendars, forms, core automations, domain and email deliverability, A2P 10DLC help, recorded walkthrough, 14 days of free changes, then a 90-day build guarantee
-- Guarantee: if anything we built breaks within 90 days of launch, we repair it free. It covers our work as delivered. New requests, and changes made after handover by you, your team or HighLevel, are not covered.
+- Includes: pipelines, calendars, forms, core automations, domain and email deliverability, A2P 10DLC help, recorded walkthrough, 14 days of free changes, then a 90-day build guarantee (covers our work as delivered; new requests and changes made after handover by the client, their team or HighLevel are not covered)
 - Payment: 50% to start, 50% after launch and approval
 
 ## Move to GHL (migration)
 
 - Price: from $997
 - Timeline: 2–3 weeks
-- Includes: funnels, pages, contacts and automations moved from ClickFunnels, Wix or other platforms, link check, recorded walkthrough, 14 days of free changes, then a 90-day build guarantee
-- Guarantee: if anything we built breaks within 90 days of launch, we repair it free. It covers our work as delivered. New requests, and changes made after handover by you, your team or HighLevel, are not covered.
+- Includes: funnels, pages, contacts and automations moved from ClickFunnels, Wix or other platforms, link check, recorded walkthrough, 14 days of free changes, then a 90-day build guarantee (covers our work as delivered; new requests and changes made after handover by the client, their team or HighLevel are not covered)
 - Payment: 50% to start, 50% after launch and approval
 
 ## SaaS / white-label build

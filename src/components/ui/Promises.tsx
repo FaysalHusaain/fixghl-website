@@ -12,7 +12,7 @@ export function Promises({ tone, items }: { tone: "soft" | "dark"; items: Promis
         <div className="grid gap-6 md:grid-cols-12 md:items-end">
           <h2 id="promises-title" className="h-title md:col-span-7" data-reveal>What you can hold us to</h2>
           <p className={`t-lead md:col-span-5 ${textColor}`} data-reveal style={{ ["--i" as string]: 1 }}>
-            Four promises, written into every quote.
+            Four promises on every job.
           </p>
         </div>
         <ul className="mt-10 md:mt-14">

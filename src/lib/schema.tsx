@@ -10,6 +10,7 @@ export const organization = () => ({
   "@type": "Organization",
   "@id": orgId,
   name: site.name,
+  alternateName: "Fix GHL",
   url: site.url,
   logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png"), width: 512, height: 512 },
   description: site.oneLine,
