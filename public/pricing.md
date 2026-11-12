@@ -6,7 +6,7 @@ FixGHL is a specialist GoHighLevel (GHL) studio. We fix, set up, migrate and aut
 
 - Price: from $99
 - Timeline: 1–3 business days
-- Includes: one GHL issue fixed, screen recording of the fix, 7 days of follow-up on the same issue
+- Includes: one GHL issue fixed, screen recording of the fix, 30 days of cover (if the same issue comes back, we fix it again free)
 - Guarantee: full refund if we can't fix it
 
 ## GHL Setup
