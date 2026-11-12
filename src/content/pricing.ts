@@ -24,7 +24,7 @@ export const plans: Plan[] = [
     includes: [
       "One issue fixed: a workflow that won't fire, emails landing in spam, a domain that won't connect, or a calendar or integration that stopped syncing",
       "A short screen recording showing what broke and what we changed",
-      "7 days of follow-up if the same issue comes back",
+      "30 days of cover: if the same issue comes back, we fix it again free",
     ],
     note: "If we can't fix it, you get a full refund.",
   },
