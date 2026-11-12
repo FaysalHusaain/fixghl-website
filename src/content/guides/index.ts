@@ -32,7 +32,7 @@ export const guides: ArticleMeta[] = [
       "Fix GoHighLevel emails landing in spam: set up a dedicated sending domain, SPF, DKIM and DMARC, clean your list and warm up sending volume.",
     summary: "How to move GHL email from spam to the inbox with a dedicated sending domain, SPF, DKIM, DMARC and a warm-up plan.",
     published: "2026-10-26",
-    updated: "2026-10-26",
+    updated: "2026-11-12",
     faqs: [
       { q: "Why are my GoHighLevel emails going to spam?", a: "Usually because mail is sent from a shared or unauthenticated domain, the domain is missing SPF, DKIM or DMARC, the list contains old or bought addresses, or a new domain is sending too much too soon." },
       { q: "Does GoHighLevel set up DMARC for me?", a: "GHL's dedicated sending domain setup covers the SPF and DKIM records. A DMARC record is published separately at _dmarc on your domain." },
