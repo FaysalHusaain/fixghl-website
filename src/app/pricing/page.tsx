@@ -5,7 +5,6 @@ import { CtaBand } from "@/components/ui/CtaBand";
 import { Faq } from "@/components/ui/Faq";
 import { Icon } from "@/components/ui/Icon";
 import { ProofStrip } from "@/components/ui/ProofStrip";
-import { OpenOnHash } from "@/components/ui/OpenOnHash";
 import { Promises } from "@/components/ui/Promises";
 import { promises } from "@/content/promises";
 import { pageMetadata } from "@/lib/seo";
@@ -46,7 +45,6 @@ export default function Page() {
           pricedService({ id: "care-plan", name: carePlan.name, description: carePlan.text, monthly: carePlan.amount }),
         ]}
       />
-      <OpenOnHash />
 
       <PageHeader
         crumbs={[{ name: "Pricing", path: "/pricing" }]}

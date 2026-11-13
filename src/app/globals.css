@@ -148,6 +148,8 @@
 [data-stories][data-playing="true"] .story-tab[data-active="true"] .story-fill { animation-play-state: running; }
 [data-stories][data-playing="true"]:hover .story-fill { animation-play-state: paused; }
 [data-stories][data-done="true"] .story-tab[data-active="true"] .story-fill { animation: none; transform: scaleX(1); }
+/* FAQ answers (FaqItem): closed panels get hidden="until-found" once hydrated; until then, keep them out of view. */
+[data-faq-panel][data-open="false"]:not([hidden]) { display: none; }
 @keyframes storyfill { to { transform: scaleX(1); } }
 @media (prefers-reduced-motion: reduce) {
   .story-tab[data-active="true"] .story-fill { animation: none !important; transform: scaleX(1); }
