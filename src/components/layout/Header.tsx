@@ -38,10 +38,14 @@ export function Header({ services, migrations }: { services: NavLink[]; migratio
 
   return (
     // Fixed header over a constant-height spacer: the compact state on scroll never moves the page (no layout shift).
+    // Compact mode slides the header up 0.5rem (4.25rem to a visible 3.75rem) and nudges the bar down 0.25rem to stay
+    // centred. Both are transforms, so the browser composites them instead of re-laying out the header every frame.
     <div className="h-[var(--header-h)] bg-ink-950">
-      <header className="on-dark fixed inset-x-0 top-0 z-50 bg-ink-950 text-ink-50">
+      <header
+        className={`on-dark fixed inset-x-0 top-0 z-50 bg-ink-950 text-ink-50 transition-[translate] duration-200 ${compact ? "-translate-y-2" : ""}`}
+      >
         <div
-          className={`frame flex items-center justify-between transition-[height] duration-200 ${compact ? "h-15" : "h-[var(--header-h)]"}`}
+          className={`frame pointer-events-none flex h-[var(--header-h)] items-center justify-between transition-[translate] duration-200 *:pointer-events-auto ${compact ? "translate-y-1" : ""}`}
         >
           <ScrollTopLink label="FixGHL home" className="inline-flex min-h-11 items-center">
             <Logo className="w-[9.25rem] md:w-[10.25rem]" title={null} />
@@ -82,54 +86,55 @@ export function Header({ services, migrations }: { services: NavLink[]; migratio
             </button>
           </div>
         </div>
-
-        <div
-          id="mobile-menu"
-          hidden={!open}
-          style={{ top: compact ? "3.75rem" : "var(--header-h)" }}
-          className="fixed inset-x-0 bottom-0 overflow-y-auto overscroll-contain bg-ink-950 lg:hidden"
-        >
-          <nav aria-label="Mobile" className="frame flex min-h-full flex-col gap-10 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-6">
-            <ul className="flex flex-col">
-              {mainNav.map((n) => (
-                <li key={n.href}>
-                  <Link href={n.href} className="font-display block py-2.5 text-[2rem] font-semibold tracking-[-0.03em]">
-                    {n.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <div className="grid gap-8 text-ink-300 sm:grid-cols-2">
-              <div>
-                <p className="text-small text-ink-400">Services</p>
-                <ul className="mt-3 flex flex-col">
-                  {services.map((s) => (
-                    <li key={s.href}>
-                      <Link href={s.href} className="block py-2 text-ink-100">{s.label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <p className="text-small text-ink-400">Migrations</p>
-                <ul className="mt-3 flex flex-col">
-                  {migrations.map((s) => (
-                    <li key={s.href}>
-                      <Link href={s.href} className="block py-2 text-ink-100">{s.label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="mt-auto flex flex-col gap-3">
-              <Link href="/book" data-track="book_call_click" data-track-location="mobile_menu" className="btn btn-gold w-full">
-                Book a free 30-minute GHL call
-              </Link>
-              <Link href="/book#describe" className="btn btn-outline-dark w-full">Describe your project</Link>
-            </div>
-          </nav>
-        </div>
       </header>
+
+      {/* Outside <header>: the header's transform would otherwise anchor this fixed panel to the header box. */}
+      <div
+        id="mobile-menu"
+        hidden={!open}
+        style={{ top: compact ? "3.75rem" : "var(--header-h)" }}
+        className="on-dark fixed inset-x-0 bottom-0 z-50 overflow-y-auto overscroll-contain bg-ink-950 text-ink-50 lg:hidden"
+      >
+        <nav aria-label="Mobile" className="frame flex min-h-full flex-col gap-10 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-6">
+          <ul className="flex flex-col">
+            {mainNav.map((n) => (
+              <li key={n.href}>
+                <Link href={n.href} className="font-display block py-2.5 text-[2rem] font-semibold tracking-[-0.03em]">
+                  {n.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="grid gap-8 text-ink-300 sm:grid-cols-2">
+            <div>
+              <p className="text-small text-ink-400">Services</p>
+              <ul className="mt-3 flex flex-col">
+                {services.map((s) => (
+                  <li key={s.href}>
+                    <Link href={s.href} className="block py-2 text-ink-100">{s.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="text-small text-ink-400">Migrations</p>
+              <ul className="mt-3 flex flex-col">
+                {migrations.map((s) => (
+                  <li key={s.href}>
+                    <Link href={s.href} className="block py-2 text-ink-100">{s.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="mt-auto flex flex-col gap-3">
+            <Link href="/book" data-track="book_call_click" data-track-location="mobile_menu" className="btn btn-gold w-full">
+              Book a free 30-minute GHL call
+            </Link>
+            <Link href="/book#describe" className="btn btn-outline-dark w-full">Describe your project</Link>
+          </div>
+        </nav>
+      </div>
     </div>
   );
 }

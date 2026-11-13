@@ -44,13 +44,6 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${interTight.variable} antialiased`}>
-      <head>
-        {/* GHL embeds: the iframe and form_embed.js are no-CORS requests, so they use this plain connection. */}
-        <link rel="preconnect" href="https://link.codenovahq.com" />
-        {/* The widgets then call HighLevel's API and static CDN; resolve those names early. */}
-        <link rel="dns-prefetch" href="https://backend.leadconnectorhq.com" />
-        <link rel="dns-prefetch" href="https://stcdn.leadconnectorhq.com" />
-      </head>
       <body>
         <Script id="ga-consent" strategy="beforeInteractive">{consentDefaults}</Script>
         <a
