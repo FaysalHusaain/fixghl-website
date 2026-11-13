@@ -11,6 +11,7 @@ import { testimonials } from "@/content/testimonials";
 import { Faq } from "@/components/ui/Faq";
 import { Icon } from "@/components/ui/Icon";
 import { BookingModule } from "@/components/booking/BookingModule";
+import { GhlHints } from "@/components/booking/GhlHints";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { migrationServices } from "@/content/services";
@@ -93,6 +94,7 @@ export default function Home() {
       {/* React moves these into <head>. See pageMetadata for why the homepage sets them here. */}
       <link rel="canonical" href={absoluteUrl("/")} />
       <meta property="og:url" content={absoluteUrl("/")} />
+      <GhlHints />
       <Hero />
 
       {/* Problem recognition */}

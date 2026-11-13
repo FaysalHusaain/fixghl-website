@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { BookingModule } from "@/components/booking/BookingModule";
+import { GhlHints } from "@/components/booking/GhlHints";
 import { Icon } from "@/components/ui/Icon";
 import { pageMetadata } from "@/lib/seo";
 
@@ -19,6 +20,7 @@ const next = [
 export default function Page() {
   return (
     <section className="on-dark bg-ink-950 text-ink-50">
+      <GhlHints />
       <div className="frame grid gap-12 pb-[var(--section)] pt-10 md:pt-16 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <Breadcrumbs items={[{ name: "Book a call", path: "/book" }]} dark />

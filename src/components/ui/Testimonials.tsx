@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import Image from "next/image";
+import { Icon } from "./Icon";
 import { testimonials, type Testimonial } from "@/content/testimonials";
 
 const initials = (name: string) =>
@@ -28,12 +29,17 @@ function Avatar({ t, size = 48 }: { t: Testimonial; size?: 48 | 56 }) {
 const stories = testimonials.filter((t, i, all) => all.findIndex((x) => x.name === t.name) === i); // one story per client
 
 // Client stories: one large quote at a time. The list of clients beside it doubles as the control:
-// a progress line fills under the active client, then the next story crossfades in. Hover pauses; tap selects.
+// a progress line fills under the active client, then the next story crossfades in. Hover, keyboard focus inside the
+// section and the Pause button stop the timer (WCAG 2.2.2); tap or arrow keys select. The list is an ARIA tabs widget:
+// one tab stop, Up/Down/Left/Right/Home/End move between clients, and each story is a tabpanel named by its tab.
 export function Testimonials() {
   const [active, setActive] = useState(0);
   const [inView, setInView] = useState(false);
   const [done, setDone] = useState(false); // plays once through, then rests on the first story
+  const [paused, setPaused] = useState(false); // the visitor pressed Pause
+  const [focusIn, setFocusIn] = useState(false); // keyboard or screen reader focus is inside the section
   const root = useRef<HTMLDivElement>(null);
+  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
     const el = root.current;
@@ -54,16 +60,45 @@ export function Testimonials() {
     setActive(i);
     setDone(true); // the visitor has taken control
   };
+  const onTabKey = (e: KeyboardEvent) => {
+    const last = stories.length - 1;
+    const to =
+      e.key === "ArrowDown" || e.key === "ArrowRight" ? (active === last ? 0 : active + 1)
+      : e.key === "ArrowUp" || e.key === "ArrowLeft" ? (active === 0 ? last : active - 1)
+      : e.key === "Home" ? 0
+      : e.key === "End" ? last
+      : -1;
+    if (to < 0) return;
+    e.preventDefault();
+    pick(to);
+    tabs.current[to]?.focus();
+  };
 
   return (
     <section aria-labelledby="reviews-title" className="section">
-      <div className="frame" data-stories data-playing={inView && !done} data-done={done} ref={root}>
+      <div
+        className="frame"
+        data-stories
+        data-playing={inView && !done && !paused && !focusIn}
+        data-done={done}
+        ref={root}
+        onFocus={() => setFocusIn(true)}
+        onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && setFocusIn(false)}
+      >
         <h2 id="reviews-title" className="h-title max-w-[16ch]" data-reveal>In our clients’ words</h2>
 
         <div className="mt-8 grid gap-10 md:mt-12 lg:grid-cols-12 lg:gap-16">
           <div className="grid lg:col-span-7">
             {stories.map((t, i) => (
-              <figure key={t.id} data-story-panel={i} data-active={i === active} aria-hidden={i !== active} className="story-panel flex flex-col justify-start gap-8 md:gap-10">
+              <figure
+                key={t.id}
+                id={`story-panel-${i}`}
+                role="tabpanel"
+                aria-labelledby={`story-tab-${i}`}
+                tabIndex={i === active ? 0 : -1}
+                data-story-panel={i}
+                data-active={i === active}
+                className="story-panel flex flex-col justify-start gap-8 md:gap-10">
                 <blockquote className="font-display text-[clamp(1.75rem,1.2rem+2.4vw,3.25rem)] font-semibold leading-[1.1] tracking-[-0.035em] text-ink-950">
                   <span className="-ml-[0.42em] text-ink-300" aria-hidden>“</span>
                   {t.quote}
@@ -83,16 +118,21 @@ export function Testimonials() {
             ))}
           </div>
 
-          <div role="tablist" aria-label="Client stories" aria-orientation="vertical" className="flex flex-col lg:col-span-5">
+          <div className="flex flex-col lg:col-span-5">
+          <div role="tablist" aria-label="Client stories" aria-orientation="vertical" className="flex flex-col">
             {stories.map((t, i) => (
               <button
                 key={t.id}
+                ref={(el) => { tabs.current[i] = el; }}
                 type="button"
                 role="tab"
+                id={`story-tab-${i}`}
+                tabIndex={i === active ? 0 : -1}
                 data-story-tab={i}
                 data-active={i === active}
                 aria-selected={i === active}
                 onClick={() => pick(i)}
+                onKeyDown={onTabKey}
                 className="story-tab group py-3 text-left md:py-4"
               >
                 <span className="flex items-baseline justify-between gap-4">
@@ -104,6 +144,17 @@ export function Testimonials() {
                 </span>
               </button>
             ))}
+          </div>
+          {!done && (
+            <button
+              type="button"
+              onClick={() => setPaused((v) => !v)}
+              className="mt-4 inline-flex min-h-11 items-center gap-2 self-start motion-reduce:hidden text-small font-medium text-ink-600 hover:text-ink-950"
+            >
+              <Icon name={paused ? "play" : "pause"} className="size-4" />
+              {paused ? "Play stories" : "Pause stories"}
+            </button>
+          )}
           </div>
         </div>
       </div>

@@ -35,8 +35,8 @@ let mounts = 0;
 const newStamp = () => String(1793230740499 + ++mounts);
 
 // calendar="immediate": the calendar is the page's main job (/book), so its iframe is injected as soon as the page
-// hydrates. Keeping it out of the server HTML lets the page paint first instead of racing GHL's ~100 files. calendar="near": it loads when the module is within 1200px of the viewport
-// or 2s after the page has loaded and gone idle, whichever comes first (homepage).
+// hydrates. Keeping it out of the server HTML lets the page paint first instead of racing GHL's ~100 files. calendar="near": it loads
+// only when the module comes within 1200px of the viewport (homepage), so visitors who never scroll that far never download it.
 export function BookingModule({
   id = "book",
   headingLevel = 2,
@@ -147,7 +147,6 @@ export function BookingModule({
               id={`${CALENDAR_ID}_${stamp}`}
               title="Book a free 30-minute GHL call with FixGHL"
               allow="payment"
-              scrolling="no"
               onLoad={onReady}
               style={{ width: "100%", border: "none", overflow: "hidden" }}
             />
@@ -163,7 +162,7 @@ export function BookingModule({
             <iframe
               src={`${GHL_HOST}/widget/form/${FORM_ID}`}
               id={`inline-${FORM_ID}-${stamp}`}
-              title="fixGHL"
+              title="Send your project details to FixGHL"
               onLoad={onReady}
               style={{ width: "100%", height: "100%", border: "none", borderRadius: 8 }}
               data-layout="{'id':'INLINE'}"
@@ -211,29 +210,12 @@ function GhlFrame({
 }) {
   const box = useRef<HTMLDivElement>(null);
 
-  // Lazy widgets load when their placeholder is within 1200px of the viewport, or 2s after the page has loaded and
-  // the browser is idle, whichever comes first.
+  // Lazy widgets load only when their placeholder comes within 1200px of the viewport.
   useEffect(() => {
     if (!lazy || show || !onNear || !box.current) return;
-    let timer = 0;
-    let idle = 0;
-    const near = () => onNear();
-    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && near(), { rootMargin: "1200px 0px" });
+    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && onNear(), { rootMargin: "1200px 0px" });
     io.observe(box.current);
-    const afterLoad = () => {
-      timer = window.setTimeout(() => {
-        if ("requestIdleCallback" in window) idle = window.requestIdleCallback(near, { timeout: 1000 });
-        else near();
-      }, 2000);
-    };
-    if (document.readyState === "complete") afterLoad();
-    else window.addEventListener("load", afterLoad, { once: true });
-    return () => {
-      io.disconnect();
-      window.clearTimeout(timer);
-      if (idle) window.cancelIdleCallback(idle);
-      window.removeEventListener("load", afterLoad);
-    };
+    return () => io.disconnect();
   }, [lazy, show, onNear]);
   const [drawn, setDrawn] = useState(false);
   const [content, setContent] = useState(false); // GHL has reported a real content height for this iframe

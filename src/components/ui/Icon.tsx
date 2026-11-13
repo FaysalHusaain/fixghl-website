@@ -6,6 +6,8 @@ const paths = {
   plus: "M12 5v14M5 12h14",
   menu: "M4 8h16M4 16h16",
   close: "M6 6l12 12M18 6L6 18",
+  pause: "M9 6v12M15 6v12",
+  play: "M8 5.5v13l10-6.5z",
   search: "M10.5 17a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13zM15.5 15.5L20 20",
   calendar: "M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM4 10h16M8 3v4M16 3v4",
   pen: "M4 20l4-1L19 8a2.1 2.1 0 0 0-3-3L5 16zM14 7l3 3",

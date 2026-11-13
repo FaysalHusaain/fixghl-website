@@ -6,3 +6,6 @@ Any public-facing text you write or change on fixghl.com (pages, guides, compari
 2. Be run through the humanizer skill (anthropic-skills:humanizer) before you commit.
 Keep facts, numbers, prices, links, headings and schema unchanged during the humanizer pass. Client testimonials stay word-for-word. Wording-only fixes never change "Last updated" or lastReviewed dates.
 In your summary, add one line confirming both skills were used.
+
+## Baseline target
+This project’s Baseline target is Baseline 2024.
