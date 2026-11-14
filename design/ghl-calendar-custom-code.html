@@ -268,4 +268,15 @@ body { background: #FFFFFF !important; }
 @media screen and (max-width: 450px) {
   #appointment_widgets--revamp .widgets-date-block .vdpInnerWrap:has(tbody tr:last-child > .vdpCell:first-child.outOfRange) { margin-bottom: -37px !important; }
 }
+
+/* 8. Hide GHL's "today" dot under the current date (shows even when today has no free slots). */
+#appointment_widgets--revamp .vdpCell.today::before,
+#appointment_widgets--revamp .vdpCell.today::after,
+#appointment_widgets--revamp .vdpCell.today .vdpCellContent::before,
+#appointment_widgets--revamp .vdpCell.today .vdpCellContent::after,
+#appointment_widgets--revamp .vdpCell .vdpCellContent::after,
+#appointment_widgets--revamp .vdpCell [class*="dot"],
+#appointment_widgets--revamp .vdpCell [class*="today"],
+#appointment_widgets--revamp .vdpCell [class*="indicator"] { display: none !important; content: none !important; }
+#appointment_widgets--revamp .vdpCell.today .vdpCellContent { background-image: none !important; text-decoration: none !important; border-bottom: 0 !important; }
 </style>
