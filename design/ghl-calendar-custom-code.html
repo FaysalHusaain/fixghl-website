@@ -268,4 +268,15 @@ body { background: #FFFFFF !important; }
 @media screen and (max-width: 450px) {
   #appointment_widgets--revamp .widgets-date-block .vdpInnerWrap:has(tbody tr:last-child > .vdpCell:first-child.outOfRange) { margin-bottom: -37px !important; }
 }
+
+/* 8. Hide GHL's "today" dot. GHL draws it as a "●" in .vdpCell.today .vdpCellContent::after (checked in DevTools, 15 Nov 2026). */
+.appointment_widgets--revamp .widgets-date-block .vdpCell.today .vdpCellContent::after,
+#appointment_widgets--revamp .widgets-date-block .vdpCell.today .vdpCellContent::after,
+#appointment_widgets--revamp .vdpCell.today .vdpCellContent::after {
+  content: "" !important;
+  display: none !important;
+  visibility: hidden !important;
+  color: transparent !important;
+  font-size: 0 !important;
+}
 </style>
