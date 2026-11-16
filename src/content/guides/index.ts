@@ -288,6 +288,29 @@ export const guides: ArticleMeta[] = [
       { href: "/guides/how-to-set-up-gohighlevel", label: "How to set up GoHighLevel: a beginner's checklist" },
     ],
   },
+  {
+    slug: "gohighlevel-api-key",
+    title: "Where to find your GoHighLevel API key (and what replaced it)",
+    metaTitle: "GoHighLevel API Key: Where to Find It and What Replaced It",
+    description:
+      "Where the GoHighLevel API key went, how to create a Private Integration token in Settings, find your Location ID, and the plan and rate limits that apply.",
+    summary: "Where the old GHL API key was, how to create a Private Integration token, where to find the Location ID, and the plan and rate limits for the API.",
+    published: "2026-11-16",
+    updated: "2026-11-16",
+    ctaLine: "Need GoHighLevel connected to another tool? We'll build the integration with you. The first 30-minute call is free.",
+    faqs: [
+      { q: "Can I still get a GoHighLevel API key?", a: "No new v1 API keys can be generated. HighLevel ended support for API v1 on December 31, 2025. Create a Private Integration token in Settings > Private Integrations instead." },
+      { q: "Where do I find my GoHighLevel Location ID?", a: "Open the sub-account, go to Settings > Business Profile and copy the Location ID. It also appears in the browser address bar after /location/." },
+      { q: "Can I see my Private Integration token again after creating it?", a: "No. HighLevel shows the token once. If you lose it, rotate the token or create a new integration, then update every tool that used the old one." },
+      { q: "Is API access included on the GoHighLevel Starter plan?", a: "Yes. HighLevel says Private Integration tokens and OAuth 2.0 are available on all plans. Some endpoints, such as creating sub-accounts and enabling SaaS mode, need the $497 plan." },
+    ],
+    related: [
+      { href: "/services/integrations", label: "GoHighLevel integrations" },
+      { href: "/glossary/agency-vs-location", label: "Agency vs location in GHL" },
+      { href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost?" },
+      { href: "/guides/ghl-workflow-not-triggering", label: "GoHighLevel workflow not triggering: how to fix it" },
+    ],
+  },
 ];
 
 export const getGuide = (slug: string) => guides.find((g) => g.slug === slug);

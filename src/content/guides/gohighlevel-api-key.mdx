@@ -1,0 +1,122 @@
+<p className="answer">GoHighLevel no longer issues new API keys. HighLevel ended support for API v1 on December 31, 2025, and the replacement is a Private Integration token. You create one in Settings &gt; Private Integrations, in the sub-account or the agency, pick its scopes, and copy it straight away. HighLevel shows the token only once.</p>
+
+Below: where the old API key was, how to create a Private Integration token, where to find the Location ID most tools also ask for, and the limits that apply. The steps come from HighLevel's help center and developer docs, checked on 16 November 2026.
+
+## Where is the API key in GoHighLevel?
+
+The old sub-account API key sat on the Business Profile page, under Settings, and was used to connect Zapier and other tools. That key belongs to API v1, which reached end of support on December 31, 2025. In June 2026, HighLevel announced that generating new v1 keys had been disabled.
+
+What that means in practice:
+
+| Situation | What to do |
+| --- | --- |
+| A tool asks for a "GHL API key" | Create a Private Integration token and paste it in, if the tool supports API v2 |
+| An old v1 key is still connected | It may keep working, but HighLevel no longer maintains or supports v1. Plan a move to a token |
+| You are building a public or Marketplace app | Use OAuth 2.0 instead of a token |
+| The tool only accepts v1 keys | Check whether it has a native GoHighLevel app or a v2 update |
+
+HighLevel's developer docs describe Private Integration tokens as the option for internal tools, and OAuth 2.0 as the option for public apps, webhooks and Marketplace listings.
+
+## How do you create a Private Integration token?
+
+Open Settings, then Private Integrations, and click Create New Integration. Give it a name and description, select only the scopes the tool needs, and generate it. Copy the token immediately and store it somewhere safe, because HighLevel may display it only once and you cannot view it again later.
+
+1. Sign in and open the sub-account (or stay in the agency view for an agency token).
+2. Go to **Settings > Private Integrations**.
+3. Click **Create New Integration**.
+4. Enter a name and a short description. Naming it after the tool, such as "Make lead sync", makes it easy to find later.
+5. Select the scopes. HighLevel advises giving each tool only the permissions it needs.
+6. Generate the token and copy it right away.
+7. Paste it into the tool as the API key or bearer token.
+
+If you don't see Private Integrations in agency settings, HighLevel's developer docs say to check that the feature is switched on in Labs. By default, every agency admin can create and manage them. HighLevel recommends one token per tool, so you can rotate or remove one connection without breaking the others.
+
+## Should you create the token in the agency or the sub-account?
+
+Create it where the data lives. Contacts, calendars, opportunities and workflows belong to a sub-account, so a tool that works with one client's data usually needs a sub-account token. Agency tokens suit work across the agency. HighLevel allows up to 20 Private Integration tokens at each level.
+
+| Level | Typical use |
+| --- | --- |
+| Sub-account | Syncing contacts, booking appointments, updating opportunities, connecting Make, Zapier or n8n to one business |
+| Agency | Agency-wide tasks across sub-accounts. Some endpoints, such as creating sub-accounts, are restricted to the higher plan |
+
+HighLevel's developer docs describe Private Integrations as the right fit when you only need to reach one sub-account at a time. If you manage many clients and want one app connected to all of them, OAuth 2.0 is built for that.
+
+## Where do you find your Location ID?
+
+The Location ID is the sub-account's unique ID, and many tools ask for it next to the token. Open the sub-account, go to Settings, then Business Profile, and copy the Location ID shown there. You can also read it from the browser address bar, after /location/ in the URL.
+
+1. Open the sub-account.
+2. Click **Settings**.
+3. Select **Business Profile**.
+4. Copy the **Location ID** from the General Information section.
+
+HighLevel calls the Business Profile method the most reliable one. If the address bar has no /location/ segment or locationId= parameter, use Business Profile instead.
+
+## Which GoHighLevel plans include API access?
+
+HighLevel says Private Integration tokens and OAuth 2.0 are available on all its plans: Starter ($97 a month), Unlimited ($297) and the $497 plan, as listed in November 2026. What changes by plan is which endpoints you can call. Creating sub-accounts and enabling SaaS mode through the API need the top plan.
+
+| Plan | Tokens and OAuth | Restricted endpoints (create sub-account, enable SaaS) |
+| --- | --- | --- |
+| Starter, $97/month | Yes | Not available |
+| Unlimited, $297/month | Yes | Not available |
+| $497/month plan | Yes | Available, subject to endpoint eligibility |
+
+HighLevel's own pages call the $497 plan both Founder and Agency Pro. Our [GoHighLevel pricing guide](/guides/how-much-does-gohighlevel-cost) explains what each plan includes.
+
+## What are the GoHighLevel API rate limits?
+
+The default limits are 100 requests per 10 seconds and 200,000 requests per day. With Private Integration tokens, the 10-second limit counts per token per sub-account or agency, while the daily limit is shared by every token in that sub-account or agency. Two tokens on one sub-account share one 200,000-request daily budget.
+
+| Limit | Default | How it is counted for Private Integration tokens |
+| --- | --- | --- |
+| Burst | 100 requests per 10 seconds | Per Private Integration, per sub-account or agency |
+| Daily | 200,000 requests per day | Shared by all tokens in the same sub-account or agency |
+
+When you go over a limit, the API returns a 429 "Too Many Requests" error with no Retry-After header. HighLevel can set different limits for specific accounts, so read your actual limits from the X-RateLimit-Max and X-RateLimit-Limit-Daily response headers.
+
+## How often should you rotate the token?
+
+HighLevel recommends rotating Private Integration tokens every 90 days. When you choose "Rotate and expire this token later", the old and new tokens both work for 7 days, which gives you time to update every tool. If a token is leaked, choose "Rotate and expire this token now" so the old one stops working straight away.
+
+To rotate a token:
+
+1. Go to **Settings > Private Integrations** and open the integration.
+2. Choose **Rotate and expire this token later** and click **Continue**.
+3. Copy the new token and update it in every tool that uses it.
+4. Before the 7 days are up, choose **Expire Now** if you are finished, or **Cancel rotation** to keep the old token.
+
+Changing a token's name or scopes doesn't change the token itself, so connected tools keep working.
+
+## How do you use the token in an API request?
+
+Send the token in the Authorization header as a bearer token, with a Version header, to HighLevel's API at services.leadconnectorhq.com. In tools such as Make, n8n or a custom webhook, paste the token wherever the tool asks for an API key or bearer token.
+
+```
+Authorization: Bearer <your Private Integration token>
+Version: 2021-07-28
+```
+
+The Version value depends on the endpoint. HighLevel's developer docs show 2021-07-28 for most v2 endpoints, and some newer APIs use named versions such as v3. Check the endpoint's page in the docs before you build.
+
+## What we see in real accounts
+
+<mark className="todo">[[EXPERIENCE: When a client needs a GHL API key or token to connect Make, Zapier, n8n or another tool, what goes wrong most often in their account? For example: an old v1 key that stopped working, a token made in the agency instead of the sub-account, missing scopes, or the token lost after it was shown once. 2-3 lines from real projects.]]</mark>
+
+## Need the integration built?
+
+Creating the token takes a few minutes. Connecting it to the right endpoints, mapping fields and handling errors and rate limits is the slower part. Our [integrations service](/services/integrations) builds and fixes GoHighLevel connections to Make, Zapier, n8n, Stripe and custom APIs.
+
+## Sources
+
+All checked on 16 November 2026.
+
+- [HighLevel API Documentation](https://help.gohighlevel.com/support/solutions/articles/48001060529-highlevel-api-documentation), HighLevel help center, last modified 13 November 2026: v1 end of support, plans, restricted endpoints and rate limits.
+- [HighLevel API Migration Guide: How to Move to Private Integrations](https://help.gohighlevel.com/support/solutions/articles/155000008488-highlevel-api-migration-guide-how-to-move-to-private-integrations), help center, last modified 21 August 2026: creating a token, one-time display, rotation and the bearer header.
+- [Private Integrations: Everything you need to know](https://help.gohighlevel.com/support/solutions/articles/155000003054-private-integrations-everything-you-need-to-know), help center, last modified 12 November 2026: menu path, the 20-token limit per level and plan availability.
+- [V1 API End-of-Life: Migrating to V2](https://www.gohighlevel.com/post/deprecating-the-highlevel-api-v1-and-migrating-to-v2), HighLevel blog, 26 June 2026: new v1 keys disabled, no fixes or support for v1.
+- [Private Integrations token](https://marketplace.gohighlevel.com/docs/Authorization/PrivateIntegrationsToken/), HighLevel developer docs: Labs toggle, admin access, rotation steps and example headers.
+- [Rate limits](https://marketplace.gohighlevel.com/docs/other/rate-limits), HighLevel developer docs: how burst and daily limits are counted for tokens.
+- [How do I find my Client's Location ID?](https://help.gohighlevel.com/support/solutions/articles/48001204848-how-do-i-find-my-client-s-location-id-), help center, last modified 12 August 2026.
+- [Business Profile settings](https://help.gohighlevel.com/support/solutions/articles/48000982605-business-profile-settings), help center, last modified 27 October 2026: Location ID and the legacy sub-account API key.
