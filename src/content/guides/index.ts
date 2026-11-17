@@ -86,6 +86,7 @@ export const guides: ArticleMeta[] = [
       { href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost per month?" },
       { href: "/services/ghl-setup", label: "GHL account setup" },
       { href: "/compare/gohighlevel-vs-clickfunnels", label: "GoHighLevel vs ClickFunnels" },
+      { href: "/guides/is-gohighlevel-a-good-crm", label: "Is GoHighLevel a good CRM?" },
     ],
   },
   {
@@ -107,6 +108,7 @@ export const guides: ArticleMeta[] = [
       { href: "/guides/what-is-gohighlevel", label: "What is GoHighLevel?" },
       { href: "/services/saas-white-label", label: "SaaS mode and white-label setup" },
       { href: "/glossary/saas-mode", label: "What is SaaS mode?" },
+      { href: "/guides/cost-to-hire-a-gohighlevel-expert", label: "How much does it cost to hire a GoHighLevel expert?" },
     ],
   },
   {
@@ -149,6 +151,7 @@ export const guides: ArticleMeta[] = [
       { href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost per month?" },
       { href: "/guides/what-is-gohighlevel-used-for", label: "What is GoHighLevel used for? 12 real examples" },
       { href: "/services/ghl-setup", label: "GHL account setup" },
+      { href: "/guides/is-gohighlevel-a-good-crm", label: "Is GoHighLevel a good CRM?" },
     ],
   },
   {
@@ -215,6 +218,7 @@ export const guides: ArticleMeta[] = [
       { href: "/guides/ghl-emails-going-to-spam", label: "GHL emails going to spam" },
       { href: "/guides/ghl-workflow-not-triggering", label: "GoHighLevel workflow not triggering" },
       { href: "/glossary/sub-account", label: "What is a sub-account?" },
+      { href: "/guides/cost-to-hire-a-gohighlevel-expert", label: "How much does it cost to hire a GoHighLevel expert?" },
     ],
   },
   {
@@ -267,7 +271,7 @@ export const guides: ArticleMeta[] = [
   {
     slug: "cost-to-hire-a-gohighlevel-expert",
     title: "How much does it cost to hire a GoHighLevel expert?",
-    metaTitle: "How Much Does It Cost to Hire a GoHighLevel Expert?",
+    metaTitle: "GoHighLevel Expert Cost: Hourly Rates and Project Prices",
     description:
       "What a GoHighLevel expert costs: hourly rates, project prices for setups, funnels and integrations, our own fixed prices, and how to check who you hire.",
     summary: "Published hourly and project prices for GoHighLevel experts, our fixed prices, what pushes a quote up, and how to check an expert before you hire.",
