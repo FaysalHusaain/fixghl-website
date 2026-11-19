@@ -10,7 +10,7 @@ export const guides: ArticleMeta[] = [
       "Why a GoHighLevel workflow stops triggering and how to fix it: draft status, trigger filters, re-entry, wrong trigger type and how to read execution logs.",
     summary: "A step-by-step check for GHL workflows that enroll nobody, enroll the wrong contacts or stop part way.",
     published: "2026-10-26",
-    updated: "2026-10-26",
+    updated: "2026-11-19",
     faqs: [
       { q: "Why is my GoHighLevel workflow not triggering?", a: "The most common causes are a workflow left in draft, a trigger filter the contact does not meet, re-entry switched off for a contact who already went through, or a trigger type that does not match the event, such as Contact Created for a contact that already existed." },
       { q: "Do draft workflows run in GoHighLevel?", a: "No. A workflow in draft does not process live trigger events. Publish it, then test with a fresh contact." },

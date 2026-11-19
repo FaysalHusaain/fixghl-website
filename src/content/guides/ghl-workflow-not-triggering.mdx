@@ -69,7 +69,9 @@ Create a new test contact with your own email and phone number, make sure it mee
 
 ## What we see in real accounts
 
-<mark className="todo">[[EXPERIENCE: In client accounts you've fixed, what was the most common reason a workflow didn't fire? For example draft status, a filter, re-entry off, the wrong trigger, or a form posting to another sub-account. Describe one real case in 2-3 lines.]]</mark>
+The cause we find most often is the simplest one: the workflow was never published. Next come notification steps set up wrong, such as the channel set to SMS when it should be email, or the wrong assigned user. Some workflows have re-entry switched off, so they never fire again for the same contact.
+
+To find which one it is, we start with the execution logs. They show step by step what happened and where it broke, which makes them our most useful tool for auditing a workflow.
 
 ## When should you get help?
 
