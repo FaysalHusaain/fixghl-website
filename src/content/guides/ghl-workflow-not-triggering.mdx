@@ -67,6 +67,12 @@ When the logs show a contact entering and then stopping, the cause is usually on
 
 Create a new test contact with your own email and phone number, make sure it meets every filter, and trigger the real event: submit the actual form or book the actual calendar. Then follow the contact through the execution logs step by step. Delete or tag test contacts afterwards so they do not end up in reports.
 
+## What we see in real accounts
+
+The cause we find most often is the simplest one: the workflow was never published. Next come notification steps set up wrong, such as the channel set to SMS when it should be email, or the wrong assigned user. Some workflows have re-entry switched off, so they never fire again for the same contact.
+
+To find which one it is, we start with the execution logs. They show step by step what happened and where it broke, which makes them our most useful tool for auditing a workflow.
+
 ## When should you get help?
 
 If you have checked all four causes and the logs still do not explain it, the problem is often outside the workflow: a form that posts to a different sub-account, a duplicate contact that received the event instead, or an integration sending incomplete data. Those take longer to trace. Our [GHL fixes service](/services/ghl-fixes) does exactly this, and the first 30-minute call is free.

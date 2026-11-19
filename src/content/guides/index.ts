@@ -10,7 +10,7 @@ export const guides: ArticleMeta[] = [
       "Why a GoHighLevel workflow stops triggering and how to fix it: draft status, trigger filters, re-entry, wrong trigger type and how to read execution logs.",
     summary: "A step-by-step check for GHL workflows that enroll nobody, enroll the wrong contacts or stop part way.",
     published: "2026-10-26",
-    updated: "2026-10-26",
+    updated: "2026-11-19",
     faqs: [
       { q: "Why is my GoHighLevel workflow not triggering?", a: "The most common causes are a workflow left in draft, a trigger filter the contact does not meet, re-entry switched off for a contact who already went through, or a trigger type that does not match the event, such as Contact Created for a contact that already existed." },
       { q: "Do draft workflows run in GoHighLevel?", a: "No. A workflow in draft does not process live trigger events. Publish it, then test with a fresh contact." },
@@ -313,6 +313,30 @@ export const guides: ArticleMeta[] = [
       { href: "/glossary/agency-vs-location", label: "Agency vs location in GHL" },
       { href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost?" },
       { href: "/guides/ghl-workflow-not-triggering", label: "GoHighLevel workflow not triggering: how to fix it" },
+    ],
+  },
+  {
+    slug: "connect-twilio-lc-phone-gohighlevel",
+    title: "How to connect Twilio or LC Phone to GoHighLevel",
+    metaTitle: "Connect Twilio or LC Phone to GoHighLevel: Setup Guide",
+    description:
+      "How to switch GoHighLevel to LC Phone, buy a number, keep your own Twilio account, move numbers across, and what calls, texts and A2P cost.",
+    summary: "LC Phone vs your own Twilio in GHL: switching steps, buying numbers, the Persona ID check, A2P fees, call and SMS rates, and moving numbers.",
+    published: "2026-11-19",
+    updated: "2026-11-19",
+    ctaLine: "Need calls and texts working in GoHighLevel? We'll set up the phone system with you. The first 30-minute call is free.",
+    faqs: [
+      { q: "Is LC Phone the same as Twilio?", a: "LC Phone is HighLevel's built-in phone system. HighLevel says its pricing matches Twilio's rates, but numbers, billing and A2P registration are handled inside GoHighLevel instead of a separate Twilio account." },
+      { q: "Can I still use my own Twilio account with GoHighLevel?", a: "Yes. HighLevel says an individual sub-account can use its own Twilio account instead of LC Phone. New numbers for that sub-account are bought in the matching Twilio subaccount, not inside GoHighLevel." },
+      { q: "How much does a phone number cost in GoHighLevel?", a: "On LC Phone, a US or Canadian local number costs $1.15 a month and a toll-free number $2.15 a month, as listed by HighLevel in November 2026. Calls and texts are billed per minute and per segment on top." },
+      { q: "Does my A2P registration move from Twilio to LC Phone?", a: "No. HighLevel says A2P 10DLC registration from your own Twilio account does not migrate to LC Phone. You register the brand and campaign again, and the registration fees apply again." },
+    ],
+    related: [
+      { href: "/services/integrations", label: "GoHighLevel integrations" },
+      { href: "/services/ghl-setup", label: "GHL account setup" },
+      { href: "/guides/gohighlevel-api-key", label: "Where to find your GoHighLevel API key" },
+      { href: "/guides/gohighlevel-saas-mode", label: "GoHighLevel SaaS mode explained" },
+      { href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost?" },
     ],
   },
 ];
