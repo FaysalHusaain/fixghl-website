@@ -1,0 +1,132 @@
+<p className="answer">To give GoHighLevel a phone line, you either use LC Phone, HighLevel's built-in phone system, or connect your own Twilio account. LC Phone is available to every agency and new sub-accounts link to it by default. You turn it on in Agency Settings &gt; Phone Integration, then buy a number in the sub-account under Settings &gt; Phone System.</p>
+
+Below: how LC Phone and Twilio differ, how to switch an agency and its sub-accounts to LC Phone, how to buy a number, when your own Twilio account still makes sense, and what calls and texts cost. Every step and price comes from HighLevel's help center, checked on 19 November 2026.
+
+## Should you use LC Phone or Twilio in GoHighLevel?
+
+Most accounts should use LC Phone. HighLevel says its pricing matches Twilio's rates, it is available to every agency without a request, new sub-accounts link to it automatically, and numbers, A2P registration and billing are handled inside GoHighLevel. Your own Twilio account suits a sub-account that already has numbers and a working setup there.
+
+| | LC Phone (built in) | Your own Twilio account |
+| --- | --- | --- |
+| Where you buy numbers | Inside the sub-account: Settings &gt; Phone System | In the Twilio console, in the Twilio subaccount linked to that sub-account |
+| Usage rates | HighLevel says they match Twilio's rates | Billed by Twilio on your Twilio account |
+| Identity check for +1 numbers | Persona ID check, once per sub-account | Not part of HighLevel's Persona check |
+| A2P 10DLC | Registered inside GoHighLevel | Registered on the Twilio side; it does not move to LC Phone |
+| SaaS rebilling | Supported | Older setup that needs Twilio support tickets |
+| Best for | New accounts and most agencies | Sub-accounts with established Twilio numbers |
+
+LC stands for LeadConnector, so you will see both names in the app and in HighLevel's articles.
+
+## How do you switch your agency to LC Phone?
+
+Go to Agency Settings, open Phone Integration, and click "Switch to LeadConnector Phone System". The tab then shows "Connected to LeadConnector" and new sub-accounts join LC Phone automatically. HighLevel does not move existing sub-accounts for you, so link each one afterwards, one at a time or all at once.
+
+1. In the agency view, go to **Settings &gt; Phone Integration &gt; Agency Settings**.
+2. Click **Switch to LeadConnector Phone System**.
+3. Open the **Sub Account Settings** tab.
+4. To move one sub-account, find it, open the row's menu and choose **Link to LeadConnector**. The Managed By column changes to an LC Phone badge.
+5. To move all of them, click **Switch all sub-accounts to LC Phone**, tick the authorization box and confirm. This bulk option works for US and Canadian sub-accounts only.
+
+HighLevel's prompt says a bulk migration can take up to 48 hours. Numbers, call logs, SMS and MMS move across. Call recordings may stay behind in your Twilio account. Avoid buying or deleting numbers while it runs. If a Twilio account is suspended, Twilio support has to clear that before you migrate.
+
+Whether new sub-accounts link to LC Phone automatically is controlled by **Automatically Link Phone System**, under Settings &gt; Phone Integration &gt; Account Creation. It is on by default.
+
+## How do you buy a phone number in a sub-account?
+
+Open the sub-account, go to Settings, then Phone System, and on the Phone numbers tab click "+ Add Number". Choose the country, filter by digits and by voice, SMS or MMS, pick a number and click "Proceed to Buy". US, Canadian and Puerto Rican numbers need a one-time ID check first.
+
+1. Open the sub-account and go to **Settings &gt; Phone System**.
+2. On the **Phone numbers** tab, click **+ Add Number**, then **Add Phone Number**.
+3. Choose the country.
+4. Filter by digits, by Voice, SMS or MMS, and by local or toll-free.
+5. Pick a number, check its type, address requirement and monthly price, and click **Proceed to Buy**.
+6. Complete any prompts, such as the identity check, and confirm.
+7. Set up call routing and make a test call.
+
+For +1 numbers (US, Canada, Puerto Rico) and +972 numbers (Israel), HighLevel runs an identity check through Persona the first time a sub-account buys one. The person who owns or controls the sub-account uploads a government ID and takes a live selfie. Persona itself costs nothing, and it is separate from A2P registration.
+
+Some countries need an approved Regulatory Bundle and address before you can buy. Set those up in Settings &gt; Phone System &gt; Regulatory Bundles. US and Canadian numbers don't need one.
+
+## What do you need before you can send texts in the US?
+
+To text US contacts from a 10-digit local number, the sub-account needs an approved A2P 10DLC brand and campaign. Toll-free numbers need Toll-Free Verification instead. Registration goes through The Campaign Registry, and the campaign fees start as soon as you submit, whether or not it gets approved.
+
+| A2P brand type | One-time fee | Daily limit | Monthly campaign fee |
+| --- | --- | --- | --- |
+| Sole Proprietor | $22.50 | 3,000 segments | $2.00 |
+| Low Volume Standard | $22.50 | 6,000 segments | $1.50 to $10.00, by campaign type |
+| High Volume Standard | $64.00 | 600,000 segments | $10.00 |
+
+The one-time fees include $3 for Fast Track, which HighLevel says speeds approval to within 3 business days. Each extra campaign under the same brand costs $15.00. Since February 1, 2026, resubmitting a rejected campaign is free. Fees as listed by HighLevel in November 2026, and HighLevel says they may change at any time.
+
+A2P registration done in your own Twilio account does not carry over to LC Phone. If you move, you register again and pay the fees again.
+
+## How much do calls and texts cost on LC Phone?
+
+A US or Canadian local number costs $1.15 a month and a toll-free number $2.15. Each SMS segment costs $0.00747, sent or received, plus a small carrier fee. Outbound calls cost $0.0166 a minute and inbound calls $0.01165, billed in whole minutes. All prices are in USD.
+
+| Item (US and Canada) | Price |
+| --- | --- |
+| Local number | $1.15/month |
+| Toll-free number | $2.15/month |
+| SMS, inbound or outbound | $0.00747 per segment, plus carrier fee |
+| MMS, outbound | $0.0220 per segment |
+| Outbound call | $0.0166/minute |
+| Inbound call | $0.01165/minute |
+| Inbound toll-free call | $0.0198/minute |
+| Call recording | $0.0025/minute |
+| Call transcription | $0.024/minute |
+
+Carrier fees depend on the recipient's network. HighLevel lists outbound SMS carrier fees from $0.0035 (AT&T) to $0.0050 (Verizon) per message. Rates as listed in HighLevel's Phone System Pricing and Billing Guide, last modified 12 October 2026.
+
+If you resell phone usage through SaaS mode, rebilling works with LC Phone and you set your markup in the agency view under Reselling. Our [GoHighLevel SaaS mode guide](/guides/gohighlevel-saas-mode) explains how rebilling fits in.
+
+## Can a sub-account still use its own Twilio account?
+
+Yes. HighLevel's help center says an individual sub-account can use its own Twilio account instead of LC Phone. If that sub-account is already on LC Phone and has numbers you want to keep, move those numbers to Twilio first. New numbers for it are then bought in the Twilio console, not inside GoHighLevel.
+
+To check which provider manages a sub-account, go to **Settings &gt; Phone Integration &gt; Sub Account Settings** in the agency view and look at the Managed By column. A sub-account on Twilio shows "Twilio" and its Account SID.
+
+To buy a number for a Twilio-managed sub-account:
+
+1. Copy the sub-account's Account SID from the Sub Account Settings tab.
+2. In the Twilio console, open the subaccount with that same SID.
+3. Go to **Develop &gt; Phone Numbers &gt; Manage &gt; Buy a number** and buy it there.
+4. Back in GoHighLevel, open the sub-account's phone number settings and refresh. The number should appear.
+
+HighLevel warns that a number bought in the main Twilio account, or the wrong subaccount, may not show up in the sub-account. Its older article on client Twilio accounts also recommends connecting a Twilio subaccount rather than the master account, using that subaccount's Account SID and Auth Token.
+
+## How do you move numbers from Twilio to LC Phone?
+
+For US local and toll-free numbers, open a ticket with HighLevel Support and send the numbers, the Twilio Account SID they are leaving, the destination sub-account's Location ID and a preferred cutover time. HighLevel Support handles the move from start to finish, and you don't need to contact Twilio.
+
+What moves and what doesn't:
+
+| Moves to LC Phone | Stays behind or needs redoing |
+| --- | --- |
+| The phone number itself | Old Twilio call recordings and voicemails |
+| Future calls and texts | A2P 10DLC registration (register again) |
+| | Toll-free verification status (check it, don't assume) |
+
+HighLevel gives no fixed timeline and says a short interruption may happen during cutover. Afterwards, check that each local number is attached to an approved A2P campaign in the Trust Center, then test a call and a text. Need your Location ID? Our [API key guide](/guides/gohighlevel-api-key) shows where to find it.
+
+## What we see in real accounts
+
+<mark className="todo">[[EXPERIENCE: When you set up phone for a client, do you mostly put them on LC Phone or keep their own Twilio? What is the one thing that most often breaks or gets delayed (for example A2P approval, the Persona ID check, or numbers bought in the wrong Twilio subaccount)? 2-3 lines.]]</mark>
+
+## Need the phone system set up?
+
+Turning on LC Phone takes minutes. Moving numbers, getting A2P approved and routing calls to the right people takes longer, and texts to US contacts wait on that approval. Our [integrations service](/services/integrations) connects and fixes GoHighLevel phone setups, and our [GHL setup service](/services/ghl-setup) includes help with A2P 10DLC registration.
+
+## Sources
+
+All checked on 19 November 2026.
+
+- [How to Purchase a Phone Number](https://help.gohighlevel.com/support/solutions/articles/155000003226), HighLevel help center, last modified 18 November 2026: menu path, buying steps, Persona, bundles, A2P and toll-free requirements.
+- [How do I migrate my agency and sub-account over to LC Phone?](https://help.gohighlevel.com/support/solutions/articles/48001204027-how-do-i-migrate-my-agency-and-sub-account-over-to-lc-phone-), help center, last modified 9 October 2026: switching steps, bulk migration, the 48-hour note, A2P not migrating and sub-accounts on their own Twilio.
+- [Phone System Pricing & Billing Guide](https://help.gohighlevel.com/support/solutions/articles/48001223556-lc-phone-pricing), help center, last modified 12 October 2026: number, SMS, MMS, voice and carrier fees, rebilling.
+- [A2P 10DLC Messaging Fees: Registration, Monthly, and Carrier Costs](https://help.gohighlevel.com/support/solutions/articles/155000005200), help center, last modified 10 November 2026: brand tiers, daily limits, campaign fees and Fast Track.
+- [Identity Verification for Phone Number Purchases](https://help.gohighlevel.com/support/solutions/articles/155000005798), help center, last modified 3 September 2026: Persona check for +1 and +972 numbers.
+- [Moving US numbers from Twilio to LeadConnector (LC)](https://help.gohighlevel.com/support/solutions/articles/48001240108-moving-us-numbers-from-twilio-to-leadconnector-lc-), help center, last modified 3 September 2026: support ticket details, what moves and what doesn't.
+- [Buying a Twilio Number in Your Connected Twilio Account](https://help.gohighlevel.com/support/solutions/articles/48001219820), help center, last modified 1 September 2026: buying numbers for a Twilio-managed sub-account.
+- [How to use the client's own Twilio account for the location?](https://help.gohighlevel.com/support/solutions/articles/48001220001), help center, last modified 13 February 2023: connecting a Twilio subaccount with its Account SID and Auth Token.
