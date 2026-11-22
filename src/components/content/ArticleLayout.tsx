@@ -25,20 +25,23 @@ export function ArticleLayout({
   path,
   toc,
   children,
+  schemaType = "TechArticle",
 }: {
   meta: ArticleMeta;
   crumbs: Crumb[];
   path: string;
   toc: { id: string; text: string }[];
   children: ReactNode;
+  schemaType?: "Article" | "TechArticle";
 }) {
+  const hasFaqs = meta.faqs.length > 0;
   const offer = OFFER[meta.kind ?? "setup"];
 
   return (
     <>
       <JsonLd
         data={[
-          article({ title: meta.title, description: meta.description, path, published: meta.published, updated: meta.updated, type: "TechArticle" }),
+          article({ title: meta.title, description: meta.description, path, published: meta.published, updated: meta.updated, type: schemaType }),
           reviewedPage({ title: meta.title, description: meta.description, path, updated: meta.updated }),
         ]}
       />
@@ -63,7 +66,7 @@ export function ArticleLayout({
         </header>
 
         <div className="frame grid gap-12 pb-[var(--section)] lg:grid-cols-12">
-          <aside className="lg:order-2 lg:col-span-3 lg:col-start-10">
+          <aside className="lg:order-2 lg:col-span-3 lg:col-start-10 print:hidden">
             <div className="flex flex-col gap-3 lg:sticky lg:top-24">
             <details className="group rounded-2xl bg-ink-100 p-5" open>
               <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between font-semibold [&::-webkit-details-marker]:hidden">
@@ -76,7 +79,7 @@ export function ArticleLayout({
                     <a href={`#${t.id}`} className="flex min-h-11 items-center py-1 text-ink-700 hover:text-ink-950">{t.text}</a>
                   </li>
                 ))}
-                <li><a href="#faq" className="flex min-h-11 items-center py-1 text-ink-700 hover:text-ink-950">Frequently asked questions</a></li>
+                {hasFaqs && <li><a href="#faq" className="flex min-h-11 items-center py-1 text-ink-700 hover:text-ink-950">Frequently asked questions</a></li>}
               </ol>
             </details>
             <div className="on-dark hidden rounded-2xl bg-ink-950 p-5 text-ink-50 lg:block">
@@ -93,7 +96,7 @@ export function ArticleLayout({
           </aside>
           <div className="prose min-w-0 lg:order-1 lg:col-span-8">
             {children}
-            <div className="not-prose on-dark mt-12 flex flex-col gap-5 rounded-[1.5rem] bg-ink-950 p-6 text-ink-50 md:flex-row md:items-center md:justify-between md:p-8">
+            <div className="not-prose on-dark mt-12 flex flex-col gap-5 rounded-[1.5rem] bg-ink-950 p-6 text-ink-50 md:flex-row md:items-center md:justify-between md:p-8 print:hidden">
               <p className="max-w-[44ch] text-[1.125rem] leading-snug">
                 {meta.ctaLine ?? "Tried these steps and it still is not working? We find the cause in your account on a free 30-minute call."}
               </p>
@@ -101,10 +104,14 @@ export function ArticleLayout({
                 Book a free 30-minute call
               </Link>
             </div>
-            <h2 id="faq">Frequently asked questions</h2>
-            <div className="not-prose">
-              <Faq items={meta.faqs} openFirst={false} />
-            </div>
+            {hasFaqs && (
+              <>
+                <h2 id="faq">Frequently asked questions</h2>
+                <div className="not-prose">
+                  <Faq items={meta.faqs} openFirst={false} />
+                </div>
+              </>
+            )}
             <p className="text-small text-ink-600">
               Written by FixGHL, a specialist GoHighLevel studio. GoHighLevel changes often; we check these steps against HighLevel&apos;s help
               center and update this page when they change.
@@ -112,8 +119,10 @@ export function ArticleLayout({
           </div>
         </div>
       </article>
-      <RelatedLinks title="Related" links={meta.related} />
-      <CtaBand title={offer.title} location={`article_${meta.slug}`} />
+      <div className="print:hidden">
+        <RelatedLinks title="Related" links={meta.related} />
+        <CtaBand title={offer.title} location={`article_${meta.slug}`} />
+      </div>
     </>
   );
 }
