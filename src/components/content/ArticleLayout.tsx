@@ -26,6 +26,7 @@ export function ArticleLayout({
   toc,
   children,
   schemaType = "TechArticle",
+  sidebarDesktopOnly = false,
 }: {
   meta: ArticleMeta;
   crumbs: Crumb[];
@@ -33,6 +34,7 @@ export function ArticleLayout({
   toc: { id: string; text: string }[];
   children: ReactNode;
   schemaType?: "Article" | "TechArticle";
+  sidebarDesktopOnly?: boolean; // hide the "On this page" sidebar under 1024px
 }) {
   const hasFaqs = meta.faqs.length > 0;
   const offer = OFFER[meta.kind ?? "setup"];
@@ -66,7 +68,7 @@ export function ArticleLayout({
         </header>
 
         <div className="frame grid gap-12 pb-[var(--section)] lg:grid-cols-12">
-          <aside className="lg:order-2 lg:col-span-3 lg:col-start-10 print:hidden">
+          <aside className={`lg:order-2 lg:col-span-3 lg:col-start-10 print:hidden ${sidebarDesktopOnly ? "hidden lg:block" : ""}`}>
             <div className="flex flex-col gap-3 lg:sticky lg:top-24">
             <details className="group rounded-2xl bg-ink-100 p-5" open>
               <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between font-semibold [&::-webkit-details-marker]:hidden">

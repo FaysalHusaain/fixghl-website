@@ -115,10 +115,10 @@ const sources = [
 ];
 
 const toc = [
-  { id: "brand-checks", text: "1. Brand checks" },
-  { id: "website-checks", text: "2. Website checks" },
-  { id: "opt-in-form-checks", text: "3. Opt-in form checks" },
-  { id: "campaign-checks", text: "4. Campaign checks" },
+  { id: "brand-checks", text: "Brand checks" },
+  { id: "website-checks", text: "Website checks" },
+  { id: "opt-in-form-checks", text: "Opt-in form checks" },
+  { id: "campaign-checks", text: "Campaign checks" },
   { id: "templates", text: "Copy-ready templates" },
   { id: "what-we-see", text: "What we see in real accounts" },
   { id: "rejection-codes", text: "New rejection codes" },
@@ -129,7 +129,7 @@ export default function Page() {
   const r = getResource(slug);
   if (!r) notFound();
   return (
-    <ArticleLayout meta={r} path={path} crumbs={[{ name: "A2P 10DLC checklist", path }]} toc={toc} schemaType="Article">
+    <ArticleLayout meta={r} path={path} crumbs={[{ name: "A2P 10DLC checklist", path }]} toc={toc} schemaType="Article" sidebarDesktopOnly>
       <p className="answer">
         Most A2P 10DLC rejections in GoHighLevel come from a few fixable things: a business name that doesn&apos;t match the tax papers, a consent
         checkbox that&apos;s missing or bundled with the terms, or privacy and terms links the reviewer can&apos;t find. Work through the four checks
