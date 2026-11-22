@@ -96,7 +96,7 @@ export const services: Service[] = [
     ],
     included: [
       { title: "Domains and email", body: "Your website and funnel domains connected, and a dedicated email sending domain with SPF and DKIM, plus a DMARC record." },
-      { title: "Calendars and booking", body: "Calendars with availability, buffers, confirmations and reminders by SMS and email." },
+      { title: "Calendars and booking", body: "Calendars with availability, buffers, confirmations and reminders by SMS and email. We also help with A2P 10DLC registration for US texting. Our free [A2P 10DLC checklist](/resources/a2p-10dlc-checklist) lists what gets checked." },
       { title: "Pipelines and contacts", body: "A pipeline that matches how you sell, with custom fields, tags and import of your existing contacts." },
       { title: "Core workflows", body: "Lead capture, speed-to-lead follow-up, booking reminders and no-show recovery, built and tested." },
     ],

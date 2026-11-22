@@ -13,6 +13,7 @@ const groups = [
     title: "Learn",
     links: [
       { href: "/guides", label: "Guides" },
+      { href: "/resources/a2p-10dlc-checklist", label: "Free A2P checklist" },
       { href: "/compare", label: "Comparisons" },
       { href: "/glossary", label: "Glossary" },
       { href: "/faq", label: "FAQ" },

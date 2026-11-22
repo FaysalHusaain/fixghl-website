@@ -3,6 +3,7 @@ import { services } from "@/content/services";
 import { guides } from "@/content/guides";
 import { comparisons } from "@/content/compare";
 import { terms } from "@/content/glossary";
+import { resources } from "@/content/resources";
 
 export type RouteEntry = { path: string; title: string; description: string; updated?: string; section: string };
 
@@ -26,6 +27,7 @@ export const allRoutes = (): RouteEntry[] => [
   ...staticPages,
   ...services.map((s) => ({ path: s.path, section: "Services", title: s.h1, description: s.metaDescription })),
   ...guides.map((g) => ({ path: `/guides/${g.slug}`, section: "Guide", title: g.title, description: g.description, updated: g.updated })),
+  ...resources.map((r) => ({ path: `/resources/${r.slug}`, section: "Resource", title: r.title, description: r.description, updated: r.updated })),
   ...comparisons.map((c) => ({ path: `/compare/${c.slug}`, section: "Comparison", title: c.title, description: c.description, updated: c.updated })),
   ...terms.map((t) => ({ path: `/glossary/${t.slug}`, section: "Glossary", title: `${t.term} in GoHighLevel`, description: t.description, updated: t.updated })),
 ];

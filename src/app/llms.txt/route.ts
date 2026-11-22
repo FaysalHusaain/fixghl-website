@@ -3,6 +3,7 @@ import { services } from "@/content/services";
 import { guides } from "@/content/guides";
 import { comparisons } from "@/content/compare";
 import { terms } from "@/content/glossary";
+import { resources } from "@/content/resources";
 
 // Follows the llms.txt proposal (llmstxt.org): H1, blockquote summary, details, H2 link lists, then an Optional section.
 const clean = (s: string) => s.replace(/\s*\[\[(TODO|VERIFY)[^\]]*\]\]/g, "").trim();
@@ -25,6 +26,10 @@ ${services.map((s) => `- [${s.h1}](${absoluteUrl(s.path)}): ${clean(s.answer).sp
 ## Guides
 
 ${guides.map((g) => `- [${g.title}](${absoluteUrl(`/guides/${g.slug}`)}): ${g.summary}`).join("\n")}
+
+## Resources
+
+${resources.map((r) => `- [${r.title}](${absoluteUrl(`/resources/${r.slug}`)}): ${r.summary}`).join("\n")}
 
 ## Comparisons
 

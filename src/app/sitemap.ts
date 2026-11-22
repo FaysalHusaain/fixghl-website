@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return allRoutes().map((r) => ({
     url: absoluteUrl(r.path),
     lastModified: r.updated ?? BUILD_DATE,
-    changeFrequency: r.section === "Guide" || r.section === "Comparison" ? "monthly" : "yearly",
+    changeFrequency: r.section === "Guide" || r.section === "Resource" || r.section === "Comparison" ? "monthly" : "yearly",
     priority: r.path === "/" ? 1 : r.path.startsWith("/services") ? 0.9 : r.section === "Legal" ? 0.2 : 0.7,
   }));
 }

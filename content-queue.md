@@ -3,7 +3,7 @@
 The scheduled guide writer takes the first unchecked topic, writes it, and checks it off in the same pull request. Add new topics to the end. Volumes are Semrush US monthly searches (Oct 30, 2026), summed across spellings.
 
 - [ ] How to connect a custom domain or subdomain to GoHighLevel (~60) -> link /services/ghl-fixes
-- [ ] How to set up A2P 10DLC in GoHighLevel -> link /services/ghl-setup
+- [ ] How to set up A2P 10DLC in GoHighLevel -> link /services/ghl-setup. Link to /resources/a2p-10dlc-checklist for the templates; don't repeat them in the guide.
 - [ ] How to connect Google Calendar or Calendly to GoHighLevel (~40)
 - [ ] How to create a sub-account in GoHighLevel (~40)
 - [ ] How to build a website on GoHighLevel (~40) -> link /services/funnels-websites

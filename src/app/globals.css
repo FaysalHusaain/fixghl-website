@@ -197,6 +197,38 @@
 @keyframes ghl-sweep { to { transform: translateX(100%); } }
 @media (prefers-reduced-motion: reduce) { .ghl-skeleton > *::after { animation: none; display: none; } .ghl-skeleton, .ghl-stage { transition: none; } }
 
+/* Checklist checkboxes (/resources): custom box drawn with appearance:none and a masked check, so it looks the same in
+   every browser (accent-color isn't in Safari before 26.2). The label around it gives the 44px tap target. */
+.checklist-box {
+  appearance: none; display: inline-grid; place-content: center; inline-size: 1.25em; aspect-ratio: 1; margin: 0;
+  border: 2px solid var(--color-ink-950); border-radius: 5px; background: var(--color-ink-50); cursor: pointer;
+  print-color-adjust: exact; -webkit-print-color-adjust: exact; /* print the tick even with background graphics off */
+}
+.checklist-box::before {
+  content: ""; inline-size: 0.75em; aspect-ratio: 1; background-color: var(--color-gold-500); scale: 0;
+  print-color-adjust: exact; -webkit-print-color-adjust: exact;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") no-repeat center / contain;
+}
+.checklist-box:checked { background: var(--color-ink-950); }
+.checklist-box:checked::before { scale: 1; }
+.checklist-box:focus-visible { outline: 2px solid var(--color-ink-950); outline-offset: 2px; }
+@media (prefers-reduced-motion: no-preference) { .checklist-box::before { transition: scale 150ms ease; } }
+@media (forced-colors: active) { .checklist-box::before { background-color: CanvasText; } }
+
+/* Print: page content only, black on white. Site chrome (header, footer, mobile bar, cookie notice) sits outside <main>. */
+@media print {
+  body > :not(main) { display: none !important; }
+  html, body { background: #fff !important; color: #000 !important; }
+  main, main * { color: #000 !important; background: transparent !important; box-shadow: none !important; }
+  .js-reveal [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .checklist-box { border-color: #000 !important; }
+  .checklist-box:checked::before { background-color: #000 !important; }
+  .template { border: 1px solid #000; break-inside: avoid; }
+  .table-wrap { overflow: visible; }
+  .table-wrap th { border-bottom: 1px solid #000; }
+  main a { text-decoration: underline; }
+}
+
 @utility scrollbar-none {
   scrollbar-width: none;
   &::-webkit-scrollbar { display: none; }
