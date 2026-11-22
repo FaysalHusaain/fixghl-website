@@ -21,8 +21,8 @@ const brand = [
   "If the EIN is less than 15 days old, wait. HighLevel says new EINs may be rejected.",
   "Use a street address, not a P.O. box.",
   "Standard brands: use an email on your own domain. Free email addresses can slow approval.",
-  "Sole Proprietor brands: use a public email (Gmail, Yahoo, Outlook) and a US or Canada mobile number that can receive a code. VoIP and LeadConnector numbers aren't accepted.",
-  "Don't reuse the same phone or email on more than five brands.",
+  "Sole Proprietor brands: use a public email (Gmail, Hotmail or Yahoo) and a US or Canada mobile number that can receive a code. VoIP and LeadConnector numbers aren't accepted.",
+  "Don't reuse a phone number or email across too many brands. A Sole Proprietor mobile number can cover up to three brands; for Standard brands, keep the same contact phone or email to five brands or fewer.",
 ];
 
 const website = [
@@ -111,7 +111,7 @@ const sources = [
   { label: "HighLevel: Campaign rejection reasons and resolutions", href: "https://help.gohighlevel.com/support/solutions/articles/155000004746-campaign-rejection-reasons-and-resolutions" },
   { label: "Twilio error 30924 (consent language)", href: "https://www.twilio.com/docs/api/errors/30924" },
   { label: "Twilio error 30925 (unticked checkbox)", href: "https://www.twilio.com/docs/api/errors/30925" },
-  { label: "Twilio changelog, Nov 13, 2026 (new rejection codes)", href: "https://www.twilio.com/en-us/changelog/new-a2p-10dlc-campaign-rejection-error-codes" },
+  { label: "Twilio changelog, 13 November 2026 (new rejection codes)", href: "https://www.twilio.com/en-us/changelog/new-a2p-10dlc-campaign-rejection-error-codes" },
 ];
 
 const toc = [
@@ -139,7 +139,7 @@ export default function Page() {
         <PrintButton />
       </div>
       <div role="note" className="not-prose mt-8 rounded-2xl bg-ink-100 p-5 text-[0.9375rem] leading-relaxed text-ink-900 print:border print:border-black">
-        From December 9, 2026, Twilio plans to return more specific rejection codes for A2P campaigns. HighLevel&apos;s rejection codes use the same
+        From 9 December 2026, Twilio plans to return more specific rejection codes for A2P campaigns. HighLevel&apos;s rejection codes use the same
         numbers, so the table at the end shows what the new ones mean.
       </div>
 
@@ -170,7 +170,7 @@ export default function Page() {
         details don&apos;t match the LLC papers exactly. We&apos;ve seen one missing letter in the business name get a campaign rejected.
       </p>
 
-      <h2 id="rejection-codes">New rejection codes from December 9, 2026</h2>
+      <h2 id="rejection-codes">New rejection codes from 9 December 2026</h2>
       <div className="table-wrap not-prose" role="region" aria-label="New A2P campaign rejection codes" tabIndex={0}>
         <table>
           <thead>
@@ -193,7 +193,7 @@ export default function Page() {
       </div>
       <p className="text-small text-ink-600">Some fixes need a new campaign of the right type instead of a resubmission (Twilio).</p>
 
-      <h2 id="sources">Sources (checked Nov 22, 2026)</h2>
+      <h2 id="sources">Sources (checked 22 November 2026)</h2>
       <ul>
         {sources.map((s) => (
           <li key={s.href}>
