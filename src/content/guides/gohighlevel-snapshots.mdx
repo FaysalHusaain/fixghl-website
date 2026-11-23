@@ -100,7 +100,19 @@ These are three separate actions, and mixing them up is a common source of confu
 
 ## What we see in real accounts
 
-<mark className="todo">[[EXPERIENCE: After you load a snapshot into a client's sub-account, what do you most often have to fix or redo by hand (for example domains, phone numbers, integrations, custom values or workflow settings), and what is one snapshot mistake you see people make?]]</mark>
+The thing we fix most is client details hardcoded by whoever the snapshot was first built for. A snapshot is only as clean as the account it came from. If the original build had the business name, phone number, address, calendar link or owner's name typed straight into emails, SMS and pages, all of it comes across to the new client. Then someone has to hunt through every workflow message for "Hi, this is Mike from ABC Roofing" before it goes out to a real lead.
+
+We ran into this when rebuilding the snapshot workflows for a construction and landscaping client. Instead of editing the text for each client, we pulled out everything client-specific and replaced it with [custom value](/glossary/custom-values) tokens: business name, phone, booking link, review link and so on. When the snapshot loads into a new sub-account, we fill in the custom values once and everything updates. That's how we build snapshots now, including one we use for two agency clients.
+
+Our routine after loading a snapshot:
+
+1. Set the workflows to draft.
+2. Fill in the custom values.
+3. Connect calendars and users.
+4. Connect integrations.
+5. Attach the domain.
+6. Wait for the phone number and A2P approval.
+7. Test each form and booking end to end before going live.
 
 ## Sources
 

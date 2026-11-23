@@ -183,7 +183,7 @@ export const guides: ArticleMeta[] = [
       "What a snapshot is in GHL, what it copies and what it leaves out, and step-by-step how to import a snapshot and load it into a sub-account.",
     summary: "What a GHL snapshot copies and leaves out, and the exact steps to import one and load it into a sub-account.",
     published: "2026-10-31",
-    updated: "2026-10-31",
+    updated: "2026-11-23",
     ctaLine: "Rather not load and reconnect a snapshot yourself? We'll set it up in your account. The first 30-minute call is free.",
     faqs: [
       { q: "Does a GoHighLevel snapshot copy contacts?", a: "No. Snapshots copy configuration such as workflows, funnels, calendars, forms and custom values. Contacts, appointments, conversations and integrations do not transfer." },

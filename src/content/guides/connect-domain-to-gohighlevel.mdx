@@ -100,7 +100,18 @@ HighLevel recommends a subdomain for the sending, branded and white label domain
 
 ## What we see in real accounts
 
-<mark className="todo">[[EXPERIENCE: When a client's domain won't connect to GoHighLevel, what is the cause you find most often (for example an old A record, Cloudflare's orange cloud, records added at the wrong DNS host, or the domain still linked in another sub-account), and do you usually advise clients to use the root domain or a subdomain for GHL?]]</mark>
+Nine times out of ten, a domain that won't connect is a nameserver problem, so before we touch any records we run an NS lookup to see where the DNS actually lives. A client hands us their GoDaddy login, we add the records GoHighLevel asks for, and nothing happens. The nameservers point to Cloudflare, an old web host, Wix, or wherever their last developer set things up, so the registrar's records are ignored however many times you fix them.
+
+On one domain, the records sat in GoDaddy but the nameservers pointed to NamePros, because the domain had been bought through a NamePros sale. The live A record still pointed at an old server. The fix was simple once we saw it: move the nameservers back to GoDaddy, or add the records where the DNS actually lived.
+
+After the nameservers, we check in this order:
+
+1. **Old records left behind.** An A record from the previous host, an extra AAAA record or a duplicate on the root. GHL's record and the old one fight each other, so the domain connects sometimes and fails other times. We delete anything that conflicts.
+2. **Cloudflare's proxy.** With the orange cloud on, GHL can't verify the record or issue SSL. We switch it to DNS only, the gray cloud, at least until the domain is connected.
+3. **Root and www mixed up.** Someone puts a CNAME on the root, or sets up only the root and forgets www (or the other way around). We set up both and pick which one redirects to the other.
+4. **The domain attached somewhere else.** It is still connected in another sub-account or an old funnel, so GHL won't take it again. We remove it there first.
+
+Sometimes the records are right, but the client checks after five minutes and says it is broken. Propagation and SSL can take a while, so we check with a DNS lookup tool, not the browser. One client couldn't find the A record type in their DNS panel at all: Chrome was auto-translating the page, and "A" had turned into "TO". With translation off, it was there.
 
 ## Domain still not connecting?
 
