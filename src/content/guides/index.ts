@@ -183,7 +183,7 @@ export const guides: ArticleMeta[] = [
       "What a snapshot is in GHL, what it copies and what it leaves out, and step-by-step how to import a snapshot and load it into a sub-account.",
     summary: "What a GHL snapshot copies and leaves out, and the exact steps to import one and load it into a sub-account.",
     published: "2026-10-31",
-    updated: "2026-10-31",
+    updated: "2026-11-23",
     ctaLine: "Rather not load and reconnect a snapshot yourself? We'll set it up in your account. The first 30-minute call is free.",
     faqs: [
       { q: "Does a GoHighLevel snapshot copy contacts?", a: "No. Snapshots copy configuration such as workflows, funnels, calendars, forms and custom values. Contacts, appointments, conversations and integrations do not transfer." },
@@ -337,6 +337,31 @@ export const guides: ArticleMeta[] = [
       { href: "/guides/gohighlevel-api-key", label: "Where to find your GoHighLevel API key" },
       { href: "/guides/gohighlevel-saas-mode", label: "GoHighLevel SaaS mode explained" },
       { href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost?" },
+    ],
+  },
+  {
+    slug: "connect-domain-to-gohighlevel",
+    title: "How to connect a custom domain or subdomain to GoHighLevel",
+    metaTitle: "Connect a Custom Domain to GoHighLevel: DNS Setup Guide",
+    description:
+      "Connect a root domain or subdomain to GoHighLevel: the exact A and CNAME values, Cloudflare settings, SSL timing and fixes for domains that won't verify.",
+    summary: "How to connect a domain to GHL: root vs subdomain, the A and CNAME values, Domain Connect, Cloudflare, SSL and fixes for common DNS conflicts.",
+    published: "2026-11-23",
+    updated: "2026-11-23",
+    ctaLine: "Domain won't connect or SSL won't issue? We'll find the conflicting record and get it live. The first 30-minute call is free.",
+    faqs: [
+      { q: "What DNS records does GoHighLevel need for a custom domain?", a: "A root domain needs an A record with host @ pointing to 162.159.140.166. A subdomain needs a CNAME with only the subdomain as the host, pointing to sites.ludicrous.cloud. Values as listed by HighLevel in October 2026." },
+      { q: "How long does it take for a domain to connect to GoHighLevel?", a: "HighLevel says DNS changes can take up to 24 hours, and its troubleshooting guide says some take 24 to 48 hours. Once the domain verifies and is linked, SSL is issued automatically within a few minutes." },
+      { q: "Do I need to buy an SSL certificate for my GoHighLevel domain?", a: "No. HighLevel provisions SSL automatically once the domain is connected and the records are correct." },
+      { q: "Why won't my domain connect to GoHighLevel in Cloudflare?", a: "Usually because the record is proxied. Set the A or CNAME record to DNS only (the gray cloud) in Cloudflare, save, and verify again in HighLevel." },
+      { q: "Can I use my domain for my main website and GoHighLevel funnels?", a: "Yes. Keep the root domain on your existing site and connect a subdomain, such as offers.yourbusiness.com, to GoHighLevel. One hostname can point to only one platform at a time." },
+    ],
+    related: [
+      { href: "/services/ghl-fixes", label: "GHL fixes and troubleshooting" },
+      { href: "/services/funnels-websites", label: "GoHighLevel funnels and websites" },
+      { href: "/guides/ghl-emails-going-to-spam", label: "GHL emails going to spam: domain, DNS and warm-up fixes" },
+      { href: "/guides/how-to-set-up-gohighlevel", label: "How to set up GoHighLevel" },
+      { href: "/glossary/sub-account", label: "What is a sub-account?" },
     ],
   },
 ];

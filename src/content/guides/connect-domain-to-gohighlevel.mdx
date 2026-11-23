@@ -1,0 +1,129 @@
+<p className="answer">To connect a custom domain to GoHighLevel, open the sub-account, go to Settings &gt; Domains &amp; URL Redirects and click "+ Connect a domain". Pick Funnel/Website, enter the domain, then let Domain Connect add the DNS records or add them yourself. A root domain needs an A record and a subdomain needs a CNAME.</p>
+
+Below: whether to use a root domain or a subdomain, the exact DNS values, Cloudflare settings, how long verification and SSL take, the errors that stop a domain from connecting, and the other domains a GHL account uses. Every step and value comes from HighLevel's help center, checked on 23 November 2026.
+
+## Should you connect a root domain or a subdomain?
+
+Use the root domain (yourbusiness.com) when GoHighLevel will host your main website. Use a subdomain (offers.yourbusiness.com) when the root already runs a site you want to keep, such as WordPress or Wix. HighLevel says one hostname can point to only one platform at a time, so a subdomain lets both sites run side by side.
+
+| | Root domain | Subdomain |
+| --- | --- | --- |
+| Example | yourbusiness.com | offers.yourbusiness.com, www.yourbusiness.com |
+| Good for | A main website built in GoHighLevel | Funnels and landing pages next to an existing site |
+| DNS record | A record | CNAME (or an A record, which HighLevel also supports) |
+| Risk | Repointing it takes down whatever the root served before | Leaves the main site and its email alone |
+| www | HighLevel can add www with a 301 redirect to the root | Not needed |
+
+HighLevel's domain guide warns that root domains are where people most often break an existing website or mailbox by accident. If you are unsure what the root currently does, start with a subdomain.
+
+## How do you connect a domain to GoHighLevel?
+
+Open the sub-account, go to Settings, then Domains &amp; URL Redirects, and click "+ Connect a domain". Choose Funnel/Website/Store/Blog/Webinar, type the domain, and pick automatic setup or manual records. After the domain verifies, link it to a funnel or website and choose the default page. SSL then starts on its own.
+
+1. In the sub-account, go to **Settings &gt; Domains &amp; URL Redirects**.
+2. Click **+ Connect a domain**.
+3. Find **Funnel/Website/Store/Blog/Webinar** and click **Connect**.
+4. Type the root domain or subdomain in the **Domain URL** field. For a root domain, you can also add www with a 301 redirect to the root.
+5. Choose **Continue** to use Domain Connect, or **Add record manually** to copy the records yourself.
+6. With Domain Connect, click **Authorize**, sign in to your domain provider and approve. Close that tab and return to HighLevel so it can verify.
+7. With manual setup, add the records from the next section at your DNS provider, save, then return and verify.
+8. Once verified, choose the funnel or website and its default page or step, then click **Link Domain**.
+9. Under **Manage** on the domain, set a **Default Page** and a **Default 404/Error Page**.
+
+Domain Connect only works when your domain is registered with a supported provider. HighLevel's Domain Connect article names GoDaddy and Cloudflare. For Namecheap, Bluehost, Squarespace and others, HighLevel shows the records to add manually.
+
+## What DNS records does GoHighLevel need?
+
+A root domain needs an A record with the host @ pointing to 162.159.140.166. A subdomain needs a CNAME with only the subdomain as the host, such as www or offers, pointing to sites.ludicrous.cloud. Use one record per hostname, never an A record and a CNAME together. Values as listed by HighLevel in October 2026.
+
+| What you connect | Record type | Host / Name | Value / Target |
+| --- | --- | --- | --- |
+| Root domain (yourbusiness.com) | A | @ | 162.159.140.166 |
+| Subdomain (offers.yourbusiness.com) | CNAME | offers | sites.ludicrous.cloud |
+| Subdomain, alternative | A | offers | 162.159.140.166 |
+
+Always copy the values HighLevel shows on your setup screen, since they are the ones it checks against. In the Host field, type only the subdomain part. Many DNS providers add the root domain for you, so "offers.yourbusiness.com" in the Host field becomes "offers.yourbusiness.com.yourbusiness.com" and never verifies.
+
+Add the records at the provider that holds your active nameservers. That is often your registrar, but not always. If you moved DNS to Cloudflare, records added at GoDaddy or Namecheap do nothing.
+
+## How do you connect a GoHighLevel domain in Cloudflare?
+
+Add the A or CNAME record in Cloudflare's DNS tab, then set its proxy status to "DNS only", the gray cloud. HighLevel says a proxied (orange cloud) record stops the domain from connecting and can cause SSL errors. Domain Connect works with Cloudflare too, but you still need to turn the proxy off on the records it creates.
+
+1. In Cloudflare, open the domain and go to **DNS**.
+2. Click **Add record** and enter the type, name and target from HighLevel.
+3. Set **Proxy status** to **DNS only**.
+4. Save, then go back to HighLevel and verify again.
+
+## How long does a GoHighLevel domain take to work?
+
+HighLevel says DNS changes can take up to 24 hours to spread. Its troubleshooting guide says some take 24 to 48 hours, while others verify within minutes. Once the domain verifies and is linked, SSL is issued automatically, and HighLevel says that takes a few minutes. You don't buy an SSL certificate separately.
+
+If the domain still shows as pending after 24 hours, check the records with a public lookup tool such as MXToolbox. You should see 162.159.140.166 for an A record or sites.ludicrous.cloud for a CNAME. If you see something else, the record is wrong or sits at the wrong DNS provider.
+
+## Why won't my domain connect to GoHighLevel?
+
+Most failed connections come from an old record still pointing the hostname somewhere else: a second A record, an IPv6 AAAA record, or a CAA record that blocks the SSL issuer. Cloudflare's proxy and records added at the wrong DNS host cause the rest. If the domain is already used by another product or sub-account, DNS changes won't fix it.
+
+| Problem | What it means | Fix |
+| --- | --- | --- |
+| Multiple A records | An old A record for the same host still points at your previous host or a parking page | Keep only the A record with HighLevel's value. Remove the others for that host only |
+| AAAA record conflict | An IPv6 record sends the hostname elsewhere | Remove all AAAA records for that root or subdomain |
+| CAA record issue | A CAA record doesn't allow Google Trust Services, so SSL can't be issued | Remove the CAA records for that domain, or add one that allows pki.goog |
+| DNS records don't match | Values copied wrong, added to the wrong domain, or added at a DNS host that isn't active | Compare type, host and value with the setup screen, at the provider that holds your nameservers |
+| Cloudflare won't connect | The record is proxied | Set the record to DNS only |
+| Product conflict | The domain is already linked to another funnel, website, WordPress site, webinar or client portal | Remove it from that product, or use a different subdomain for the new one |
+| Connected elsewhere | The domain sits in another sub-account or agency | Remove it there, or contact the account owner or HighLevel support |
+| Site works on root but 404s on www, or the reverse | Only one version is set up | Connect both and add a 301 redirect from one to the other |
+
+HighLevel's guide warns against deleting records you don't recognize. MX and TXT records often run your email or verify other services, so remove only the conflicting A, AAAA, CNAME or CAA records for the exact hostname you are connecting.
+
+## Can you buy a domain inside GoHighLevel?
+
+Yes, if the agency has turned on Domain Purchase. In the sub-account, go to Settings &gt; Domains &amp; URL Redirects and click "Purchase/Transfer Domain", search, choose the number of years and pay. HighLevel says registration takes about a minute and includes WHOIS privacy. Domain purchases are final and can't be refunded.
+
+HighLevel shows the price at checkout and does not publish a price list in its help article. Most extensions can be registered for up to 10 years; the .co family allows up to 5. Purchased domains appear under **Purchased Domains**, where you also manage their DNS. If you already own the domain elsewhere, there is no need to move it. Pointing DNS works the same.
+
+## Which other domains does a GoHighLevel account use?
+
+A website domain is only one of several. Email sending, branded links in forms and calendars, the white-label app login and the client portal each use their own domain or subdomain, set up in different places. HighLevel says the DNS records for one domain type should not be reused for another.
+
+| Domain type | What it does | Where to set it up |
+| --- | --- | --- |
+| Website or funnel domain | Publishes websites, funnels, stores and blogs | Sub-account &gt; Settings &gt; Domains &amp; URL Redirects |
+| Dedicated sending domain | Sends email from your own domain through LC Email | Settings &gt; Email Services &gt; Dedicated Domain and IP |
+| Branded (API) domain | Brands links in forms, surveys and calendars | Sub-account &gt; Settings &gt; Business Profile &gt; Branded Domain |
+| White label domain | Your own login URL for the app, often app.youragency.com | Agency view &gt; Settings &gt; Company Settings &gt; Whitelabel |
+| Client Portal domain | The address clients use to reach the portal | Sub-account &gt; Sites &gt; Client Portal &gt; Settings |
+
+HighLevel recommends a subdomain for the sending, branded and white label domains, because pointing the root at HighLevel would take it away from your website. If your emails land in spam, our [guide to GHL emails going to spam](/guides/ghl-emails-going-to-spam) covers the sending domain records.
+
+## What we see in real accounts
+
+Nine times out of ten, a domain that won't connect is a nameserver problem, so before we touch any records we run an NS lookup to see where the DNS actually lives. A client hands us their GoDaddy login, we add the records GoHighLevel asks for, and nothing happens. The nameservers point to Cloudflare, an old web host, Wix, or wherever their last developer set things up, so the registrar's records are ignored however many times you fix them.
+
+On one domain, the records sat in GoDaddy but the nameservers pointed to NamePros, because the domain had been bought through a NamePros sale. The live A record still pointed at an old server. The fix was simple once we saw it: move the nameservers back to GoDaddy, or add the records where the DNS actually lived.
+
+After the nameservers, we check in this order:
+
+1. **Old records left behind.** An A record from the previous host, an extra AAAA record or a duplicate on the root. GHL's record and the old one fight each other, so the domain connects sometimes and fails other times. We delete anything that conflicts.
+2. **Cloudflare's proxy.** With the orange cloud on, GHL can't verify the record or issue SSL. We switch it to DNS only, the gray cloud, at least until the domain is connected.
+3. **Root and www mixed up.** Someone puts a CNAME on the root, or sets up only the root and forgets www (or the other way around). We set up both and pick which one redirects to the other.
+4. **The domain attached somewhere else.** It is still connected in another sub-account or an old funnel, so GHL won't take it again. We remove it there first.
+
+Sometimes the records are right, but the client checks after five minutes and says it is broken. Propagation and SSL can take a while, so we check with a DNS lookup tool, not the browser. One client couldn't find the A record type in their DNS panel at all: Chrome was auto-translating the page, and "A" had turned into "TO". With translation off, it was there.
+
+## Domain still not connecting?
+
+Once the records are right, many domains connect within minutes. When one won't verify, SSL won't issue, or the site loads the wrong page, our [GHL fixes service](/services/ghl-fixes) finds the conflicting record and gets it live. If you are building the site itself, see our [funnels and websites service](/services/funnels-websites).
+
+## Sources
+
+All checked on 23 November 2026.
+
+- [How to Set Up Root Domain/Subdomain for Funnels/Websites](https://help.gohighlevel.com/support/solutions/articles/48001153720-how-to-set-up-root-domain-subdomain-for-funnels-websites), HighLevel help center, modified 16 October 2026: menu path, DNS values, Cloudflare, default and 404 pages, SSL and troubleshooting.
+- [Troubleshooting Guide: Connecting Your Domain](https://help.leadconnectorhq.com/support/solutions/articles/155000004862-troubleshooting-guide-connecting-your-domain), LeadConnector help center, modified 28 September 2026: A, AAAA and CAA conflicts, product conflicts, domains connected elsewhere, the 24 to 48 hour note.
+- [Connecting Your Domain on GHL - A Guide](https://help.gohighlevel.com/support/solutions/articles/155000005132-connecting-your-domain-on-ghl-a-guide), help center, modified 25 March 2026: automatic and manual paths, provider steps, SSL.
+- [How to use the Domain Connect feature?](https://help.gohighlevel.com/support/solutions/articles/155000000734-how-to-use-the-domain-connect-feature-), help center, modified 6 February 2024: supported providers and authorization.
+- [How to Set Up Different Domain Types in HighLevel](https://help.gohighlevel.com/support/solutions/articles/155000002561-how-to-set-up-different-domain-types-in-highlevel-websites-email-wordpress-more), help center, modified 10 September 2026: domain types, where each is set up, root domain warning.
+- [How to Purchase a Domain in HighLevel](https://help.gohighlevel.com/support/solutions/articles/155000003610), help center, modified 8 October 2026: purchase steps, terms, WHOIS privacy, refund policy.
