@@ -37,7 +37,7 @@ Build the snapshot you want new customers to receive before you create plans. A 
 
 ## How do you set up SaaS mode in GoHighLevel?
 
-You set up SaaS mode in the SaaS Configurator in Agency View. Connect Stripe, create each plan with its price, features, snapshot and trial, then sell it through an order form or a sale link. HighLevel's setup guide says you can create up to 20 SaaS plans per agency account.
+You set up SaaS mode in the SaaS Configurator in Agency View. Connect Stripe, create each plan with its price, features, snapshot and trial, then sell it through an order form or a sale link.
 
 1. In Agency View, go to **Settings > Stripe** and click **Connect with Stripe**.
 2. Open **SaaS Configurator** in Agency View.
@@ -61,7 +61,7 @@ A sub-account is not created when:
 - The customer paid through PayPal
 - The email address already has an account
 
-HighLevel says "Only Stripe works for SaaS products" on Stripe-based plans, so a customer who pays through PayPal will not get an account. Because test-mode purchases also skip account creation, a test order in test mode will not show you the full sign-up flow.
+In [HighLevel's original SaaS billing (V1)](https://help.gohighlevel.com/support/solutions/articles/155000008015-getting-started-with-the-saas-configurator), Stripe is the payment provider. The newer SaaS billing (V2) uses the payment providers connected to your agency's own sub-account. Test-mode purchases skip account creation, so a test order won't show you the full sign-up flow.
 
 ## How does rebilling work in SaaS mode?
 
@@ -110,6 +110,6 @@ Domains cause the last common problem. The agency needs a branded domain for its
 All checked on 9 November 2026.
 
 - [HighLevel pricing page](https://www.gohighlevel.com/pricing), checked on 9 November 2026: plan names and prices, rebilling with markup on Founder, advanced API and the 20% annual saving.
-- SaaS Mode: Full Setup Guide + FAQ, HighLevel help center, last modified 20 February 2026: definition, prerequisites, setup steps, the 20-plan limit, Stripe-only payments, what happens at sign-up and when no sub-account is created.
+- SaaS Mode: Full Setup Guide + FAQ, HighLevel help center, last modified 20 February 2026: definition, prerequisites, setup steps, what happens at sign-up and when no sub-account is created.
 - [Getting Started with the SaaS Configurator](https://help.gohighlevel.com/support/solutions/articles/155000008015-getting-started-with-the-saas-configurator), help center, last modified 12 September 2026: SaaS V1 and V2, plan categories, plan settings, sale links, onboarding and adding a SaaS subscription to an existing client.
 - [Rebilling, Reselling, and Wallets Explained](https://help.gohighlevel.com/support/solutions/articles/155000002095-rebilling-reselling-and-wallets-explained), help center, last modified 30 September 2026: which plans can rebill, markup on the $497 plan only, wallets, auto-recharge, negative balances and Switch to SaaS.
