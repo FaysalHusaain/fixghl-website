@@ -135,7 +135,7 @@ export default function Page() {
         </div>
         <p className="text-small text-ink-600">
           The one business example assumes one local number, 2,000 text segments, 300 minutes of calls each way, 10,000 emails and a Low Volume A2P
-          campaign. Pick any of the three in the calculator to see every line.
+          campaign. Enter the same numbers in the calculator to see every line.
         </p>
 
         <h2 id="rates">Which prices does the calculator use?</h2>

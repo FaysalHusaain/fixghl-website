@@ -23,7 +23,7 @@ export function MobileBookBar() {
       entries.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
       setBookingInView(visible.size > 0);
     });
-    document.querySelectorAll("[data-booking-module]").forEach((el) => bookIo.observe(el));
+    document.querySelectorAll("[data-booking-module], [data-calculator]").forEach((el) => bookIo.observe(el)); // the calculator has its own bottom bar
     return () => {
       heroIo.disconnect();
       bookIo.disconnect();
