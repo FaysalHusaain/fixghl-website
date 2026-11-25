@@ -59,6 +59,7 @@ export const addons: Record<AddonId, { name: string; price: number; per: "sub-ac
 export const premiumAction = 0.01; // per workflow premium action
 
 export type Inputs = {
+  who: "own" | "agency";
   plan: PlanId;
   subAccounts: number;
   localNumbers: number;
@@ -82,6 +83,7 @@ export type Inputs = {
 };
 
 export const defaults: Inputs = {
+  who: "own",
   plan: "starter",
   subAccounts: 1,
   localNumbers: 1,
@@ -110,13 +112,13 @@ export const presets: { id: string; name: string; line: string; inputs: Inputs }
     id: "agency5",
     name: "Agency, 5 clients",
     line: "Unlimited plan, a number per client, AI Growth on two",
-    inputs: { ...defaults, plan: "unlimited", subAccounts: 5, localNumbers: 5, sms: 10000, callOutMin: 1500, callInMin: 1500, emails: 50000, aiPlan: "growth", aiSubAccounts: 2 },
+    inputs: { ...defaults, who: "agency", plan: "unlimited", subAccounts: 5, localNumbers: 5, sms: 10000, callOutMin: 1500, callInMin: 1500, emails: 50000, aiPlan: "growth", aiSubAccounts: 2 },
   },
   {
     id: "saas20",
     name: "SaaS agency, 20 clients",
     line: "Founder plan, heavy texting, AI Unlimited on ten",
-    inputs: { ...defaults, plan: "founder", subAccounts: 20, localNumbers: 20, sms: 60000, callOutMin: 6000, callInMin: 6000, recording: true, a2p: "standard", emails: 200000, validations: 20000, aiPlan: "unlimited", aiSubAccounts: 10, addons: { whatsapp: 5 } },
+    inputs: { ...defaults, who: "agency", plan: "founder", subAccounts: 20, localNumbers: 20, sms: 60000, callOutMin: 6000, callInMin: 6000, recording: true, a2p: "standard", emails: 200000, validations: 20000, aiPlan: "unlimited", aiSubAccounts: 10, addons: { whatsapp: 5 } },
   },
 ];
 
@@ -124,6 +126,8 @@ export type Line = { label: string; detail: string; amount: number };
 export type Group = { id: string; name: string; lines: Line[]; total: number };
 export type Result = { groups: Group[]; monthly: number; oneTime: number; firstMonth: number; yearly: number; rebillable: number; perSubAccount: number; warnings: string[] };
 
+// Round to the cent, half up. toFixed first removes float noise such as 33.075 being stored as 33.07499...
+const toCents = (v: number) => Math.round(Number((v * 100).toFixed(6))) / 100;
 const n = (v: number) => (Number.isFinite(v) && v > 0 ? v : 0);
 const fmtInt = (v: number) => Math.round(v).toLocaleString("en-US");
 
@@ -136,7 +140,7 @@ export function calculate(i: Inputs): Result {
   const planLines: Line[] = [{ label: `${plan.name} plan`, detail: "per month", amount: plan.price }];
 
   const phoneLines: Line[] = [];
-  const add = (arr: Line[], label: string, detail: string, amount: number) => { if (amount > 0) arr.push({ label, detail, amount }); };
+  const add = (arr: Line[], label: string, detail: string, amount: number) => { const cents = toCents(amount); if (cents > 0) arr.push({ label, detail, amount: cents }); };
   add(phoneLines, "Local numbers", `${fmtInt(n(i.localNumbers))} × $${phone.localNumber}`, n(i.localNumbers) * phone.localNumber);
   add(phoneLines, "Toll-free numbers", `${fmtInt(n(i.tollFreeNumbers))} × $${phone.tollFreeNumber}`, n(i.tollFreeNumbers) * phone.tollFreeNumber);
   add(phoneLines, "SMS", `${fmtInt(n(i.sms))} segments × $${phone.sms}`, n(i.sms) * phone.sms);
@@ -171,9 +175,10 @@ export function calculate(i: Inputs): Result {
   }
   add(addonLines, "Workflow premium actions", `${fmtInt(n(i.premiumActions))} × $${premiumAction}`, n(i.premiumActions) * premiumAction);
 
-  const group = (id: string, name: string, lines: Line[]): Group => ({ id, name, lines, total: lines.reduce((s, l) => s + l.amount, 0) });
+  const r2 = toCents;
+  const group = (id: string, name: string, lines: Line[]): Group => ({ id, name, lines, total: r2(lines.reduce((s, l) => s + l.amount, 0)) });
   const groups = [group("plan", "Plan", planLines), group("phone", "Phone and SMS", phoneLines), group("email", "Email", emailLines), group("ai", "AI", aiLines), group("addons", "Add-ons", addonLines)];
-  const monthly = groups.reduce((s, g) => s + g.total, 0);
+  const monthly = r2(groups.reduce((s, g) => s + g.total, 0));
   const oneTime = a.oneTime;
   const usageRebill = i.plan === "starter" ? 0 : groups.find((g) => g.id === "phone")!.total + groups.find((g) => g.id === "email")!.total;
   const aiRebill = i.plan === "founder" ? groups.find((g) => g.id === "ai")!.total : 0;
@@ -182,10 +187,10 @@ export function calculate(i: Inputs): Result {
     groups,
     monthly,
     oneTime,
-    firstMonth: monthly + oneTime,
-    yearly: monthly * 12 + oneTime,
-    rebillable: usageRebill + aiRebill,
-    perSubAccount: monthly / subs,
+    firstMonth: r2(monthly + oneTime),
+    yearly: r2(monthly * 12 + oneTime),
+    rebillable: r2(usageRebill + aiRebill),
+    perSubAccount: r2(monthly / subs),
     warnings,
   };
 }

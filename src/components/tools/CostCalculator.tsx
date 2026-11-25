@@ -11,12 +11,10 @@ import {
   calculate,
   defaults,
   plans,
-  presets,
   usd,
   voiceAi,
   type A2pId,
   type AddonId,
-  type AiPlanId,
   type Inputs,
   type PlanId,
 } from "@/lib/ghl-pricing";
@@ -24,10 +22,11 @@ import {
 /* ---------- URL state: every choice lives in the link, so a result can be shared or bookmarked ---------- */
 
 const keys: [keyof Inputs, string][] = [
-  ["plan", "p"], ["subAccounts", "s"], ["localNumbers", "ln"], ["tollFreeNumbers", "tf"], ["sms", "sms"], ["carrierFees", "cf"],
+  ["who", "w"], ["plan", "p"], ["subAccounts", "s"], ["localNumbers", "ln"], ["tollFreeNumbers", "tf"], ["sms", "sms"], ["carrierFees", "cf"],
   ["mms", "mms"], ["callOutMin", "co"], ["callInMin", "ci"], ["recording", "rec"], ["transcription", "tr"], ["a2p", "a2p"],
   ["emails", "em"], ["validations", "ev"], ["aiPlan", "ai"], ["aiSubAccounts", "ais"], ["voiceMin", "vm"], ["voiceRate", "vr"], ["premiumActions", "pa"],
 ];
+const MAX = 10_000_000;
 
 function toQuery(i: Inputs) {
   const q = new URLSearchParams();
@@ -50,21 +49,23 @@ function fromQuery(search: string): Inputs {
     if (raw === null) continue;
     const d = defaults[k];
     if (typeof d === "boolean") rec[k] = raw === "1";
-    else if (typeof d === "number") { const num = Number(raw); if (Number.isFinite(num) && num >= 0) rec[k] = Math.min(num, 10_000_000); }
+    else if (typeof d === "number") { const num = Math.round(Number(raw)); if (Number.isFinite(num) && num >= 0) rec[k] = Math.min(num, MAX); }
     else rec[k] = raw;
   }
+  if (out.who !== "own" && out.who !== "agency") out.who = defaults.who;
   if (!(out.plan in plans)) out.plan = defaults.plan;
   if (!(out.a2p in a2p)) out.a2p = defaults.a2p;
   if (!(out.aiPlan in aiPlans)) out.aiPlan = defaults.aiPlan;
   if (out.voiceRate !== "low" && out.voiceRate !== "high") out.voiceRate = "low";
+  out.subAccounts = Math.max(1, out.subAccounts);
   for (const pair of (q.get("ad") ?? "").split("-")) {
     const [k, v] = pair.split(".");
-    if (k in addons && Number(v) > 0) out.addons[k as AddonId] = Math.min(Number(v), 999);
+    if (k in addons && Number(v) > 0) out.addons[k as AddonId] = Math.min(Math.round(Number(v)), 999);
   }
   return out;
 }
 
-/* ---------- Small controls ---------- */
+/* ---------- Controls ---------- */
 
 function useTween(value: number) {
   const [shown, setShown] = useState(value);
@@ -75,9 +76,8 @@ function useTween(value: number) {
     const a = from.current;
     let raf = 0;
     const step = (t: number) => {
-      const k = reduce ? 1 : Math.min(1, (t - start) / 420);
-      const e = 1 - Math.pow(1 - k, 3);
-      const v = a + (value - a) * e;
+      const k = reduce ? 1 : Math.min(1, (t - start) / 380);
+      const v = k === 1 ? value : a + (value - a) * (1 - Math.pow(1 - k, 3));
       setShown(v);
       from.current = v;
       if (k < 1) raf = requestAnimationFrame(step);
@@ -88,20 +88,90 @@ function useTween(value: number) {
   return shown;
 }
 
-function Segmented<T extends string>({ label, value, options, onChange, hint }: { label: string; value: T; options: { value: T; label: string; disabled?: boolean }[]; onChange: (v: T) => void; hint?: string }) {
+const fmt = (v: number) => v.toLocaleString("en-US");
+
+/** A number with a minus/plus stepper. Typing is free; the value is cleaned on every change. */
+function Stepper({ label, value, onChange, step = 1, min = 0, max = MAX, id }: { label: string; value: number; onChange: (v: number) => void; step?: number; min?: number; max?: number; id?: string }) {
+  const clamp = (v: number) => Math.max(min, Math.min(Number.isFinite(v) ? Math.round(v) : min, max));
+  return (
+    <div className="calc-stepper">
+      <button type="button" aria-label={`Fewer ${label}`} onClick={() => onChange(clamp(value - step))} disabled={value <= min}>
+        <svg viewBox="0 0 24 24" className="size-4" aria-hidden><path d="M5 12h14" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" /></svg>
+      </button>
+      <input
+        id={id}
+        type="text"
+        inputMode="numeric"
+        aria-label={id ? undefined : label}
+        value={fmt(value)}
+        onChange={(e) => onChange(clamp(Number(e.target.value.replace(/[^\d]/g, "") || 0)))}
+        onFocus={(e) => e.target.select()}
+      />
+      <button type="button" aria-label={`More ${label}`} onClick={() => onChange(clamp(value + step))} disabled={value >= max}>
+        <Icon name="plus" className="size-4" />
+      </button>
+    </div>
+  );
+}
+
+/** A labelled row: question on the left, stepper on the right (stacks on narrow screens). */
+function NumberRow({ label, hint, value, onChange, step, min, max }: { label: string; hint?: string; value: number; onChange: (v: number) => void; step?: number; min?: number; max?: number }) {
   const id = useId();
   return (
+    <div className="calc-row">
+      <label htmlFor={id} className="min-w-0 flex-1 basis-[12rem]">
+        <span className="block text-[1rem] font-medium text-ink-950">{label}</span>
+        {hint && <span className="mt-0.5 block text-small text-ink-600">{hint}</span>}
+      </label>
+      <Stepper id={id} label={label} value={value} onChange={onChange} step={step} min={min} max={max} />
+    </div>
+  );
+}
+
+/** Quick picks for an amount, plus "Other" to type an exact number. */
+function Amount({ label, hint, value, choices, onChange, step, unit }: { label: string; hint?: string; value: number; choices: number[]; onChange: (v: number) => void; step: number; unit: string }) {
+  const name = useId();
+  const [custom, setCustom] = useState(!choices.includes(value));
+  const isCustom = custom || !choices.includes(value);
+  return (
     <fieldset className="min-w-0">
-      <legend className="text-[0.9375rem] font-medium text-ink-950">{label}</legend>
-      <div className="calc-seg mt-3" role="radiogroup" aria-describedby={hint ? `${id}-h` : undefined}>
-        {options.map((o) => (
-          <label key={o.value} className="calc-seg-item" data-disabled={o.disabled || undefined}>
-            <input type="radio" name={id} value={o.value} checked={value === o.value} disabled={o.disabled} onChange={() => onChange(o.value)} className="sr-only" />
-            <span>{o.label}</span>
+      <legend className="text-[1rem] font-medium text-ink-950">{label}</legend>
+      {hint && <p className="mt-0.5 text-small text-ink-600">{hint}</p>}
+      <div className="calc-chips mt-3">
+        {choices.map((c) => (
+          <label key={c} className="calc-chip">
+            <input type="radio" name={name} checked={!isCustom && value === c} onChange={() => { setCustom(false); onChange(c); }} className="sr-only" />
+            <span>{c === 0 ? "None" : fmt(c)}</span>
           </label>
         ))}
+        <label className="calc-chip">
+          <input type="radio" name={name} checked={isCustom} onChange={() => setCustom(true)} className="sr-only" />
+          <span>Other</span>
+        </label>
       </div>
-      {hint && <p id={`${id}-h`} className="mt-2 text-small text-ink-600">{hint}</p>}
+      {isCustom && (
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <Stepper label={unit} value={value} onChange={onChange} step={step} />
+          <span className="text-small text-ink-600">{unit} a month</span>
+        </div>
+      )}
+    </fieldset>
+  );
+}
+
+function Choice<T extends string>({ label, value, options, onChange, hint }: { label: string; value: T; options: { value: T; title: string; line?: string; disabled?: boolean }[]; onChange: (v: T) => void; hint?: string }) {
+  return (
+    <fieldset className="min-w-0">
+      <legend className="text-[1rem] font-medium text-ink-950">{label}</legend>
+      {hint && <p className="mt-0.5 text-small text-ink-600">{hint}</p>}
+      <div className={`mt-3 grid gap-2.5 ${options.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`} role="radiogroup" aria-label={label}>
+        {options.map((o) => (
+          <button key={o.value} type="button" role="radio" aria-checked={value === o.value} disabled={o.disabled} onClick={() => onChange(o.value)} className="calc-option">
+            <span className="block font-semibold">{o.title}</span>
+            {o.line && <span className="calc-option-line mt-1 block text-small leading-snug">{o.line}</span>}
+          </button>
+        ))}
+      </div>
     </fieldset>
   );
 }
@@ -109,9 +179,9 @@ function Segmented<T extends string>({ label, value, options, onChange, hint }: 
 function Switch({ label, checked, onChange, hint }: { label: string; checked: boolean; onChange: (v: boolean) => void; hint?: string }) {
   const id = useId();
   return (
-    <div className="flex min-h-11 items-center justify-between gap-6">
-      <label htmlFor={id} className="min-w-0 cursor-pointer">
-        <span className="block text-[0.9375rem] font-medium text-ink-950">{label}</span>
+    <div className="calc-row">
+      <label htmlFor={id} className="min-w-0 flex-1 basis-[12rem] cursor-pointer">
+        <span className="block text-[1rem] font-medium text-ink-950">{label}</span>
         {hint && <span className="mt-0.5 block text-small text-ink-600">{hint}</span>}
       </label>
       <input id={id} type="checkbox" role="switch" className="calc-switch shrink-0" checked={checked} onChange={(e) => onChange(e.target.checked)} />
@@ -119,93 +189,45 @@ function Switch({ label, checked, onChange, hint }: { label: string; checked: bo
   );
 }
 
-const SLIDER_MAX = { sms: 100_000, emails: 500_000, minutes: 20_000, small: 50, voice: 5_000, validations: 100_000, actions: 100_000 } as const;
-
-function NumberField({ label, value, onChange, hint, max, step = 1, slider, unit }: { label: string; value: number; onChange: (v: number) => void; hint?: string; max: number; step?: number; slider?: boolean; unit?: string }) {
-  const id = useId();
-  const clamp = (v: number) => Math.max(0, Math.min(Number.isFinite(v) ? v : 0, 10_000_000));
-  const pct = Math.min(100, (value / max) * 100);
-  return (
-    <div className="min-w-0">
-      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
-        <label htmlFor={id} className="min-w-0 flex-1 basis-[13rem]">
-          <span className="block text-[0.9375rem] font-medium text-ink-950">{label}</span>
-          {hint && <span className="mt-0.5 block text-small text-ink-600">{hint}</span>}
-        </label>
-        <div className="calc-stepper shrink-0">
-          <button type="button" aria-label={`Decrease ${label}`} onClick={() => onChange(clamp(value - step))} disabled={value <= 0}>
-            <svg viewBox="0 0 24 24" className="size-4" aria-hidden><path d="M5 12h14" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" /></svg>
-          </button>
-          <input
-            id={id}
-            type="text"
-            inputMode="numeric"
-            value={value.toLocaleString("en-US")}
-            onChange={(e) => onChange(clamp(Number(e.target.value.replace(/[^\d]/g, ""))))}
-            onFocus={(e) => e.target.select()}
-            aria-describedby={unit ? `${id}-u` : undefined}
-          />
-          <button type="button" aria-label={`Increase ${label}`} onClick={() => onChange(clamp(value + step))}>
-            <Icon name="plus" className="size-4" />
-          </button>
-        </div>
-      </div>
-      {unit && <span id={`${id}-u`} className="sr-only">{unit}</span>}
-      {slider && (
-        <input
-          type="range"
-          className="calc-range mt-4 w-full"
-          min={0}
-          max={max}
-          step={step}
-          value={Math.min(value, max)}
-          onChange={(e) => onChange(Number(e.target.value))}
-          aria-label={`${label} slider`}
-          style={{ "--pct": `${pct}%` } as React.CSSProperties}
-        />
-      )}
-    </div>
-  );
-}
-
-function Step({ title, subtotal, children, id }: { title: string; subtotal?: number; children: React.ReactNode; id: string }) {
+function Card({ title, children, id }: { title: string; children: React.ReactNode; id: string }) {
   return (
     <section aria-labelledby={id} className="rounded-[1.75rem] bg-white p-6 md:p-8">
-      <div className="flex items-baseline justify-between gap-4">
-        <h3 id={id} className="font-display text-[1.375rem] font-semibold tracking-[-0.02em] text-ink-950 md:text-[1.5rem]">{title}</h3>
-        {subtotal !== undefined && <p className="shrink-0 text-[0.9375rem] tabular-nums text-ink-600"><span className="sr-only">Subtotal </span>{usd(subtotal)}<span className="text-ink-500">/mo</span></p>}
-      </div>
-      <div className="mt-6 flex flex-col gap-7">{children}</div>
+      <h3 id={id} className="font-display text-[1.375rem] font-semibold tracking-[-0.02em] text-ink-950 md:text-[1.5rem]">{title}</h3>
+      <div className="mt-6 flex flex-col gap-8">{children}</div>
     </section>
   );
 }
 
 /* ---------- The calculator ---------- */
 
+const recommendPlan = (who: Inputs["who"], subs: number): PlanId => (who === "own" || subs <= 3 ? "starter" : "unlimited");
+
 export function CostCalculator() {
   const [i, setI] = useState<Inputs>(defaults);
-  const [preset, setPreset] = useState<string | null>("solo");
-  const [copied, setCopied] = useState<string>("");
+  const [copied, setCopied] = useState("");
+  const [inView, setInView] = useState(false);
+  const planTouched = useRef(false);
   const used = useRef(false);
-  const hydrated = useRef(false);
+  const ready = useRef(false);
+  const root = useRef<HTMLDivElement>(null);
   const r = useMemo(() => calculate(i), [i]);
   const monthly = useTween(r.monthly);
 
+  // Restore a shared link's choices after hydration (the server renders the defaults).
   useEffect(() => {
-    // Restore a shared link's choices after hydration (the server renders the defaults).
     const raf = requestAnimationFrame(() => {
       if (window.location.search) {
-        const fromUrl = fromQuery(window.location.search);
-        setI(fromUrl);
-        setPreset(presets.find((p) => toQuery(p.inputs) === toQuery(fromUrl))?.id ?? null);
+        setI(fromQuery(window.location.search));
+        planTouched.current = true;
       }
-      hydrated.current = true;
+      ready.current = true;
     });
     return () => cancelAnimationFrame(raf);
   }, []);
 
+  // Keep the link in sync with the choices.
   useEffect(() => {
-    if (!hydrated.current) return;
+    if (!ready.current) return;
     const t = setTimeout(() => {
       const q = toQuery(i);
       window.history.replaceState(null, "", q ? `?${q}` : window.location.pathname);
@@ -213,24 +235,39 @@ export function CostCalculator() {
     return () => clearTimeout(t);
   }, [i]);
 
-  const set = <K extends keyof Inputs>(k: K, v: Inputs[K]) => {
+  // Phones: show the total bar while the questions are on screen, and hide it once the summary itself is visible.
+  useEffect(() => {
+    const el = root.current;
+    const summary = document.getElementById("calc-summary");
+    if (!el || !summary) return;
+    let calcOn = false;
+    let summaryOn = false;
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.target === el) calcOn = e.isIntersecting;
+        else summaryOn = e.isIntersecting;
+      }
+      setInView(calcOn && !summaryOn);
+    });
+    io.observe(el);
+    io.observe(summary);
+    return () => io.disconnect();
+  }, []);
+
+  const update = (patch: Partial<Inputs>) => {
     setI((prev) => {
-      const next = { ...prev, [k]: v };
-      if (k === "plan" && v !== "founder" && next.aiPlan === "starter") next.aiPlan = "none";
+      const next = { ...prev, ...patch };
+      if ("plan" in patch) planTouched.current = true;
+      if (("who" in patch || "subAccounts" in patch) && !planTouched.current) next.plan = recommendPlan(next.who, next.subAccounts);
+      if ("who" in patch && patch.who === "own") next.subAccounts = 1;
+      if ("subAccounts" in patch && prev.localNumbers === prev.subAccounts) next.localNumbers = next.subAccounts; // numbers follow businesses until changed by hand
+      if (next.plan !== "founder" && next.aiPlan === "starter") next.aiPlan = "none";
+      next.aiSubAccounts = Math.min(Math.max(1, next.aiSubAccounts), next.subAccounts);
       return next;
     });
-    setPreset(null);
     if (!used.current) { used.current = true; track("calculator_used", { tool: "ghl_cost" }); }
   };
-  const setAddon = (id: AddonId, q: number) => set("addons", { ...i.addons, [id]: q });
-
-  const applyPreset = (id: string) => {
-    const p = presets.find((x) => x.id === id);
-    if (!p) return;
-    setI({ ...p.inputs, addons: { ...p.inputs.addons } });
-    setPreset(id);
-    track("calculator_preset", { tool: "ghl_cost", preset: id });
-  };
+  const setAddon = (id: AddonId, q: number) => update({ addons: { ...i.addons, [id]: q } });
 
   const flash = (what: string) => { setCopied(what); setTimeout(() => setCopied(""), 2000); };
   const copyLink = async () => {
@@ -238,206 +275,198 @@ export function CostCalculator() {
   };
   const copyBreakdown = async () => {
     const lines = [
-      `GoHighLevel cost estimate (fixghl.com/resources/gohighlevel-cost-calculator)`,
+      "GoHighLevel cost estimate",
       `Monthly: ${usd(r.monthly)}`,
       r.oneTime ? `One-time A2P registration: ${usd(r.oneTime)}` : "",
-      `Per year: ${usd(r.yearly)}`,
+      `First year: ${usd(r.yearly)}`,
       "",
-      ...r.groups.filter((g) => g.lines.length).flatMap((g) => [`${g.name}: ${usd(g.total)}`, ...g.lines.map((l) => `  ${l.label} (${l.detail}): ${usd(l.amount)}`)]),
-      "",
-      "Estimate from HighLevel's published US prices. Taxes and WhatsApp conversation fees not included.",
-      `Open it: ${window.location.href}`,
-    ].filter((l, idx, arr) => l !== "" || arr[idx - 1] !== "");
+      ...r.groups.filter((g) => g.lines.length).flatMap((g) => [`${g.name}: ${usd(g.total)}`, ...g.lines.map((l) => `  ${l.label} (${l.detail}): ${usd(l.amount)}`), ""]),
+      "HighLevel's published US prices, checked 25 November 2026. Taxes not included.",
+      window.location.href,
+    ].filter((l, idx, arr) => !(l === "" && arr[idx - 1] === ""));
     try { await navigator.clipboard.writeText(lines.join("\n")); flash("breakdown"); track("calculator_copy", { tool: "ghl_cost" }); } catch { flash("fail"); }
   };
-  const reset = () => { setI({ ...defaults, addons: {} }); setPreset("solo"); };
+  const reset = () => { planTouched.current = false; setI({ ...defaults, addons: {} }); };
 
-  const g = (id: string) => r.groups.find((x) => x.id === id)!.total;
-  const voicePaid = i.aiPlan === "none" || i.aiPlan === "starter";
-  const subs = Math.max(1, i.subAccounts);
-  const totalCents = Math.round(monthly * 100);
-  const dollars = Math.floor(totalCents / 100);
-  const cents = String(totalCents % 100).padStart(2, "0");
-
+  const agency = i.who === "agency";
+  const subs = i.subAccounts;
+  const calls = i.callOutMin + i.callInMin;
+  const setCalls = (v: number) => update({ callOutMin: Math.ceil(v / 2), callInMin: Math.floor(v / 2) });
+  const recommended = recommendPlan(i.who, subs);
+  const cents = Math.round(monthly * 100);
   const addonOrder: AddonId[] = ["whatsapp", "seo", "listings", "prospecting", "clientPortal", "wordpress", "dedicatedIp", "whiteLabelApp", "hipaa", "premiumSupport"];
 
   return (
-    <div className="calc" data-calculator>
-      {/* Phone: the running total stays in view while you change things */}
-      <a href="#calc-summary" className="calc-mobile-total on-dark lg:hidden">
-        <span className="text-small text-ink-300">Estimated monthly</span>
-        <span className="font-display text-[1.25rem] font-semibold tabular-nums text-gold-500">{usd(r.monthly)}</span>
-      </a>
-
-      <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
-        <div className="flex min-w-0 flex-col gap-4 lg:col-span-7 md:gap-5">
-          <section aria-labelledby="calc-start" className="rounded-[1.75rem] bg-white p-6 md:p-8">
-            <h3 id="calc-start" className="font-display text-[1.375rem] font-semibold tracking-[-0.02em] md:text-[1.5rem]">Start from a typical setup</h3>
-            <div className="mt-5 grid gap-2.5 sm:grid-cols-3" role="radiogroup" aria-label="Typical setups">
-              {presets.map((p) => (
-                <button key={p.id} type="button" role="radio" aria-checked={preset === p.id} onClick={() => applyPreset(p.id)} className="calc-preset">
-                  <span className="block font-semibold">{p.name}</span>
-                  <span className="mt-1 block text-small leading-snug opacity-75">{p.line}</span>
-                </button>
-              ))}
-            </div>
-            <p className="mt-4 text-small text-ink-600">Then change anything below. The total updates as you go.</p>
-          </section>
-
-          <Step id="calc-plan" title="Plan" subtotal={g("plan")}>
-            <div className="grid gap-2.5 sm:grid-cols-3" role="radiogroup" aria-label="GoHighLevel plan">
-              {(Object.keys(plans) as PlanId[]).map((id) => (
-                <button key={id} type="button" role="radio" aria-checked={i.plan === id} onClick={() => set("plan", id)} className="calc-plan">
-                  <span className="block font-semibold">{plans[id].name}</span>
-                  <span className="calc-plan-price mt-3 block font-display text-[1.75rem] font-semibold leading-none tracking-[-0.03em] tabular-nums">${plans[id].price}<span className="text-[0.9375rem] font-medium tracking-normal opacity-70">/mo</span></span>
-                  <span className="mt-3 block text-small leading-snug opacity-75">{plans[id].note}</span>
-                </button>
-              ))}
-            </div>
-            <NumberField label="Sub-accounts" hint="One per business or client you run in GoHighLevel" value={i.subAccounts} onChange={(v) => set("subAccounts", Math.max(1, v))} max={SLIDER_MAX.small} />
-          </Step>
-
-          <Step id="calc-phone" title="Phone and texting" subtotal={g("phone")}>
-            <div className="grid gap-7 sm:grid-cols-2">
-              <NumberField label="Local numbers" hint="$1.15 a month each" value={i.localNumbers} onChange={(v) => set("localNumbers", v)} max={SLIDER_MAX.small} />
-              <NumberField label="Toll-free numbers" hint="$2.15 a month each" value={i.tollFreeNumbers} onChange={(v) => set("tollFreeNumbers", v)} max={SLIDER_MAX.small} />
-            </div>
-            <NumberField label="Text messages a month" hint="Segments sent and received, across all sub-accounts. A long text can be 2 or 3 segments." value={i.sms} onChange={(v) => set("sms", v)} max={SLIDER_MAX.sms} step={500} slider unit="segments" />
-            <Switch label="Include carrier fees" hint="US carriers add about half a cent per text. We use $0.0045 as an average." checked={i.carrierFees} onChange={(v) => set("carrierFees", v)} />
-            <NumberField label="Picture messages (MMS) sent" hint="$0.022 each" value={i.mms} onChange={(v) => set("mms", v)} max={SLIDER_MAX.sms} step={100} />
-            <div className="grid gap-7 sm:grid-cols-2">
-              <NumberField label="Outbound call minutes" hint="$0.0166 a minute" value={i.callOutMin} onChange={(v) => set("callOutMin", v)} max={SLIDER_MAX.minutes} step={100} slider unit="minutes" />
-              <NumberField label="Inbound call minutes" hint="$0.01165 a minute" value={i.callInMin} onChange={(v) => set("callInMin", v)} max={SLIDER_MAX.minutes} step={100} slider unit="minutes" />
-            </div>
-            <Switch label="Record calls" hint="$0.0025 a minute" checked={i.recording} onChange={(v) => set("recording", v)} />
-            <Switch label="Transcribe calls" hint="$0.024 a minute" checked={i.transcription} onChange={(v) => set("transcription", v)} />
-            <Segmented<A2pId>
-              label="A2P 10DLC registration"
-              value={i.a2p}
-              onChange={(v) => set("a2p", v)}
+    <div ref={root} className="calc" data-calculator>
+      <div className="grid items-start gap-5 lg:grid-cols-12 lg:gap-8">
+        <div className="flex min-w-0 flex-col gap-4 md:gap-5 lg:col-span-7">
+          <Card id="calc-who" title="Who is it for?">
+            <Choice
+              label="I'm pricing GoHighLevel for"
+              value={i.who}
+              onChange={(v) => update({ who: v })}
               options={[
-                { value: "none", label: "None" },
-                { value: "sole", label: "Sole Prop" },
-                { value: "lowvolume", label: "Low Volume" },
-                { value: "standard", label: "High Volume" },
+                { value: "own", title: "My own business", line: "One business, one account" },
+                { value: "agency", title: "My agency's clients", line: "A separate sub-account for each client" },
               ]}
-              hint={i.a2p === "none" ? "Needed to text US numbers from a local number." : `${usd(a2p[i.a2p].oneTime)} once, then ${usd(a2p[i.a2p].monthly)} a month for the campaign.`}
             />
-          </Step>
+            {agency && <NumberRow label="How many clients?" hint="Each client gets its own sub-account" value={subs} onChange={(v) => update({ subAccounts: v })} min={1} max={1000} />}
+            <Choice<PlanId>
+              label="Plan"
+              hint={`We suggest ${plans[recommended].name} for ${agency ? `${subs} client${subs === 1 ? "" : "s"}` : "one business"}. Change it if you need more.`}
+              value={i.plan}
+              onChange={(v) => update({ plan: v })}
+              options={(Object.keys(plans) as PlanId[]).map((id) => ({ value: id, title: `${plans[id].name}, $${plans[id].price}/mo`, line: plans[id].note }))}
+            />
+          </Card>
 
-          <Step id="calc-email" title="Email" subtotal={g("email")}>
-            <NumberField label="Emails sent a month" hint="$0.675 per 1,000 on every plan" value={i.emails} onChange={(v) => set("emails", v)} max={SLIDER_MAX.emails} step={1000} slider unit="emails" />
-            <NumberField label="Email addresses validated" hint="$2.50 per 1,000 checks" value={i.validations} onChange={(v) => set("validations", v)} max={SLIDER_MAX.validations} step={1000} />
-          </Step>
+          <Card id="calc-phone" title="Phone and texting">
+            <NumberRow label="Phone numbers" hint="$1.15 a month each. Most businesses need one." value={i.localNumbers} onChange={(v) => update({ localNumbers: v })} max={1000} />
+            <Amount label="Text messages a month" hint="Sent and received, all businesses together" value={i.sms} choices={[0, 500, 2000, 10000]} onChange={(v) => update({ sms: v })} step={500} unit="texts" />
+            <Amount label="Call minutes a month" hint="Calls in and out, all businesses together" value={calls} choices={[0, 300, 600, 2000]} onChange={setCalls} step={100} unit="minutes" />
+            <Switch label="I'll text people in the US" hint="Needs A2P registration: $22.50 once, then $1.50 a month" checked={i.a2p !== "none"} onChange={(v) => update({ a2p: v ? (i.a2p === "none" ? "lowvolume" : i.a2p) : "none" })} />
+          </Card>
 
-          <Step id="calc-ai" title="AI" subtotal={g("ai")}>
-            <Segmented<AiPlanId>
-              label="AI Employee plan"
-              value={i.aiPlan}
-              onChange={(v) => set("aiPlan", v)}
+          <Card id="calc-email" title="Email">
+            <Amount label="Emails sent a month" hint="Newsletters, follow-ups and automations. $0.675 per 1,000." value={i.emails} choices={[0, 1000, 10000, 50000]} onChange={(v) => update({ emails: v })} step={1000} unit="emails" />
+          </Card>
+
+          <Card id="calc-ai" title="AI assistant">
+            <Choice
+              label="Do you want AI to answer chats and calls?"
+              hint="Writing help (Content AI) is free on every plan."
+              value={i.aiPlan === "none" ? "none" : i.aiPlan === "unlimited" ? "unlimited" : "growth"}
+              onChange={(v) => update({ aiPlan: v as Inputs["aiPlan"] })}
               options={[
-                { value: "none", label: "None" },
-                { value: "starter", label: "$20", disabled: i.plan !== "founder" },
-                { value: "growth", label: "$50" },
-                { value: "unlimited", label: "$97" },
+                { value: "none", title: "No", line: "Skip AI for now" },
+                { value: "growth", title: "Yes, some", line: "$50/mo: 1,000 replies and 100 call minutes" },
+                { value: "unlimited", title: "Yes, a lot", line: "$97/mo: unlimited, fair use" },
               ]}
-              hint={`${aiPlans[i.aiPlan].name === "None" ? "No AI plan" : aiPlans[i.aiPlan].name}: ${aiPlans[i.aiPlan].note}${i.plan !== "founder" ? " The $20 plan needs the Founder plan." : ""} Content AI and the AI builders are free on every plan.`}
             />
-            {i.aiPlan !== "none" && (
-              <NumberField label="Sub-accounts with the AI plan" hint={`Up to ${subs}`} value={Math.min(i.aiSubAccounts, subs)} onChange={(v) => set("aiSubAccounts", Math.min(v, subs))} max={SLIDER_MAX.small} />
+            {agency && i.aiPlan !== "none" && (
+              <NumberRow label="How many clients get AI?" hint={`The AI plan is charged per client, up to ${subs}`} value={i.aiSubAccounts} onChange={(v) => update({ aiSubAccounts: v })} min={1} max={subs} />
             )}
-            {voicePaid ? (
-              <>
-                <NumberField label="Voice AI minutes a month" hint="Paid per minute without the $50 or $97 plan. Phone minutes are charged as well." value={i.voiceMin} onChange={(v) => set("voiceMin", v)} max={SLIDER_MAX.voice} step={50} slider unit="minutes" />
-                {i.voiceMin > 0 && (
-                  <Segmented<"low" | "high">
-                    label="Voice AI model"
-                    value={i.voiceRate}
-                    onChange={(v) => set("voiceRate", v)}
-                    options={[
-                      { value: "low", label: `Gemini Live, $${voiceAi.low.toFixed(2)}/min` },
-                      { value: "high", label: `GPT Realtime, $${voiceAi.high.toFixed(2)}/min` },
-                    ]}
+          </Card>
+
+          <details className="calc-more group rounded-[1.75rem] bg-white">
+            <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 md:px-8 [&::-webkit-details-marker]:hidden">
+              <span>
+                <span className="block font-display text-[1.25rem] font-semibold tracking-[-0.02em]">More options</span>
+                <span className="mt-0.5 block text-small text-ink-600">Toll-free numbers, recordings, add-ons and other extras</span>
+              </span>
+              <Icon name="plus" className="size-5 shrink-0 transition-transform duration-200 group-open:rotate-45" />
+            </summary>
+            <div className="flex flex-col gap-8 px-6 pb-8 md:px-8">
+              <div className="flex flex-col gap-6">
+                <h4 className="text-small font-semibold text-ink-950">Phone extras</h4>
+                <NumberRow label="Toll-free numbers" hint="$2.15 a month each" value={i.tollFreeNumbers} onChange={(v) => update({ tollFreeNumbers: v })} max={1000} />
+                <NumberRow label="Picture messages sent" hint="MMS, $0.022 each" value={i.mms} onChange={(v) => update({ mms: v })} step={100} />
+                <Switch label="Record calls" hint="$0.0025 a minute" checked={i.recording} onChange={(v) => update({ recording: v })} />
+                <Switch label="Transcribe calls" hint="$0.024 a minute" checked={i.transcription} onChange={(v) => update({ transcription: v })} />
+                <Switch label="Include carrier fees" hint="US carriers add about half a cent per text. We use $0.0045 as an average." checked={i.carrierFees} onChange={(v) => update({ carrierFees: v })} />
+                {i.a2p !== "none" && (
+                  <SelectRow<A2pId>
+                    label="A2P brand type"
+                    hint={`${usd(a2p[i.a2p].oneTime)} once, then ${usd(a2p[i.a2p].monthly)} a month`}
+                    value={i.a2p}
+                    onChange={(v) => update({ a2p: v })}
+                    options={(["sole", "lowvolume", "standard"] as A2pId[]).map((id) => ({ value: id, label: a2p[id].name }))}
                   />
                 )}
-              </>
-            ) : (
-              <p className="rounded-2xl bg-ink-100 p-4 text-small leading-relaxed text-ink-800">
-                {i.aiPlan === "growth" ? "Includes 100 Voice AI minutes and 1,000 Conversation AI replies a month per sub-account." : "Voice AI and Conversation AI are unlimited, subject to fair use."} Voice AI calls still use phone minutes, so add them under Phone and texting.
-              </p>
-            )}
-          </Step>
-
-          <Step id="calc-addons" title="Add-ons" subtotal={g("addons")}>
-            <ul className="-my-2 flex flex-col">
-              {addonOrder.map((id) => {
-                const ad = addons[id];
-                const qty = i.addons[id] ?? 0;
-                const on = qty > 0;
-                const blocked = id === "dedicatedIp" && i.plan === "starter";
-                return (
-                  <li key={id} className="calc-addon" data-on={on || undefined}>
-                    <Switch
-                      label={ad.name}
-                      hint={`$${ad.price}${ad.per === "account" ? " a month" : ` a month per ${ad.per}`}${ad.note ? `. ${ad.note}` : ""}${blocked ? ". Not on Starter" : ""}`}
-                      checked={on}
-                      onChange={(v) => setAddon(id, v ? 1 : 0)}
-                    />
-                    {on && ad.per !== "account" && (
-                      <div className="mt-3 pb-1">
-                        <NumberField label={`${ad.per === "site" ? "Sites" : ad.per === "IP" ? "IPs" : "Sub-accounts"}`} value={qty} onChange={(v) => setAddon(id, Math.max(1, v))} max={SLIDER_MAX.small} />
-                      </div>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-            <NumberField label="Workflow premium actions a month" hint="$0.01 each, such as AI decision and summarize steps" value={i.premiumActions} onChange={(v) => set("premiumActions", v)} max={SLIDER_MAX.actions} step={500} />
-          </Step>
+              </div>
+              <div className="flex flex-col gap-6">
+                <h4 className="text-small font-semibold text-ink-950">Email and AI extras</h4>
+                <NumberRow label="Email addresses checked" hint="Email validation, $2.50 per 1,000" value={i.validations} onChange={(v) => update({ validations: v })} step={1000} />
+                {i.plan === "founder" && (
+                  <Switch label="AI Starter instead" hint="$20 a month per sub-account, Founder plan only. AI assistants only; AI agents are paid per use." checked={i.aiPlan === "starter"} onChange={(v) => update({ aiPlan: v ? "starter" : "none" })} />
+                )}
+                {(i.aiPlan === "none" || i.aiPlan === "starter") && (
+                  <>
+                    <NumberRow label="Voice AI minutes, pay per use" hint={`$${voiceAi.low.toFixed(2)} a minute (Gemini Live) without an AI plan, plus phone minutes`} value={i.voiceMin} onChange={(v) => update({ voiceMin: v })} step={50} />
+                    {i.voiceMin > 0 && <Switch label="Use GPT Realtime instead" hint={`$${voiceAi.high.toFixed(2)} a minute`} checked={i.voiceRate === "high"} onChange={(v) => update({ voiceRate: v ? "high" : "low" })} />}
+                  </>
+                )}
+                <NumberRow label="Workflow premium actions" hint="$0.01 each, such as AI decision or summary steps" value={i.premiumActions} onChange={(v) => update({ premiumActions: v })} step={500} />
+              </div>
+              <div className="flex flex-col gap-2">
+                <h4 className="text-small font-semibold text-ink-950">Add-ons</h4>
+                <ul className="flex flex-col">
+                  {addonOrder.map((id) => {
+                    const ad = addons[id];
+                    const qty = i.addons[id] ?? 0;
+                    const blocked = id === "dedicatedIp" && i.plan === "starter";
+                    return (
+                      <li key={id} className="calc-addon">
+                        <Switch
+                          label={ad.name}
+                          hint={blocked ? "Needs the Unlimited or Founder plan" : `$${ad.price} a month${ad.per === "account" ? "" : ` per ${ad.per}`}${ad.note ? `. ${ad.note}` : ""}`}
+                          checked={qty > 0}
+                          onChange={(v) => setAddon(id, v ? (ad.per === "sub-account" ? subs : 1) : 0)}
+                        />
+                        {qty > 0 && ad.per !== "account" && (
+                          <div className="mt-3">
+                            <NumberRow label={ad.per === "site" ? "Sites" : ad.per === "IP" ? "IPs" : "Sub-accounts"} value={qty} onChange={(v) => setAddon(id, v)} min={1} max={1000} />
+                          </div>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+          </details>
         </div>
 
         {/* Summary */}
-        <aside id="calc-summary" className="lg:col-span-5" aria-labelledby="calc-total-label">
-          <div className="on-dark rounded-[1.75rem] bg-ink-950 p-6 text-ink-50 md:p-8 lg:sticky lg:top-[calc(var(--header-h)+1.5rem)]">
-            <p id="calc-total-label" className="text-[0.9375rem] text-ink-300">Your estimated monthly cost</p>
-            <p className="mt-2 font-display font-semibold leading-none tracking-[-0.045em] tabular-nums text-gold-500" aria-live="polite" aria-atomic="true">
-              <span className="sr-only">{usd(r.monthly)} a month</span>
-              <span aria-hidden className="text-[clamp(3.25rem,2rem+5vw,5.25rem)]">${dollars.toLocaleString("en-US")}</span>
-              <span aria-hidden className="align-top text-[1.5rem] tracking-[-0.02em]">.{cents}</span>
+        <aside id="calc-summary" className="calc-summary lg:col-span-5" aria-labelledby="calc-total-label">
+          <div className="on-dark rounded-[1.75rem] bg-ink-950 p-6 text-ink-50 md:p-8">
+            <p id="calc-total-label" className="text-[1rem] text-ink-300">Your monthly cost</p>
+            <p className="mt-2 font-display font-semibold leading-none tracking-[-0.045em] tabular-nums text-gold-500">
+              <span className="sr-only" aria-live="polite">{usd(r.monthly)} a month</span>
+              <span aria-hidden className="text-[clamp(3rem,2rem+4.5vw,4.75rem)]">${fmt(Math.floor(cents / 100))}</span>
+              <span aria-hidden className="align-top text-[1.375rem] tracking-[-0.02em]">.{String(cents % 100).padStart(2, "0")}</span>
+            </p>
+            <p className="mt-3 text-small text-ink-400">
+              {r.oneTime > 0 ? `Plus ${usd(r.oneTime)} once for A2P registration. ` : ""}About {usd(r.yearly, 0)} in the first year.
             </p>
 
-            <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 text-small">
-              <div>
-                <dt className="text-ink-400">Per year</dt>
-                <dd className="mt-1 text-[1.0625rem] font-medium tabular-nums text-ink-50">{usd(r.yearly, 0)}</dd>
-              </div>
-              <div>
-                <dt className="text-ink-400">First month</dt>
-                <dd className="mt-1 text-[1.0625rem] font-medium tabular-nums text-ink-50">{usd(r.firstMonth)}</dd>
-              </div>
-              {subs > 1 && (
-                <div>
-                  <dt className="text-ink-400">Per sub-account</dt>
-                  <dd className="mt-1 text-[1.0625rem] font-medium tabular-nums text-ink-50">{usd(r.perSubAccount)}</dd>
-                </div>
-              )}
-              {r.rebillable > 0 && (
-                <div>
-                  <dt className="text-ink-400">You can rebill</dt>
-                  <dd className="mt-1 text-[1.0625rem] font-medium tabular-nums text-ink-50">{usd(r.rebillable)}</dd>
-                </div>
-              )}
-            </dl>
+            {(agency && subs > 1) || r.rebillable > 0 ? (
+              <dl className="mt-6 grid grid-cols-2 gap-4 text-small">
+                {agency && subs > 1 && (
+                  <div className="rounded-2xl bg-ink-900 p-4">
+                    <dt className="text-ink-400">Per client</dt>
+                    <dd className="mt-1 text-[1.125rem] font-semibold tabular-nums text-ink-50">{usd(r.perSubAccount)}</dd>
+                  </div>
+                )}
+                {r.rebillable > 0 && (
+                  <div className="rounded-2xl bg-ink-900 p-4">
+                    <dt className="text-ink-400">You can bill clients</dt>
+                    <dd className="mt-1 text-[1.125rem] font-semibold tabular-nums text-ink-50">{usd(r.rebillable)}</dd>
+                  </div>
+                )}
+              </dl>
+            ) : null}
 
-            <div className="mt-7 flex flex-col">
+            <Link href="/book" data-track="book_call_click" data-track-location="calculator_summary" className="btn btn-gold mt-6 w-full">
+              Get it set up for you
+              <Icon name="arrow" className="size-4" />
+            </Link>
+            <div className="mt-3 grid grid-cols-2 gap-2.5">
+              <button type="button" onClick={copyLink} className="btn btn-outline-dark min-h-11 px-3">{copied === "link" ? "Link copied" : "Copy link"}</button>
+              <button type="button" onClick={copyBreakdown} className="btn btn-outline-dark min-h-11 px-3">{copied === "breakdown" ? "Copied" : "Copy breakdown"}</button>
+            </div>
+            <span className="sr-only" role="status">{copied === "link" ? "Link copied" : copied === "breakdown" ? "Breakdown copied" : copied === "fail" ? "Copy failed" : ""}</span>
+
+            <p className="mt-7 text-small font-semibold text-ink-200">Breakdown</p>
+            <div className="mt-1 flex flex-col">
               {r.groups.map((grp) => (
-                <details key={grp.id} className="calc-group group" open={grp.id === "phone" || undefined}>
+                <details key={grp.id} className="calc-group group">
                   <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
                     <span className="flex items-center gap-2.5">
                       <Icon name="plus" className="size-3.5 text-ink-500 transition-transform duration-200 group-open:rotate-45" />
                       {grp.name}
                     </span>
-                    <span className="tabular-nums text-ink-200">{usd(grp.total)}</span>
+                    <span className="tabular-nums text-ink-100">{usd(grp.total)}</span>
                   </summary>
                   {grp.lines.length > 0 ? (
                     <ul className="pb-3 pl-6 text-small">
@@ -449,42 +478,56 @@ export function CostCalculator() {
                       ))}
                     </ul>
                   ) : (
-                    <p className="pb-3 pl-6 text-small text-ink-500">Nothing selected</p>
+                    <p className="pb-3 pl-6 text-small text-ink-500">Nothing added</p>
                   )}
                 </details>
               ))}
-              {r.oneTime > 0 && (
-                <p className="flex justify-between gap-4 pt-3 text-small text-ink-300">
-                  <span>One-time A2P registration</span>
-                  <span className="tabular-nums text-ink-200">{usd(r.oneTime)}</span>
-                </p>
-              )}
             </div>
 
             {r.warnings.length > 0 && (
               <ul className="mt-5 flex flex-col gap-2" role="status">
                 {r.warnings.map((w) => (
-                  <li key={w} className="rounded-2xl bg-gold-500/12 px-4 py-3 text-small leading-snug text-gold-400">{w}</li>
+                  <li key={w} className="rounded-2xl bg-ink-900 px-4 py-3 text-small leading-snug text-gold-400">{w}</li>
                 ))}
               </ul>
             )}
 
-            <Link href="/book" data-track="book_call_click" data-track-location="calculator_summary" className="btn btn-gold mt-7 w-full">
-              Get it set up for you
-              <Icon name="arrow" className="size-4" />
-            </Link>
-            <div className="mt-3 grid grid-cols-2 gap-2.5">
-              <button type="button" onClick={copyLink} className="btn btn-outline-dark min-h-11 px-3">{copied === "link" ? "Link copied" : "Copy link"}</button>
-              <button type="button" onClick={copyBreakdown} className="btn btn-outline-dark min-h-11 px-3">{copied === "breakdown" ? "Copied" : "Copy breakdown"}</button>
-            </div>
-            <span className="sr-only" role="status">{copied === "link" ? "Link copied" : copied === "breakdown" ? "Breakdown copied" : copied === "fail" ? "Copy failed" : ""}</span>
-            <button type="button" onClick={reset} className="mt-4 min-h-11 w-full text-small text-ink-400 transition-colors hover:text-ink-50">Reset</button>
+            <button type="button" onClick={reset} className="mt-3 min-h-11 w-full text-small text-ink-400 transition-colors hover:text-ink-50">Start again</button>
             <p className="mt-2 text-small leading-relaxed text-ink-500">
-              Estimate from HighLevel&apos;s published US and Canada prices, checked 25 November 2026. Excludes taxes, WhatsApp conversation fees and Conversation AI pay-per-use, which is billed by tokens.
+              HighLevel&apos;s published US and Canada prices, checked 25 November 2026. Taxes not included.
             </p>
           </div>
         </aside>
       </div>
+
+      {/* Phones: the running total, pinned to the bottom while the calculator is on screen */}
+      <a href="#calc-summary" className="calc-mobile-total on-dark lg:hidden" data-show={inView || undefined} tabIndex={inView ? 0 : -1} aria-hidden={!inView}>
+        <span>
+          <span className="block text-small text-ink-300">Your monthly cost</span>
+          <span className="block font-display text-[1.375rem] font-semibold leading-tight tabular-nums text-gold-500">{usd(r.monthly)}</span>
+        </span>
+        <span className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-ink-800 px-4 text-small font-semibold text-ink-50">
+          See breakdown
+          <Icon name="arrowDown" className="size-4" />
+        </span>
+      </a>
+    </div>
+  );
+}
+
+function SelectRow<T extends string>({ label, hint, value, options, onChange }: { label: string; hint?: string; value: T; options: { value: T; label: string }[]; onChange: (v: T) => void }) {
+  const id = useId();
+  return (
+    <div className="calc-row">
+      <label htmlFor={id} className="min-w-0 flex-1 basis-[12rem]">
+        <span className="block text-[1rem] font-medium text-ink-950">{label}</span>
+        {hint && <span className="mt-0.5 block text-small text-ink-600">{hint}</span>}
+      </label>
+      <select id={id} value={value} onChange={(e) => onChange(e.target.value as T)} className="calc-select">
+        {options.map((o) => (
+          <option key={o.value} value={o.value}>{o.label}</option>
+        ))}
+      </select>
     </div>
   );
 }
