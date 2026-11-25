@@ -27,6 +27,8 @@ export function ArticleLayout({
   children,
   schemaType = "TechArticle",
   sidebarDesktopOnly = false,
+  lead,
+  wide,
 }: {
   meta: ArticleMeta;
   crumbs: Crumb[];
@@ -35,6 +37,8 @@ export function ArticleLayout({
   children: ReactNode;
   schemaType?: "Article" | "TechArticle";
   sidebarDesktopOnly?: boolean; // hide the "On this page" sidebar under 1024px
+  lead?: ReactNode; // shown under the byline, inside the header (an answer-first paragraph for tool pages)
+  wide?: ReactNode; // a full-width band between the header and the article body (tools, such as the cost calculator)
 }) {
   const hasFaqs = meta.faqs.length > 0;
   const offer = OFFER[meta.kind ?? "setup"];
@@ -64,10 +68,12 @@ export function ArticleLayout({
                 Last updated <time dateTime={meta.updated}>{formatDate(meta.updated)}</time>
               </span>
             </p>
+            {lead}
           </div>
         </header>
+        {wide}
 
-        <div className="frame grid gap-12 pb-[var(--section)] lg:grid-cols-12">
+        <div className={`frame grid gap-12 pb-[var(--section)] lg:grid-cols-12 ${wide ? "pt-[var(--section)]" : ""}`}>
           <aside className={`lg:order-2 lg:col-span-3 lg:col-start-10 print:hidden ${sidebarDesktopOnly ? "hidden lg:block" : ""}`}>
             <div className="flex flex-col gap-3 lg:sticky lg:top-24">
             <details className="group rounded-2xl bg-ink-100 p-5" open>
