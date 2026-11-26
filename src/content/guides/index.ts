@@ -363,6 +363,31 @@ export const guides: ArticleMeta[] = [
       { href: "/glossary/sub-account", label: "What is a sub-account?" },
     ],
   },
+  {
+    slug: "how-to-set-up-a2p-10dlc-gohighlevel",
+    title: "How to set up A2P 10DLC in GoHighLevel",
+    metaTitle: "How to Set Up A2P 10DLC in GoHighLevel: Step-by-Step",
+    description:
+      "Register A2P 10DLC in GoHighLevel: pick the right brand type, fill in the Trust Center form, see the fees and approval times, and link your numbers.",
+    summary: "A2P 10DLC in GHL step by step: brand types, what to prepare, Trust Center registration, fees, approval times and linking numbers to the campaign.",
+    published: "2026-11-26",
+    updated: "2026-11-26",
+    ctaLine: "Want texts to US contacts approved and working? We'll register A2P with you. The first 30-minute call is free.",
+    faqs: [
+      { q: "Where do I register A2P 10DLC in GoHighLevel?", a: "In the sub-account, go to Settings > Phone System > Trust Center and click Start Registration under A2P Messaging (SMS). You register the brand first, then the campaign." },
+      { q: "Should I register as Sole Proprietor or Standard?", a: "Register as Standard if the business has an EIN or another tax ID, including every LLC and corporation. Sole Proprietor is only for businesses with no tax ID, and it is limited to one phone number and 3,000 segments a day." },
+      { q: "How much does A2P 10DLC cost in GoHighLevel?", a: "HighLevel lists a one-time fee of $22.50 for Sole Proprietor and Low Volume Standard brands, or $64.00 for High Volume Standard, plus a monthly campaign fee from $1.50 to $10.00. Fees as listed in November 2026." },
+      { q: "How long does A2P approval take in GoHighLevel?", a: "HighLevel gives no fixed timeline. Standard brands may take several business days, Sole Proprietor brands are often faster, and the Fast Track included in the one-time fee aims for approval within 3 business days." },
+      { q: "Why do my texts fail with error 30034 after approval?", a: "The sending number is usually not linked to the approved campaign. Go to Settings > Phone System > Phone Numbers, open the number's three-dot menu, click Select A2P campaign to Link and choose the campaign." },
+    ],
+    related: [
+      { href: "/services/ghl-setup", label: "GHL account setup" },
+      { href: "/resources/a2p-10dlc-checklist", label: "A2P 10DLC checklist and templates" },
+      { href: "/guides/connect-twilio-lc-phone-gohighlevel", label: "How to connect Twilio or LC Phone to GoHighLevel" },
+      { href: "/guides/connect-domain-to-gohighlevel", label: "How to connect a custom domain to GoHighLevel" },
+      { href: "/guides/how-much-does-gohighlevel-cost", label: "How much does GoHighLevel cost?" },
+    ],
+  },
 ];
 
 export const getGuide = (slug: string) => guides.find((g) => g.slug === slug);

@@ -1,0 +1,119 @@
+<p className="answer">To set up A2P 10DLC in GoHighLevel, open the sub-account and go to Settings &gt; Phone System &gt; Trust Center, then click Start Registration under A2P Messaging (SMS). Register your brand, create a campaign with your consent details, pass HighLevel's review, submit, and link each local number once the campaign is approved.</p>
+
+Below: what A2P 10DLC covers, which brand type to pick, the registration steps in order, what it costs, how long approval takes, and how to link your numbers afterwards. Every step and fee comes from HighLevel's help center, checked on 26 November 2026. For the consent, privacy and terms wording reviewers look for, use our [A2P 10DLC checklist](/resources/a2p-10dlc-checklist).
+
+## What is A2P 10DLC and do you need it?
+
+A2P 10DLC is the US carrier registration for business texts sent from ordinary 10-digit local numbers. If a GoHighLevel sub-account texts US contacts from a local number, it needs an approved brand and campaign first. Toll-free numbers don't use A2P 10DLC. They go through Toll-Free Verification, a separate process.
+
+The registration has two parts. The **brand** says who is sending. The **campaign** says what you send and how people agreed to get it. HighLevel collects your submission, but carriers and their registration partners decide whether it's approved.
+
+Brand approval alone doesn't let you send. HighLevel says to wait until the number shows **A2P Verified** before sending texts.
+
+Canadian sub-accounts follow their own rule. Texting US contacts from Canada needs A2P. Canada-only texting from numbers bought before 26 March 2025 doesn't. Numbers bought on or after that date need A2P or a Persona identity check.
+
+## Which brand type should you choose?
+
+Choose Standard if the business has an EIN or another tax ID, which covers every LLC and corporation. Choose Sole Proprietor only if the business has no tax ID. HighLevel says a business with a tax ID should register as Standard. Sole Proprietor is limited to one phone number and lower daily sending.
+
+| | Sole Proprietor | Low Volume Standard | High Volume Standard |
+| --- | --- | --- | --- |
+| Who it's for | No EIN or tax ID | Business with a tax ID | Business with a tax ID and high volume |
+| Phone numbers | 1 per campaign | Multiple | Multiple |
+| Daily limit | 3,000 segments | 6,000 segments | 600,000 segments |
+| One-time fee | $22.50 | $22.50 | $64.00 |
+| Contact email | Public address (Gmail, Hotmail, Yahoo) | Email on your own domain recommended | Email on your own domain recommended |
+
+Limits and fees as listed by HighLevel in November 2026. If you expect to send more than 6,000 segments a day, pick High Volume from the start.
+
+## What do you need before you start?
+
+Have the exact legal business name, the EIN, a street address, an authorized contact, and a live public website ready. The website needs a privacy policy, terms and an opt-in form with a consent checkbox. If the EIN is less than 15 days old, wait. HighLevel says new EINs may be rejected.
+
+- The legal name and EIN, exactly as they appear on the IRS CP-575 or 147C letter. Uploading the CP-575 can fill these fields for you.
+- A street address, not a P.O. box.
+- Contact details for a real person who can be reached. Don't reuse the same contact phone or email on more than five brands.
+- A live public website on your own domain. Our [custom domain guide](/guides/connect-domain-to-gohighlevel) covers connecting one to GoHighLevel.
+- Privacy policy and terms pages, linked under your opt-in form.
+- Sample messages that match what you'll really send, with opt-out wording.
+- For Sole Proprietor brands, a US or Canadian mobile number. HighLevel doesn't accept VoIP, LeadConnector or other CPaaS numbers for the code check.
+
+If the sub-account doesn't have a phone number yet, our [LC Phone and Twilio guide](/guides/connect-twilio-lc-phone-gohighlevel) shows how to buy one.
+
+## How do you register A2P 10DLC in GoHighLevel, step by step?
+
+Start in the sub-account's Trust Center, answer whether the business has a tax ID, fill in the brand details, then build the campaign. HighLevel runs its own compliance review before you can submit, and it blocks the submission until every check passes.
+
+1. Open the sub-account and go to **Settings &gt; Phone System &gt; Trust Center**.
+2. Under **A2P Messaging (SMS)**, click **Start Registration**.
+3. Choose the country and answer whether the business has a tax ID. This sets the path: Standard or Sole Proprietor.
+4. Enter the brand details: legal name, business type, industry, registration ID type and number, business email and region. Then the address and the contact person.
+5. Complete any verification HighLevel asks for. This is either a Persona identity check, usually once per sub-account, or a code sent to your business email.
+6. Continue to the campaign and pick the volume: Low or High Volume for Standard, or the single-number path for Sole Proprietor.
+7. Pick the setup method. **Chat Widget Setup** is the default: confirm the use case, enter your website URL, click **Copy code** and paste the widget into your site's body or footer. Choose **Switch to manual setup** if people opt in some other way.
+8. For manual setup, fill in the use case, website URL, use case description, sample messages, opt-in method, opt-in form URL, opt-in flow, opt-in message, and the privacy policy and terms URLs.
+9. Click **Review Application**. Fix anything HighLevel's review flags, click **Review Again**, then submit.
+
+Two more rules apply to the campaign. If you use the chat widget, it has to be the only SMS opt-in form on that page. And if the business trades under a different name, HighLevel says to add "We are doing DBA as [Business_Name]" to the use case, with the website, policies and checkbox matching the legal name and the DBA.
+
+To add a second campaign to a brand that's already registered, go to the Trust Center, click **Brand & Campaigns** on the A2P Messaging (SMS) card, open the **Campaigns** tab and click **Create Campaign**.
+
+## How much does A2P 10DLC cost in GoHighLevel?
+
+You pay a one-time fee when you first submit: $22.50 for Sole Proprietor or Low Volume Standard, and $64.00 for High Volume Standard. Then a monthly campaign fee, from $1.50 to $10.00 depending on the campaign type. HighLevel says these are pass-through fees with no markup.
+
+| Fee | Amount |
+| --- | --- |
+| One-time, Sole Proprietor or Low Volume Standard | $22.50 |
+| One-time, High Volume Standard | $64.00 |
+| Monthly, Sole Proprietor campaign | $2.00 |
+| Monthly, Low Volume Mixed campaign | $1.50 |
+| Monthly, Standard campaign use cases | $10.00 |
+| Each extra campaign under the same brand | $15.00 vetting fee |
+| Resubmitting a rejected campaign | No extra vetting fee |
+
+The one-time fee bundles brand registration, campaign vetting and $3 of Fast Track processing, which HighLevel says speeds approval to within 3 business days. Fees as listed in November 2026, and HighLevel says they may change. Texts themselves are billed per segment on top, as covered in our [GoHighLevel cost guide](/guides/how-much-does-gohighlevel-cost).
+
+## How long does A2P approval take?
+
+HighLevel gives no fixed timeline. It says Standard brands may take several business days, Sole Proprietor brands are often reviewed faster, and the Fast Track in the one-time fee aims for approval within 3 business days. Extra verification adds time. While a campaign shows Pending, don't create or resubmit another one.
+
+| Campaign status | What to do |
+| --- | --- |
+| Pending | Wait. Don't create or resubmit another campaign |
+| Rejected | Click **View required fixes** and fix every reason listed, then resubmit |
+| Approved | Link each local number to the campaign (next section) |
+| Approved, but texts fail | Check each number shows A2P Verified, then look at the message error |
+
+When a campaign is rejected, the Trust Center shows the error code, the category and the fix needed. Some locked fields, such as the use case, can't be edited, so that fix means creating a new campaign. Our [A2P 10DLC checklist](/resources/a2p-10dlc-checklist) explains the newer rejection codes and how to fix each one.
+
+## How do you link a phone number to your A2P campaign?
+
+Once the campaign is approved, go to Settings &gt; Phone System &gt; Phone Numbers, open the three-dot menu next to the number and click "Select A2P campaign to Link". Pick the campaign and repeat for every local number that sends texts. The number is ready when its tag shows A2P Verified.
+
+1. Go to **Settings &gt; Phone System &gt; Phone Numbers**.
+2. Open the three-dot menu next to the number.
+3. Click **Select A2P campaign to Link**. This option only appears after the brand and campaign are approved.
+4. Choose the campaign.
+5. Check the number's tag. **A2P In Progress** means wait. **A2P Verified** means it can send. **A2P Rejected** means contact HighLevel Support with the number and campaign details.
+
+If texts fail with error 30034, the sending number usually isn't linked to an approved campaign. On a Sole Proprietor brand, HighLevel says the same error can come from having more than one local number in the sub-account, because Sole Proprietor supports one number per campaign. Toll-free numbers can't be linked this way.
+
+## What we see in real accounts
+
+<mark className="todo">[[EXPERIENCE: When you register A2P for a client in GoHighLevel, how long does approval usually take in practice, and what is the one thing you check on their website or form before you click submit?]]</mark>
+
+## Need A2P registered for you?
+
+A rejected campaign means fixing the fields and waiting for another review, and texts to US contacts wait with it. Our [GHL setup service](/services/ghl-setup) includes A2P 10DLC registration, along with the phone number, website pages and opt-in form it depends on. If you also need numbers moved or calls routed, see our [integrations service](/services/integrations).
+
+## Sources
+
+All checked on 26 November 2026.
+
+- [A2P Campaign Registration: Step by Step Guide and FAQs](https://help.gohighlevel.com/support/solutions/articles/155000004539-campaign-registration-step-by-step-guide-and-faqs), HighLevel help center, last modified 19 November 2026: Trust Center path, volume options and daily limits, chat widget and manual setup fields, DBA wording, Review Application, campaign statuses.
+- [What is A2P 10DLC: Brand and Campaign Registration](https://help.gohighlevel.com/support/solutions/articles/155000002380-what-is-a2p-10-dlc-brand-and-campaign-registration-faqs-and-summary), help center, last modified 19 November 2026: brand types, Canadian rules, what to prepare, rejected campaigns and locked fields.
+- [Registering Your A2P Brand](https://help.gohighlevel.com/support/solutions/articles/155000008140), help center, last modified 29 September 2026: brand fields, the 15-day EIN rule, Sole Proprietor phone and email rules, verification, review times.
+- [A2P 10DLC Messaging Fees: Registration, Monthly, and Carrier Costs](https://help.gohighlevel.com/support/solutions/articles/155000005200), help center, last modified 10 November 2026: one-time and monthly fees, daily limits, Fast Track, extra campaigns and resubmission.
+- [Error 30034: Linking a Phone Number to an Approved A2P Campaign](https://help.gohighlevel.com/support/solutions/articles/155000008316), help center, last modified 19 November 2026: linking steps, A2P tags and error 30034.
+- [Getting Started with A2P 10DLC](https://help.gohighlevel.com/support/solutions/articles/155000007411-getting-started-with-a2p-10dlc), help center: local vs toll-free numbers, brand and campaign roles, who approves.
