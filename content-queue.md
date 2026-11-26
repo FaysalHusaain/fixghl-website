@@ -2,7 +2,6 @@
 
 The scheduled guide writer takes the first unchecked topic, writes it, and checks it off in the same pull request. Add new topics to the end. Volumes are Semrush US monthly searches (Oct 30, 2026), summed across spellings.
 
-- [ ] How to set up A2P 10DLC in GoHighLevel -> link /services/ghl-setup. Link to /resources/a2p-10dlc-checklist for the templates; don't repeat them in the guide.
 - [ ] How to connect Google Calendar or Calendly to GoHighLevel (~40)
 - [ ] How to create a sub-account in GoHighLevel (~40)
 - [ ] How to build a website on GoHighLevel (~40) -> link /services/funnels-websites
@@ -16,4 +15,4 @@ The scheduled guide writer takes the first unchecked topic, writes it, and check
 - [ ] Compare: GoHighLevel vs Wix -> link /services/migrations/wix-to-ghl
 
 ## Done
-- What is GoHighLevel, GoHighLevel cost, Is GoHighLevel down, Is GoHighLevel worth it, What GoHighLevel is used for, GoHighLevel snapshots, Workflow not triggering, Emails going to spam, ClickFunnels migration, Compare GHL vs ClickFunnels, How to set up GoHighLevel, Is GoHighLevel a good CRM, GoHighLevel SaaS mode explained, Cost to hire a GoHighLevel expert, GoHighLevel API key, Connect Twilio or LC Phone to GoHighLevel, Connect a custom domain to GoHighLevel
+- What is GoHighLevel, GoHighLevel cost, Is GoHighLevel down, Is GoHighLevel worth it, What GoHighLevel is used for, GoHighLevel snapshots, Workflow not triggering, Emails going to spam, ClickFunnels migration, Compare GHL vs ClickFunnels, How to set up GoHighLevel, Is GoHighLevel a good CRM, GoHighLevel SaaS mode explained, Cost to hire a GoHighLevel expert, GoHighLevel API key, Connect Twilio or LC Phone to GoHighLevel, Connect a custom domain to GoHighLevel, How to set up A2P 10DLC in GoHighLevel
